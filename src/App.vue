@@ -5,7 +5,12 @@
             <!-- 占位,标题不居中-->
             <mu-icon-button icon="" slot="right"/>
         </mu-appbar>
-        <router-view></router-view>
+        {{$route.query.notKeepAlive}}
+        <keep-alive>
+            <router-view v-if="!$route.query.notKeepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="$route.query.notKeepAlive"></router-view>
+
         <mu-toast v-if="toast" :message="toast_message"/>
     </div>
 </template>

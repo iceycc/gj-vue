@@ -39,6 +39,11 @@ let router = new Router({
             path:'/order_info',
             name:'order_info',
             component: pages.Order_Info
+        },
+        {
+            path:'/order_node',
+            name:'order_node',
+            component: pages.Order_Node
         }
     ]
 })

@@ -86,11 +86,62 @@ export const Order = {
         name: '已终止',
         count: 0,
         value: '5'
-    }]
+    }],
+    node: {
+        before: [{
+            name: '预约见面'
+        }, {
+            name: '见面'
+        }, {
+            name: '预约量房'
+        }, {
+            name: '上面量房'
+        }, {
+            name: '报价审核'
+        }, {
+            name: '签订意向定金'
+        }, {
+            name: '预交底'
+        }, {
+            name: '签订三方合同'
+        }],
+        going: [{
+            name: '开工仪式'
+        }, {
+            name: '水电材料验收'
+        }, {
+            name: '水电工程验收'
+        }, {
+            name: '防水工程验收'
+        }, {
+            name: '瓦木材料验收'
+        }, {
+            name: '瓦木工程验收'
+        }, {
+            name: '油漆材料验收'
+        }, {
+            name: '油漆工程验收'
+        }, {
+            name: '安装工程验收'
+        }, {
+            name: '竣工验收'
+        }],
+        after: [{
+            name: '第一次环保监测'
+        }, {
+            name: '第二次环保监测'
+        }, {
+            name: '维保'
+        }, {
+            name: '环保治理'
+        }, {
+            name: '环保治理后复测'
+        }]
+    }
 }
 
 export const Tips = {
     input_null: '输入内容为空',
     search_word_null: '输入内容为空',
-    params_null:'参数为空'
+    params_null: '参数为空'
 }

@@ -13,6 +13,9 @@ import 'muse-ui/dist/theme-light.css'
 import 'material-design-icons/iconfont/material-icons.css'
 Vue.use(MuseUI)
 
+//加载iview
+import 'iview/dist/styles/iview.css';    // 使用 CSS
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

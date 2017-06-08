@@ -22,7 +22,7 @@
             this.menus = [{
                 img: require('../../assets/image/icon_order_apply_manage.png'),
                 title: '我的订单',
-                path: '/my_order',
+                path: 'my_order',
                 role: 0,
             }, {
                 img: require('../../assets/image/icon_order_myorder.png'),
@@ -41,7 +41,7 @@
         methods: {
             handleGridChange(val)
             {
-                this.$router.push({path: this.menus[val].path});
+                this.$router.push({name: this.menus[val].path, query: {notKeepAlive: true}});
             }
         }
     }

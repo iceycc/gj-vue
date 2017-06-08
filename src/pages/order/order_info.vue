@@ -25,14 +25,16 @@
             }
 
         },
-        created(){
+        mounted(){
             EventBus.$emit(Constants.EventBus.setTitle, '订单信息');
             api = new API(this);
 
             if (this.$route.query.orderId) {
                 this.getdata(this.$route.query.orderId)
             } else {
-                EventBus.$emit(Constants.EventBus.showToast, Constants.Tips.params_null);
+                EventBus.$emit(Constants.EventBus.showToast, {
+                    message:Constants.Tips.params_null
+                });
             }
         },
         methods: {
@@ -42,9 +44,6 @@
                 }).then((response) => {
                     let result = response.data;
                     this.list = result;
-                    this.list = this.list.concat(result);
-                    this.list = this.list.concat(result);
-
                 });
             },
         }
