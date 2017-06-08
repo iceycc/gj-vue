@@ -1,0 +1,68 @@
+<template>
+    <div class="grid">
+        <div class="grid-item" :style="griditemStyle" v-for="item, index in grids" :key="index"
+             @click="itmeClick(index)">
+            <img class="grid-item-img" :src="item.img"/>
+            <span>{{item.title}}</span>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'uz-grid',
+        props: {
+            cols: {
+                type: Number,
+                default: 3
+            },
+            grids: {}
+        },
+        data () {
+            return {
+                griditemStyle: {
+                    width: '33vw',
+                    height: '33vw'
+                }
+            }
+        },
+        updated () {
+
+        },
+        mounted () {
+            this.griditemStyle.width = 100 / this.cols + 'vw';
+            this.griditemStyle.height = 100 / this.cols + 'vw';
+        },
+        methods: {
+            itmeClick(index){
+                this.$emit('change', index);
+            }
+        }
+    }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style lang="scss" scoped>
+    .grid {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        .grid-item {
+            width: 33vw;
+            height: 33vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #FFFFFF;
+            .grid-item-img {
+                height: 50px;
+                width: 50px;
+                margin-bottom: 10px;
+            }
+        }
+        .grid-item:active {
+            background-color: #cccccc;
+        }
+    }
+</style>
