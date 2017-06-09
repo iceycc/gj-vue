@@ -38,10 +38,34 @@ export const Tabs = [{
     index: 3
 }];
 
+const role_gj = '21';
+const role_gjjl = '22';
+
 /**
  *  订单列表页 查询选项
  */
 export const Order = {
+    menu: [{
+        img: require('../assets/image/icon_order_apply_manage.png'),
+        title: '我的订单',
+        path: 'my_order',
+        role: [role_gj, role_gjjl],
+    }, {
+        img: require('../assets/image/icon_order_myorder.png'),
+        title: '分配订单',
+        path: '',
+        role: [role_gjjl],
+    }, {
+        img: require('../assets/image/icon_order_orderallot.png'),
+        title: '申请管理',
+        path: '',
+        role: [role_gjjl]
+    }, {
+        img: require('../assets/image/icon_order_orderallot.png'),
+        title: '我的申请',
+        path: '',
+        role: [role_gj]
+    }],
     search_field: [{
         title: '小区地址',
         value: 0,

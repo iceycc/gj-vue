@@ -1,40 +1,28 @@
 <template>
     <div class="page">
-        <uz-grid :grids="menus" @change="handleGridChange"></uz-grid>
+        <uz-grid :grids="menus" :role="user.role" @change="handleGridChange"></uz-grid>
     </div>
 </template>
 
 <script>
-    import {EventBus, Constants} from  '../../service/index';
+    import {EventBus, Constants, mixins} from  '../../service/index';
     import UzGrid from "../../components/Grid";
 
     export default {
         components: {UzGrid},
+        mixins: [mixins],
         name: 'order',
         data() {
             return {
                 grid_cols: 3,
                 grids: []
             }
-
         },
         created(){
-            this.menus = [{
-                img: require('../../assets/image/icon_order_apply_manage.png'),
-                title: '我的订单',
-                path: 'my_order',
-                role: 0,
-            }, {
-                img: require('../../assets/image/icon_order_myorder.png'),
-                title: '分配订单',
-                path: '',
-                role: 1,
-            }, {
-                img: require('../../assets/image/icon_order_orderallot.png'),
-                title: '申请管理',
-                path: '',
-                role: 1
-            }];
+            this.setTitle('订单管理');
+            this.menus = Constants.Order.menu;
+
+            this.user = this.getUser();
 
             EventBus.$emit(Constants.EventBus.update_main_tab_index, 0);
         },

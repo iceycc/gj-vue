@@ -1,10 +1,13 @@
 <template>
     <div class="grid">
-        <div class="grid-item" :style="griditemStyle" v-for="item, index in grids" :key="index"
-             @click="itmeClick(index)">
-            <img class="grid-item-img" :src="item.img"/>
-            <span>{{item.title}}</span>
-        </div>
+        <template v-for="item, index in grids">
+            <div class="grid-item" :style="griditemStyle" @click="itmeClick(index)"
+                 v-if="item.role.indexOf(role) > -1">
+                <img class="grid-item-img" :src="item.img"/>
+                <span>{{item.title}}</span>
+            </div>
+        </template>
+
     </div>
 </template>
 
@@ -15,6 +18,10 @@
             cols: {
                 type: Number,
                 default: 3
+            },
+            role: {
+                type: String,
+                default: '21'
             },
             grids: {}
         },

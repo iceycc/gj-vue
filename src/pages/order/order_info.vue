@@ -33,7 +33,7 @@
                 this.getdata(this.$route.query.orderId)
             } else {
                 EventBus.$emit(Constants.EventBus.showToast, {
-                    message:Constants.Tips.params_null
+                    message: Constants.Tips.params_null
                 });
             }
         },
@@ -41,10 +41,10 @@
             getdata(orderId){
                 api.post(api.method.nodelist, {
                     orderId: orderId
-                }).then((response) => {
+                }, (response) => {
                     let result = response.data;
                     this.list = result;
-                });
+                })
             },
         }
     }

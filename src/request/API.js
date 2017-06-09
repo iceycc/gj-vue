@@ -2,9 +2,12 @@
  * Created by zhangweiwei on 2017/04/10.
  */
 
+import Vue from 'vue'
 import axios from 'axios'
 import config from './config'
 import Qs from 'qs'
+import {EventBus, Constants} from  '../service/index';
+
 
 let test = 'http://10.1.40.42/bang/www/';
 let test1 = 'http://bpre.uz.com/';
@@ -15,17 +18,18 @@ class API {
     constructor(view) {
         this.that = view;
     }
+
     //http://bang.uz.com/
     method = {
         baseURL: test2 + 'index.php',
         login: "m=bang&f=memberSt&v=login",
         orderlist: 'm=hkapp&f=order2&v=orderList',
-        nodelist:'m=hkapp&f=order&v=nodeList',
+        nodelist: 'm=hkapp&f=order&v=nodeList',
     }
 
-    post(url, param) {
+    post(url, param, success, fail, finish) {
         let _url = this.method.baseURL + '?' + url;
-        return this._request(_url, 'post', param)
+        return this._request(_url, 'post', param, success, fail, finish)
     }
 
     get(url, param) {
@@ -39,9 +43,13 @@ class API {
         return this._request(_url, 'get')
     }
 
-    _request(url, type, param) {
+    _request(url, type, param, success, fail, finish) {
         if (param) {
-            param.uid = "25416";
+            let userStr = Vue.localStorage.get('user');
+            if (userStr) {
+                let user = JSON.parse(userStr);
+                param.uid = user.uid;
+            }
         }
 
         if (type === 'get') {
@@ -60,8 +68,22 @@ class API {
         }
 
         request.then((response) => {
+            let result = response.data;
+            if (result.code == 1) {
+                if (success) {
+                    success(result);
+                }
+            } else {
+                if (fail) {
+                    fail();
+                }
+                EventBus.$emit(Constants.EventBus.showToast, {
+                    message: result.message
+                });
+            }
         }).catch((error) => {
         })
+
         return request;
     }
 

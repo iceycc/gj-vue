@@ -21,6 +21,11 @@ npm run build --report
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 
+## role
+管家 21
+管家经理 22
+
 ## TODO
 - 用户登录状态
+- 角色管理
 - 拍张上传

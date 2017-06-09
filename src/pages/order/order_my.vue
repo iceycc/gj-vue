@@ -53,7 +53,7 @@
         data() {
             return {
                 activeTab: 0,
-                tabs:[],
+                tabs: [],
                 search_word: '',
                 search_type: 0,
                 search_field: Constants.Order.search_field,
@@ -107,9 +107,7 @@
                     param.keyWord = this.search_word
                 }
 
-                api.post(api.method.orderlist, param).then((response) => {
-                    let result = response.data;
-
+                api.post(api.method.orderlist, param, (result) => {
                     if (result.orderNum) {
                         this.tabs[0].count = result.orderNum.wating;
                         this.tabs[1].count = result.orderNum.going;

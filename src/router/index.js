@@ -10,7 +10,7 @@ let router = new Router({
     routes: [
         {
             path: '/',
-            name: 'Index',
+            name: 'index',
             component: pages.Index,
             children: [{
                 path: 'order',
@@ -27,8 +27,13 @@ let router = new Router({
             }, {
                 path: 'userinfo',
                 name: 'userinfo',
-                component: pages.UserInfo_Index
+                component: pages.User_Index
             }]
+        },
+        {
+            path: '/user_login',
+            name: 'user_login',
+            component: pages.User_Login
         },
         {
             path: '/my_order',
@@ -36,13 +41,13 @@ let router = new Router({
             component: pages.Order_My
         },
         {
-            path:'/order_info',
-            name:'order_info',
+            path: '/order_info',
+            name: 'order_info',
             component: pages.Order_Info
         },
         {
-            path:'/order_node',
-            name:'order_node',
+            path: '/order_node',
+            name: 'order_node',
             component: pages.Order_Node
         }
     ]
@@ -50,10 +55,23 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
 
-    let tabs = ['/log', '/zhuge', '/order', '/userinfo'];
+    let user = Vue.localStorage.get('user');
+    console.log(user);
+
+    if (!user && to.name != 'user_login') {
+        console.log('用户未登录');
+        next({name: 'user_login'});
+        return;
+    }
+
+    let tabs = ['/', '/log', '/zhuge', '/order', '/userinfo'];
+
+    console.log(tabs.indexOf(to.path));
     if (tabs.indexOf(to.path) != -1) { //控制返回箭头
+        console.log(1);
         EventBus.$emit(Constants.EventBus.setTitleLeftIcon, '');
     } else {
+        console.log(2);
         EventBus.$emit(Constants.EventBus.setTitleLeftIcon, 'arrow_back');
     }
 

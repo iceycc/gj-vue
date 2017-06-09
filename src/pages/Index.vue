@@ -28,9 +28,6 @@
                     this.activeTab = value;
                 });
 
-                api = new API(this);
-                this.getdata();
-
                 this.tabs = Constants.Tabs;
 
                 this.handleTabChange(this.activeTab);
@@ -43,17 +40,6 @@
                 EventBus.$emit(Constants.EventBus.setTitle, this.tabs[val].title || this.tabs[val].name);
                 this.activeTab = val
             },
-            getdata(){
-                api.post(api.method.login, {
-                    username: 'guanjia02',
-                    password: '123456'
-                }).then((response) => {
-                    let result = response.data.data;
-                    this.title = result.nickname;
-                    EventBus.$emit(Constants.EventBus.setTitle, result.nickname);
-                    console.log(response.data);
-                });
-            }
         }
     }
 </script>
