@@ -16,17 +16,7 @@
             }
         },
         created(){
-            this.menus = [{
-                img: require('../../assets/image/icon_log_dailyrecord.png'),
-                title: '我的日志',
-                path: '',
-                role: 0,
-            }, {
-                img: require('../../assets/image/icon_log_dailymanage.png'),
-                title: '日志管理',
-                path: '',
-                role: 1,
-            }];
+            this.menus = Constants.Log.menu;
 
             EventBus.$emit(Constants.EventBus.update_main_tab_index, 2);
         },

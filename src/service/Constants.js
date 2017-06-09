@@ -38,8 +38,8 @@ export const Tabs = [{
     index: 3
 }];
 
-const role_gj = '21';
-const role_gjjl = '22';
+const role_gj = '22';
+const role_gjjl = '21';
 
 /**
  *  订单列表页 查询选项
@@ -162,6 +162,39 @@ export const Order = {
             name: '环保治理后复测'
         }]
     }
+}
+
+export const QA = {
+    menu: [{
+        img: require('../assets/image/icon_qa_myquest.png'),
+        title: '我的问答',
+        path: '',
+        role: [role_gj, role_gjjl],
+    }, {
+        img: require('../assets/image/icon_qa_questlist.png'),
+        title: '问题列表',
+        path: '',
+        role: [role_gj, role_gjjl],
+    }, {
+        img: require('../assets/image/icon_qa_knowledge.png'),
+        title: '知识库',
+        path: '',
+        role: [role_gj, role_gjjl],
+    }]
+}
+
+export const Log = {
+    menu: [{
+        img: require('../assets/image/icon_log_dailyrecord.png'),
+        title: '我的日志',
+        path: '',
+        role: [role_gj, role_gjjl],
+    }, {
+        img: require('../assets/image/icon_log_dailymanage.png'),
+        title: '日志管理',
+        path: '',
+        role: [role_gjjl],
+    }]
 }
 
 export const Tips = {

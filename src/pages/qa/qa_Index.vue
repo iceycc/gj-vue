@@ -4,8 +4,9 @@
     </div>
 </template>
 <script>
-    import {EventBus, Constants} from  '../../service/index';
+    import {EventBus, Constants, mixins} from  '../../service/index';
     import UzGrid from "../../components/Grid";
+
     export default {
         components: {UzGrid},
         name: 'qa',
@@ -15,22 +16,7 @@
             }
         },
         created(){
-            this.menus = [{
-                img: require('../../assets/image/icon_qa_myquest.png'),
-                title: '我的问答',
-                path: '',
-                role: 0,
-            }, {
-                img: require('../../assets/image/icon_qa_questlist.png'),
-                title: '问题列表',
-                path: '',
-                role: 1,
-            }, {
-                img: require('../../assets/image/icon_qa_knowledge.png'),
-                title: '知识库',
-                path: '',
-                role: 1
-            }];
+            this.menus = Constants.QA.menu;
 
             EventBus.$emit(Constants.EventBus.update_main_tab_index, 1);
         },
