@@ -41,6 +41,28 @@ export const Tabs = [{
 const role_gj = '22';
 const role_gjjl = '21';
 
+
+export const User = {
+    menus: [{
+        title: '工作日程',
+        path: '',
+        role: [role_gj, role_gjjl],
+    }, {
+        title: '未处理订单',
+        path: 'my_order',
+        role: [role_gj, role_gjjl],
+    }, {
+        title: '业主评价',
+        path: 'evaluate_list',
+        role: [role_gj, role_gjjl],
+    }, {
+        title: '异常日志',
+        path: 'my_log',
+        query: {tab: 2},
+        role: [role_gj, role_gjjl],
+    }]
+}
+
 /**
  *  订单列表页 查询选项
  */
@@ -187,13 +209,26 @@ export const Log = {
     menu: [{
         img: require('../assets/image/icon_log_dailyrecord.png'),
         title: '我的日志',
-        path: '',
+        path: 'my_log',
         role: [role_gj, role_gjjl],
     }, {
         img: require('../assets/image/icon_log_dailymanage.png'),
         title: '日志管理',
         path: '',
         role: [role_gjjl],
+    }],
+    tabs: [{
+        name: '已完成',
+        count: 0,
+        value: '0'
+    }, {
+        name: '进行中',
+        count: 0,
+        value: '1'
+    }, {
+        name: '异常',
+        count: 0,
+        value: '2'
     }]
 }
 

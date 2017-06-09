@@ -1,48 +1,48 @@
 <template>
-    <div class="grid">
-        <template v-for="item, index in grids">
-            <div class="grid-item" :style="griditemStyle" @click="itmeClick(index)"
-                 v-if="item.role.indexOf(role) > -1">
-                <img class="grid-item-img" :src="item.img" v-if="item.img"/>
-                <span>{{item.title}}</span>
-            </div>
-        </template>
-
+    <div class="list">
+        <mu-list>
+            <template v-for="(item,index) in list">
+                <div class="item" @click="itemOnClick(index)">
+                    <slot name="item" :item="item" :index="index"></slot>
+                </div>
+                <mu-divider/>
+            </template>
+        </mu-list>
+        <mu-infinite-scroll v-if="isMore" :scroller="scroller" :loading="loading" @load="loadMore"/>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'uz-grid',
+        name: 'uz-list',
         props: {
-            cols: {
-                type: Number,
-                default: 3
+            list: {
+                type: Array,
+                default: []
             },
-            role: {
-                type: String,
-                default: '21'
+            isMore: {
+                default: false
             },
-            grids: {}
+            loading: {
+                default: false
+            },
         },
         data () {
             return {
-                griditemStyle: {
-                    width: '33vw',
-                    height: '33vw'
-                }
+                scroller: null
             }
         },
         updated () {
-
         },
         mounted () {
-            this.griditemStyle.width = 100 / this.cols + 'vw';
-            this.griditemStyle.height = 100 / this.cols + 'vw';
+            this.scroller = this.$el;
         },
         methods: {
-            itmeClick(index){
-                this.$emit('change', index);
+            loadMore(){
+                this.$emit('loadMore');
+            },
+            itemOnClick(index){
+                this.$emit('itemOnClick', index);
             }
         }
     }

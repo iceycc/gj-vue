@@ -36,10 +36,16 @@ let router = new Router({
             component: pages.User_Login
         },
         {
+            path: '/my_log',
+            name: 'my_log',
+            component: pages.Log_My
+        },
+        {
             path: '/my_order',
             name: 'my_order',
             component: pages.Order_My
         },
+
         {
             path: '/order_info',
             name: 'order_info',
@@ -49,14 +55,24 @@ let router = new Router({
             path: '/order_node',
             name: 'order_node',
             component: pages.Order_Node
+        },
+        {
+            path: '/evaluate_list',
+            name: 'evaluate_list',
+            component: pages.Evaluate_List
+        },
+        {
+            path: '/guanjia_data',
+            name: 'guanjia_data',
+            component: pages.Guanjia_Data
         }
+
     ]
 })
 
 router.beforeEach((to, from, next) => {
 
     let user = Vue.localStorage.get('user');
-    console.log(user);
 
     if (!user && to.name != 'user_login') {
         console.log('用户未登录');
@@ -66,12 +82,9 @@ router.beforeEach((to, from, next) => {
 
     let tabs = ['/', '/log', '/zhuge', '/order', '/userinfo'];
 
-    console.log(tabs.indexOf(to.path));
     if (tabs.indexOf(to.path) != -1) { //控制返回箭头
-        console.log(1);
         EventBus.$emit(Constants.EventBus.setTitleLeftIcon, '');
     } else {
-        console.log(2);
         EventBus.$emit(Constants.EventBus.setTitleLeftIcon, 'arrow_back');
     }
 

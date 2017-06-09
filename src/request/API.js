@@ -25,6 +25,10 @@ class API {
         login: "m=bang&f=memberSt&v=login",
         orderlist: 'm=hkapp&f=order2&v=orderList',
         nodelist: 'm=hkapp&f=order&v=nodeList',
+        myLoglist: 'm=hkapp&f=orderLog&v=myLoglist',
+        hkDataList: 'm=hkapp&f=evaluate&v=hkDataList',          //个人中心-管家数据
+        schedule: 'm=hkapp&f=evaluate&v=schedule',              //个人中心-badge
+        evaluateList:'m=hkapp&f=evaluate&v=evaluateList'        //业主评价列表
     }
 
     post(url, param, success, fail, finish) {
@@ -44,12 +48,16 @@ class API {
     }
 
     _request(url, type, param, success, fail, finish) {
-        if (param) {
-            let userStr = Vue.localStorage.get('user');
-            if (userStr) {
-                let user = JSON.parse(userStr);
-                param.uid = user.uid;
-            }
+
+        if (!param) {
+            param = {};
+        }
+
+        //默认添加登录参数
+        let userStr = Vue.localStorage.get('user');
+        if (userStr) {
+            let user = JSON.parse(userStr);
+            param.uid = user.uid;
         }
 
         if (type === 'get') {
@@ -69,13 +77,18 @@ class API {
 
         request.then((response) => {
             let result = response.data;
+
+            if (!('code' in result)) {
+                success(result);
+                return;
+            }
             if (result.code == 1) {
                 if (success) {
                     success(result);
                 }
             } else {
                 if (fail) {
-                    fail();
+                    fail(result);
                 }
                 EventBus.$emit(Constants.EventBus.showToast, {
                     message: result.message

@@ -1,23 +1,21 @@
 <template>
     <div class="page">
-        <mu-list class="list">
-            <template v-for="(item,index) in list">
-                <div class="item">
-                    <div>{{item.nodename}}</div>
-                    <div>时间:{{item.date1}}</div>
-                </div>
-                <mu-divider/>
+        <uz-list :list="list">
+            <template slot="item" scope="props">
+                <div>{{props.item.nodename}}</div>
+                <div>时间:{{props.item.date1}}</div>
             </template>
-
-        </mu-list>
+        </uz-list>
     </div>
 </template>
 
 <script>
     import {EventBus, Constants, API} from  '../../service/index';
+    import UzList from "../../components/List";
     let api;
     export default {
 
+        components: {UzList},
         name: 'order_info',
         data() {
             return {
@@ -42,7 +40,7 @@
                 api.post(api.method.nodelist, {
                     orderId: orderId
                 }, (response) => {
-                    let result = response.data;
+                    let result = response;
                     this.list = result;
                 })
             },

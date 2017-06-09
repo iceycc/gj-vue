@@ -31,6 +31,7 @@
         },
         created(){
             EventBus.$on(Constants.EventBus.setTitle, value => {
+                console.log(value);
                 this.title = value;
             });
 
@@ -49,7 +50,6 @@
             });
         },
         mounted(){
-            console.log('mounted');
         },
         methods: {
             back(){
@@ -107,4 +107,23 @@
             }
         }
     }
+
+    .search_bar {
+        display: flex;
+        flex-direction: row;
+        margin: 10px;
+        .search_type {
+            width: 30vw;
+            margin-left: 10px;
+        }
+        .search_text {
+            flex-grow: 1;
+            margin-left: 10px;
+        }
+        .search_icon {
+            width: 40px;
+            height: 40px;
+        }
+    }
+
 </style>

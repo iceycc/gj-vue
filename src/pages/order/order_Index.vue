@@ -29,7 +29,7 @@
         methods: {
             handleGridChange(val)
             {
-                this.$router.push({name: this.menus[val].path, query: {notKeepAlive: true}});
+                this.router_push(this.menus[val])
             }
         }
     }

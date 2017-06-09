@@ -26,6 +26,6 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 管家经理 22
 
 ## TODO
-- 用户登录状态
+- 用户登录状态 (已完成)
 - 角色管理
 - 拍张上传
