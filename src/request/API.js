@@ -25,10 +25,12 @@ class API {
         login: "m=bang&f=memberSt&v=login",
         orderlist: 'm=hkapp&f=order2&v=orderList',
         nodelist: 'm=hkapp&f=order&v=nodeList',
+        getNowNode: 'm=hkapp&f=order&v=getNowNode',                 //获取订单当前节点
+        checkUnadd: 'm=hkapp&f=order&v=checkUnadd',                 //检测节点
         myLoglist: 'm=hkapp&f=orderLog&v=myLoglist',
-        hkDataList: 'm=hkapp&f=evaluate&v=hkDataList',          //个人中心-管家数据
-        schedule: 'm=hkapp&f=evaluate&v=schedule',              //个人中心-badge
-        evaluateList:'m=hkapp&f=evaluate&v=evaluateList'        //业主评价列表
+        hkDataList: 'm=hkapp&f=evaluate&v=hkDataList',              //个人中心-管家数据
+        schedule: 'm=hkapp&f=evaluate&v=schedule',                  //个人中心-badge
+        evaluateList: 'm=hkapp&f=evaluate&v=evaluateList'           //业主评价列表
     }
 
     post(url, param, success, fail, finish) {

@@ -25,7 +25,7 @@
                 </div>
                 <div class="btns" v-if="props.item.spread">
                     <mu-raised-button label="详细信息" class="demo-raised-button" @click="toInfo(props.item.id)"/>
-                    <mu-raised-button label="订单跟踪" class="demo-raised-button"/>
+                    <mu-raised-button label="订单跟踪" class="demo-raised-button" @click="toNode(props.item.id)"/>
                     <mu-raised-button label="节点信息" class="demo-raised-button"/>
                 </div>
             </template>
@@ -133,8 +133,11 @@
             delPhone(phone){
                 window.location.href = 'tel://' + phone;
             },
-            toInfo(id){
+            toInfo(id){//订单信息
                 this.$router.push({path: '/order_info', query: {orderId: id}});
+            },
+            toNode(id){
+                this.$router.push({path: '/order_node', query: {orderId: id}});
             },
             handleTabChange(val)
             {

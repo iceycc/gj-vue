@@ -68,8 +68,6 @@
         font-family: 'Avenir', Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-        text-align: center;
-        color: #2c3e50;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -86,6 +84,7 @@
         flex-grow: 1;
     }
 
+    //list基础样式
     .list {
         overflow: auto;
         height: 100%;
@@ -108,6 +107,7 @@
         }
     }
 
+    //搜索条
     .search_bar {
         display: flex;
         flex-direction: row;
@@ -124,6 +124,22 @@
             width: 40px;
             height: 40px;
         }
+    }
+
+    //iview-折叠控件样式
+    .ivu-collapse {
+        border: 0px;
+        .ivu-collapse-content-box {
+            padding-bottom: 0;
+        }
+    }
+
+    //dialog 样式
+    .mu-dialog-title {
+        font-size: 16px;
+    }
+    .mu-dialog-body {
+        font-size: 14px;
     }
 
 </style>

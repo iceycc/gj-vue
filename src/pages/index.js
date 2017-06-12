@@ -11,6 +11,7 @@ import Order_Index from './order/order_Index.vue'
 import Order_My from './order/order_my.vue'
 import Order_Info from './order/order_info.vue'
 import Order_Node from './order/order_node.vue'
+import order_test from './order/order_test.vue'
 
 
 import Evaluate_List from './other/evaluate_list.vue'
@@ -27,6 +28,7 @@ export default {
     Order_My,
     Order_Info,
     Order_Node,
+    order_test,
     Guanjia_Data,
     Evaluate_List
 }

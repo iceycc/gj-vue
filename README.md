@@ -26,6 +26,12 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 管家经理 22
 
 ## TODO
+- title修改放在 router 里完成
 - 用户登录状态 (已完成)
 - 角色管理
 - 拍张上传
+
+
+## 
+- [Android Web Apps Using Android WebView](http://tutorials.jenkov.com/android/android-web-apps-using-android-webview.html#caching-web-resources-in-the-android-device)
+- [H5 缓存机制浅析 移动端 Web 加载性能优化](http://dev.qq.com/topic/591d537a5bf956911a014c63)

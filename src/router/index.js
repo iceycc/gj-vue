@@ -76,6 +76,12 @@ let router = new Router({
             name: 'guanjia_data',
             component: pages.Guanjia_Data,
             meta: {title: '更多数据'}
+        },
+        {
+            path: '/order_test',
+            name: 'order_test',
+            component: pages.order_test,
+            meta: {title: '测试'}
         }
 
     ]

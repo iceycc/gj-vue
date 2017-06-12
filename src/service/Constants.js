@@ -69,6 +69,11 @@ export const User = {
 export const Order = {
     menu: [{
         img: require('../assets/image/icon_order_apply_manage.png'),
+        title: '测试',
+        path: 'order_test',
+        role: [role_gj, role_gjjl],
+    },{
+        img: require('../assets/image/icon_order_apply_manage.png'),
         title: '我的订单',
         path: 'my_order',
         role: [role_gj, role_gjjl],
@@ -182,6 +187,17 @@ export const Order = {
             name: '环保治理'
         }, {
             name: '环保治理后复测'
+        }],
+        other: [{
+            name: '日志封面'
+        }, {
+            name: '上门服务'
+        }, {
+            name: '装修对比图'
+        }, {
+            name: '添加日程'
+        }, {
+            name: '编辑订单信息'
         }]
     }
 }
