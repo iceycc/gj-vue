@@ -48,7 +48,6 @@
             }
         },
         created(){
-            this.setTitle('个人中心');
             this.user = this.getUser();
             api = new API(this);
 

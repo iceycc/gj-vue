@@ -37,7 +37,6 @@
         methods: {
             handleTabChange(val){
                 this.$router.push({path: this.tabs[val].url});
-                EventBus.$emit(Constants.EventBus.setTitle, this.tabs[val].title || this.tabs[val].name);
                 this.activeTab = val
             },
         }

@@ -44,7 +44,6 @@
             }
         },
         mounted(){
-            EventBus.$emit(Constants.EventBus.setTitle, '我的日志');
             api = new API(this);
 
             if (this.$route.query && this.$route.query.tab) {

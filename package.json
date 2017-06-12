@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "copy:android": "rm -rf /Users/zhangweiwei/Downloads/uzhuang/UZhuang/app/src/main/assets/dist && cp -rf dist/ /Users/zhangweiwei/Downloads/uzhuang/UZhuang/app/src/main/assets/dist"
   },
   "dependencies": {
     "axios": "^0.16.2",

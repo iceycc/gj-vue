@@ -45,7 +45,6 @@
 
         },
         mounted(){
-            EventBus.$emit(Constants.EventBus.setTitle, '节点导航');
             api = new API(this);
 
             /*            if (this.$route.query.orderId) {

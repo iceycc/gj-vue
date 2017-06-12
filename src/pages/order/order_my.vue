@@ -62,7 +62,6 @@
             }
         },
         mounted () {
-            EventBus.$emit(Constants.EventBus.setTitle, '我的订单');
             api = new API(this);
 
             this.getdata();

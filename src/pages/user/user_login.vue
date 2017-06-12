@@ -30,7 +30,6 @@
         },
         created(){
             api = new API(this);
-            EventBus.$emit(Constants.EventBus.setTitle, '登录');
         },
         methods: {
             doLogin(){

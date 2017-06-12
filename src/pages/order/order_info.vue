@@ -24,7 +24,6 @@
 
         },
         mounted(){
-            EventBus.$emit(Constants.EventBus.setTitle, '订单信息');
             api = new API(this);
 
             if (this.$route.query.orderId) {

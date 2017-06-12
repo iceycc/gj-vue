@@ -30,7 +30,6 @@
             }
         },
         mounted(){
-            EventBus.$emit(Constants.EventBus.setTitle, '业主评价');
             api = new API(this);
 
             if (this.$route.query && this.$route.query.tab) {
