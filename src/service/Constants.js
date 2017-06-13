@@ -2,6 +2,24 @@
  * Created by zhangweiwei on 16/9/7.
  */
 
+let test = 'http://10.1.40.42/bang/www/';
+let test1 = 'http://bpre.uz.com/';
+let test2 = 'http://bang.uz.com/';
+
+export const method = {
+    baseURL: test2 + 'index.php',
+    login: "m=bang&f=memberSt&v=login",
+    orderlist: 'm=hkapp&f=order2&v=orderList',
+    nodelist: 'm=hkapp&f=order&v=nodeList',
+    getNowNode: 'm=hkapp&f=order&v=getNowNode',                 //获取订单当前节点
+    checkUnadd: 'm=hkapp&f=order&v=checkUnadd',                 //检测节点
+    myLoglist: 'm=hkapp&f=orderLog&v=myLoglist',
+    hkDataList: 'm=hkapp&f=evaluate&v=hkDataList',              //个人中心-管家数据
+    schedule: 'm=hkapp&f=evaluate&v=schedule',                  //个人中心-badge
+    evaluateList: 'm=hkapp&f=evaluate&v=evaluateList',          //业主评价列表
+    save_photo: 'm=hkapp&f=uploadImage&v=save_photo'            //上传图片
+}
+
 export const EventBus = {
     userLogin: 'userLogin',
     setTitle: 'setTitle',

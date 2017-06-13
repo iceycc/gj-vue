@@ -86,7 +86,7 @@
         },
         methods: {
             getdata(orderId){
-                api.post(api.method.getNowNode, {
+                api.post(Constants.method.getNowNode, {
                     orderId: orderId
                 }).then((response) => {
                     let result = response.data;
@@ -94,7 +94,7 @@
                 });
             },
             checknode(node_id){
-                api.post(api.method.checkUnadd, {
+                api.post(Constants.method.checkUnadd, {
                     orderid: this.$route.query.orderId,
                     nodeid: node_id
                 }).then((response) => {

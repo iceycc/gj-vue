@@ -50,7 +50,7 @@
                     page: this.page,
                 };
 
-                api.post(api.method.evaluateList, param, (result) => {
+                api.post(Constants.method.evaluateList, param, (result) => {
 
                     if (result.data instanceof Array) {
                         let tempArray = [];

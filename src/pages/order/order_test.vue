@@ -1,15 +1,25 @@
 <template>
     <div class="page">
+        <br>
+        <br>
+        <br>
         <mu-raised-button label="选择图片" @click="selectAlbum" fullWidth primary/>
+        <br>
+        <br>
+        <br>
+        <mu-raised-button label="上传图片" @click="uploadFiles" fullWidth primary/>
+        <br>
+        <br>
+        <br>
         <div class="image-list">
             <!-- :style="{backgroundImage: 'url(' + image + ')'}"  :src="image"  -->
-            <img v-for="image in images" class="image" :src="image" >
+            <img v-for="image in images" class="image" :src="image">
         </div>
     </div>
 </template>
 
 <script>
-    import {EventBus, Constants, mixins} from  '../../service/index';
+    import {EventBus, Constants, mixins, API} from  '../../service/index';
     import * as JsBridge from '../../service/JsBridge'
 
     export default {
@@ -18,7 +28,7 @@
         data() {
             return {
                 grid_cols: 3,
-                images: ['abc.png']
+                images: []
             }
         },
         created(){
@@ -30,9 +40,26 @@
         },
         methods: {
             selectAlbum(){
-                JsBridge.seletcAlbum(2, (data) => {
+                JsBridge.seletcAlbum(1, (data) => {
                     this.images = data;
                 });
+            },
+            uploadFiles(){
+                JsBridge.sendRequest(Constants.method.baseURL + '?' + Constants.method.save_photo, null, {
+                    inputName: this.images[0]
+                }, ((result) => {
+                    try {
+                        let fileName = result.data.saveName;
+                        EventBus.$emit(Constants.EventBus.showToast, {
+                            message: '上传成功:' + fileName
+                        });
+                    }
+                    catch (err) {
+                        EventBus.$emit(Constants.EventBus.showToast, {
+                            message: '上传失败:' + result
+                        });
+                    }
+                }))
             }
         }
     }

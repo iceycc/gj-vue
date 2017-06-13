@@ -59,12 +59,12 @@
                 this.logout();
             },
             getGuanjiaData(){
-                api.post(api.method.hkDataList, null, (result) => {
+                api.post(Constants.method.hkDataList, null, (result) => {
                     this.hkData = result.data;
                 });
             },
             getScheduleData(){
-                api.post(api.method.schedule, null, (result) => {
+                api.post(Constants.method.schedule, null, (result) => {
                     console.log(result.data);
                 });
             },

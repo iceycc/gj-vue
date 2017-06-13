@@ -46,7 +46,7 @@
                 }
                 this.error_pass = '';
 
-                api.post(api.method.login, {
+                api.post(Constants.method.login, {
                     username: this.username,
                     password: this.pass
                 }, (result) => {

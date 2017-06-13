@@ -36,7 +36,7 @@
         },
         methods: {
             getdata(orderId){
-                api.post(api.method.nodelist, {
+                api.post(Constants.method.nodelist, {
                     orderId: orderId
                 }, (response) => {
                     let result = response;

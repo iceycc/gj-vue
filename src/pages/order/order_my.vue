@@ -99,7 +99,7 @@
                     param.keyWord = this.search_word
                 }
 
-                api.post(api.method.orderlist, param, (result) => {
+                api.post(Constants.method.orderlist, param, (result) => {
                     if (result.orderNum) {
                         this.tabs[0].count = result.orderNum.wating;
                         this.tabs[1].count = result.orderNum.going;

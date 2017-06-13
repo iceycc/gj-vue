@@ -8,33 +8,14 @@ import config from './config'
 import Qs from 'qs'
 import {EventBus, Constants} from  '../service/index';
 
-
-let test = 'http://10.1.40.42/bang/www/';
-let test1 = 'http://bpre.uz.com/';
-let test2 = 'http://bang.uz.com/';
-
 class API {
 
     constructor(view) {
         this.that = view;
     }
 
-    //http://bang.uz.com/
-    method = {
-        baseURL: test2 + 'index.php',
-        login: "m=bang&f=memberSt&v=login",
-        orderlist: 'm=hkapp&f=order2&v=orderList',
-        nodelist: 'm=hkapp&f=order&v=nodeList',
-        getNowNode: 'm=hkapp&f=order&v=getNowNode',                 //获取订单当前节点
-        checkUnadd: 'm=hkapp&f=order&v=checkUnadd',                 //检测节点
-        myLoglist: 'm=hkapp&f=orderLog&v=myLoglist',
-        hkDataList: 'm=hkapp&f=evaluate&v=hkDataList',              //个人中心-管家数据
-        schedule: 'm=hkapp&f=evaluate&v=schedule',                  //个人中心-badge
-        evaluateList: 'm=hkapp&f=evaluate&v=evaluateList'           //业主评价列表
-    }
-
     post(url, param, success, fail, finish) {
-        let _url = this.method.baseURL + '?' + url;
+        let _url = Constants.method.baseURL + '?' + url;
         return this._request(_url, 'post', param, success, fail, finish)
     }
 

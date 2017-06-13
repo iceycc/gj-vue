@@ -9,22 +9,38 @@ const name = 'native';
  * @param count
  */
 function seletcAlbum(count, callback) {
-    if (window[name]) {
+    if (isSupport()) {
         window[name].seletcAlbum(count);
-
         window.onSelectAlbum = function (data) {
             if (callback) {
                 callback(JSON.parse(data));
             }
         }
-    } else {
-        noSupport();
     }
 };
 
 
-function noSupport() {
+/**
+ * 发起请求
+ * @param count
+ */
+function sendRequest(url, values, files, callback) {
+    if (isSupport()) {
+        window[name].sendRequest(url, values ? JSON.stringify(values) : '', files ? JSON.stringify(files) : '');
+        window.onResult = function (data) {
+            if (callback) {
+                callback(JSON.parse(data));
+            }
+        }
+    }
+};
+
+function isSupport() {
+
+    if (window[name]) {
+        return true;
+    }
     alert('设备不支持.');
 }
 
-export {seletcAlbum};
+export {seletcAlbum, sendRequest};

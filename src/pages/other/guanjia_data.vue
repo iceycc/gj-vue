@@ -71,7 +71,7 @@
                     start: this.startDate + '-1',
                     end: this.endDate + '-' + date.getDate()
                 };
-                api.post(api.method.hkDataList, param, (result) => {
+                api.post(Constants.method.hkDataList, param, (result) => {
                     this.hkData = result.data;
                 }, (result) => {
 

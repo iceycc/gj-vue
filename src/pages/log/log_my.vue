@@ -69,7 +69,7 @@
                     param.keyWord = this.search_word;
                 }
 
-                api.post(api.method.myLoglist, param, (result) => {
+                api.post(Constants.method.myLoglist, param, (result) => {
                     this.tabs[0].count = result.over;
                     this.tabs[1].count = result.go;
                     this.tabs[2].count = result.yc;
