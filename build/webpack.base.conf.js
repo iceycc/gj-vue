@@ -2,16 +2,22 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var webpack = require('webpack')
 
 function resolve(dir) {
     return path.join(__dirname, '..', dir)
 }
 
+//const extractDocs = new ExtractTextPlugin('docs.md');
+//vueLoaderConfig.loaders['docs'] = extractDocs.extract('raw-loader');
+
 module.exports = {
+    cache: true,
     entry: {
         app: './src/main.js'
     },
     output: {
+        /* 输出目录 */
         path: config.build.assetsRoot,
         filename: '[name].js',
         publicPath: process.env.NODE_ENV === 'production'
@@ -32,8 +38,14 @@ module.exports = {
                 loader: 'vue-loader',
                 options: vueLoaderConfig
             },
-            {test: /iview.src.*?js$/, loader: 'babel-loader'},
-            //{test: /\.js$/, loader: 'babel', exclude: /node_modules/},
+            {
+                test: /iview.src.*?js$/,
+                loader: 'babel-loader'
+            },
+            {
+                test: /muse-ui.src.*?js$/,
+                loader: 'babel-loader'
+            },
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
@@ -43,7 +55,7 @@ module.exports = {
                 test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
                 loader: 'url-loader',
                 options: {
-                    limit: 10000,
+                    limit: 1000,
                     name: utils.assetsPath('img/[name].[hash:7].[ext]')
                 }
             },
@@ -52,10 +64,16 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     publicPath: '../../',
-                    limit: 10000,
+                    limit: 1000,
                     name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
                 }
             }
         ]
-    }
+    },
+    plugins: [
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('../static/js/vendor-mainfest.json') // 指向这个json
+        })
+    ]
 }

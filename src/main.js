@@ -14,9 +14,36 @@ Vue.config.productionTip = false
 import MuseUI from 'muse-ui'
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-light.css'
-import 'material-design-icons/iconfont/material-icons.css'
 Vue.use(MuseUI)
 
+/*// import appBar from 'muse-ui/src/appBar'
+ import raisedButton from 'muse-ui/src/raisedButton'
+ // import iconButton from 'muse-ui/src/iconButton'
+ import selectField from 'muse-ui/src/selectField'
+ import textField from 'muse-ui/src/textField'
+ import menu from 'muse-ui/src/menu/menu.vue'
+ import divider from 'muse-ui/src/divider'
+ import menuItem from 'muse-ui/src/menu/menuItem.vue'
+ import infiniteScroll from 'muse-ui/src/infiniteScroll'
+ import avatar from 'muse-ui/src/avatar'
+ import list from 'muse-ui/src/list/list.vue'
+ import listItem from 'muse-ui/src/list/listItem.vue'
+
+ // Vue.component(appBar.name, appBar);
+ // Vue.component(iconButton.name, iconButton);
+ Vue.component(raisedButton.name, raisedButton);
+ Vue.component(selectField.name, selectField);
+ Vue.component(textField.name, textField);
+ Vue.component(menu.name, menu);
+ Vue.component(menuItem.name, menuItem);
+ Vue.component(list.name, list);
+ Vue.component(listItem.name, listItem);
+ Vue.component(divider.name, divider);
+
+ Vue.component(infiniteScroll.name, infiniteScroll);
+ Vue.component(avatar.name, avatar);*/
+
+import 'material-design-icons/iconfont/material-icons.css'
 //加载iview
 import 'iview/dist/styles/iview.css';    // 使用 CSS
 

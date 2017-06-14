@@ -1,4 +1,5 @@
 .DS_Store
+babel_cache/
 node_modules/
 dist/
 .idea/
