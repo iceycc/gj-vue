@@ -73,7 +73,7 @@ module.exports = {
     plugins: [
         new webpack.DllReferencePlugin({
             context: __dirname,
-            manifest: require('../static/js/vendor-mainfest.json') // 指向这个json
+            manifest: require('../static/dll/vendor-mainfest.json') // 指向这个json
         })
     ]
 }
