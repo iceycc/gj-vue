@@ -25,7 +25,7 @@
 
 <script>
     import {EventBus, Constants, API, mixins} from  '../../service/index';
-    import DatePicker from "../../../node_modules/iview/src/components/date-picker/";
+    import DatePicker from "iview/src/components/date-picker/";
 
     let api;
     export default {

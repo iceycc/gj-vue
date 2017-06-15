@@ -37,15 +37,6 @@ var webpackConfig = merge(baseWebpackConfig, {
         }),
         // extract css into its own file
         // 导出node_modules 的css文件
-    /*    new webpack.optimize.CommonsChunkPlugin({
-            name: 'base',
-            minChunks: function (module, count) {
-                // any required modules inside node_modules are extracted to vendor
-                return (
-                    module.resource && /\.css/.test(module.resource)
-                )
-            }
-        }),*/
         new ExtractTextPlugin({
             filename: utils.assetsPath('css/[name].[contenthash].css')
         }),
@@ -79,7 +70,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             minChunks: function (module, count) {
                 // any required modules inside node_modules are extracted to vendor
                 return (
-                    module.resource && /\.js$/.test(module.resource) &&
+                    module.resource && /\.js|vue$/.test(module.resource) &&
                     module.resource.indexOf(
                         path.join(__dirname, '../node_modules')
                     ) === 0

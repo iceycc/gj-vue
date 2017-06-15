@@ -9,6 +9,8 @@
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
     "build:dll": "webpack --config ./build/webpack.dll.conf.js",
+    "build:dll:report": "npm run build:dll --report",
+    "build:report": "npm run build --report",
     "copy:android": "rm -rf /Users/zhangweiwei/Downloads/uzhuang/UZhuang/app/src/main/assets/dist && cp -rf dist/ /Users/zhangweiwei/Downloads/uzhuang/UZhuang/app/src/main/assets/dist"
   },
   "dependencies": {
@@ -30,6 +32,7 @@
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.22.0",
     "chalk": "^1.1.3",
+    "compression-webpack-plugin": "^0.4.0",
     "connect-history-api-fallback": "^1.3.0",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",

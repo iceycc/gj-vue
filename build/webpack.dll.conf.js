@@ -1,29 +1,61 @@
+process.env.NODE_ENV = 'production'
+
 const path = require('path');
 var utils = require('./utils')
+var vueLoaderConfig = require('./vue-loader.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const webpack = require('webpack');
 
 const srcPath = path.join(__dirname, '../static/dll/');
+////'muse-ui' 异常
+const vendors = ['vue/dist/vue.esm.js',
+    'vue-router',
+    'axios',
+    'qs',
+    'vue-localstorage',
+    'material-design-icons/iconfont/material-icons.css',
+    'iview/dist/styles/iview.css',
+    'iview/src/components/tag/tag.vue',
+    'iview/src/components/collapse/panel.vue',
+    'iview/src/components/collapse/collapse.vue',
+    'iview/src/components/date-picker/',
+    'muse-ui/src/appBar',
+    'muse-ui/src/raisedButton',
+    'muse-ui/src/iconButton',
+    'muse-ui/src/selectField',
+    'muse-ui/src/textField',
+    'muse-ui/src/menu/menu.vue',
+    'muse-ui/src/divider',
+    'muse-ui/src/infiniteScroll',
+    'muse-ui/src/menu/menuItem.vue',
+    'muse-ui/src/avatar',
+    'muse-ui/src/list/list.vue',
+    'muse-ui/src/list/listItem.vue'
+];
 
-module.exports = {
+webpackConfig = {
     entry: {
-        //'muse-ui'
-        vendor: [
-            'vue/dist/vue.esm.js',
-            'vue-router',
-            'axios',
-            'qs',
-            'vue-localstorage',
-            'material-design-icons/iconfont/material-icons.css',
-            'iview/dist/styles/iview.css',
-            'muse-ui/dist/muse-ui.css',
-            'muse-ui/dist/theme-light.css'] // 需要打包起来的依赖
+        vendor: vendors
+    },
+    resolve: {
+        extensions: ['.js', '.vue', '.json']
     },
     module: {
-        //加载器配置
-        //module.loaders 是最关键的一块配置。它告知 webpack 每一种文件都需要使用什么加载器来处理
         loaders: [
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: vueLoaderConfig
+            },
+            {
+                test: /iview.src.*?js$/,
+                loader: 'babel-loader'
+            },
+            {
+                test: /muse-ui.src.*?js$/,
+                loader: 'babel-loader'
+            },
             {
                 test: /\.css$/,
                 use: ExtractTextPlugin.extract({
@@ -54,15 +86,22 @@ module.exports = {
                 safe: true
             }
         }),
-        new webpack.DllPlugin({
-            path: path.join(srcPath, '[name]-mainfest.json'), // 描述依赖对应关系的json文件
-            name: '[name]_library',
-            context: __dirname // 执行的上下文环境，对之后DllReferencePlugin有用
-        }),
         new webpack.optimize.UglifyJsPlugin({ // uglifjs压缩
             compress: {
                 warnings: false
             }
+        }),
+        new webpack.DllPlugin({
+            path: path.join(srcPath, '[name]-mainfest.json'), // 描述依赖对应关系的json文件
+            name: '[name]_library',
+            context: __dirname // 执行的上下文环境，对之后DllReferencePlugin有用
         })
     ]
 }
+
+if (process.env.npm_config_report) {
+    var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+    webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+}
+
+module.exports = webpackConfig;

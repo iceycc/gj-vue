@@ -8,11 +8,8 @@ function resolve(dir) {
     return path.join(__dirname, '..', dir)
 }
 
-//const extractDocs = new ExtractTextPlugin('docs.md');
-//vueLoaderConfig.loaders['docs'] = extractDocs.extract('raw-loader');
-
 module.exports = {
-    cache: true,
+    // cache: false,
     entry: {
         app: './src/main.js'
     },

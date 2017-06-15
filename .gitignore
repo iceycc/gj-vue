@@ -3,6 +3,7 @@ babel_cache/
 node_modules/
 dist/
 .idea/
+static/dll/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

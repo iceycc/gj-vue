@@ -49,9 +49,9 @@
 
 <script>
     import {EventBus, Constants, API} from  '../../service/index';
-    import Collapse from "../../../node_modules/iview/src/components/collapse/collapse";
-    import Panel from "../../../node_modules/iview/src/components/collapse/panel";
-    import Tag from "../../../node_modules/iview/src/components/tag/tag";
+    import Collapse from "iview/src/components/collapse/collapse";
+    import Panel from "iview/src/components/collapse/panel";
+    import Tag from "iview/src/components/tag/tag";
     let api;
     export default {
 
