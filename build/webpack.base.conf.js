@@ -1,4 +1,5 @@
 var path = require('path')
+var fs = require('fs')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
@@ -8,7 +9,7 @@ function resolve(dir) {
     return path.join(__dirname, '..', dir)
 }
 
-module.exports = {
+let webpackConfig = {
     // cache: false,
     entry: {
         app: './src/main.js'
@@ -67,10 +68,15 @@ module.exports = {
             }
         ]
     },
-    plugins: [
-        new webpack.DllReferencePlugin({
-            context: __dirname,
-            manifest: require('../static/dll/vendor-mainfest.json') // 指向这个json
-        })
-    ]
+    plugins: []
 }
+
+if (fs.existsSync(resolve('static/dll/vendor-mainfest.json'))) {
+    console.log('build with DllReferencePlugin');
+    webpackConfig.plugins.push(new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest: require('../static/dll/vendor-mainfest.json') // 指向这个json
+    }))
+}
+
+module.exports = webpackConfig
