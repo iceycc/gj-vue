@@ -21,6 +21,9 @@ npm run build --report
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 
+### build:dll  构建静态资源
+
+
 ## role
 管家 21
 管家经理 22
