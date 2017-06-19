@@ -19,7 +19,7 @@
             }
         },
         created(){
-            this.setTitle('订单管理');
+            console.log('created');
             this.menus = Constants.Order.menu;
 
             this.user = this.getUser();

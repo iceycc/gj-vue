@@ -1,14 +1,14 @@
-process.env.NODE_ENV = 'production'
-
 const path = require('path');
+
+var config = require('../config')
 var utils = require('./utils')
 var vueLoaderConfig = require('./vue-loader.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const webpack = require('webpack');
 
+process.env.NODE_ENV = config.build.env
 const srcPath = path.join(__dirname, '../static/dll/');
-////'muse-ui' 异常
 const vendors = ['vue/dist/vue.esm.js',
     'vue-router',
     'axios',
@@ -21,6 +21,7 @@ const vendors = ['vue/dist/vue.esm.js',
     'iview/src/components/collapse/collapse.vue',
     'iview/src/components/date-picker/',
     'muse-ui/src/appBar',
+    'muse-ui/src/toast',
     'muse-ui/src/raisedButton',
     'muse-ui/src/iconButton',
     'muse-ui/src/selectField',

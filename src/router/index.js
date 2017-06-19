@@ -16,22 +16,22 @@ let router = new Router({
                 path: 'order',
                 name: 'order',
                 component: pages.Order_Index,
-                meta: {title: '订单管理'}
+                meta: {title: '订单管理', notKeepAlive: false}
             }, {
                 path: 'zhuge',
                 name: 'zhuge',
                 component: pages.QA_Index,
-                meta: {title: '诸葛装修'}
+                meta: {title: '诸葛装修', notKeepAlive: false}
             }, {
                 path: 'log',
                 name: 'log',
                 component: pages.Log_Index,
-                meta: {title: '日志管理'}
+                meta: {title: '日志管理', notKeepAlive: false}
             }, {
                 path: 'userinfo',
                 name: 'userinfo',
                 component: pages.User_Index,
-                meta: {title: '个人中心'}
+                meta: {title: '个人中心', notKeepAlive: true}
             }]
         },
         {

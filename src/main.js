@@ -17,6 +17,7 @@ Vue.config.productionTip = false
  Vue.use(MuseUI)*/
 
 import appBar from 'muse-ui/src/appBar'
+import toast from 'muse-ui/src/toast'
 import raisedButton from 'muse-ui/src/raisedButton'
 import iconButton from 'muse-ui/src/iconButton'
 import selectField from 'muse-ui/src/selectField'
@@ -30,6 +31,7 @@ import list from 'muse-ui/src/list/list.vue'
 import listItem from 'muse-ui/src/list/listItem.vue'
 
 Vue.component(appBar.name, appBar);
+Vue.component(toast.name, toast);
 Vue.component(iconButton.name, iconButton);
 Vue.component(raisedButton.name, raisedButton);
 Vue.component(selectField.name, selectField);

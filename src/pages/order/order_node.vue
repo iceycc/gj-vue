@@ -12,25 +12,25 @@
             <panel name="before">
                 装修前
                 <div class="tag-div" slot="content">
-                    <tag v-for="item in node.before">{{item.name}}</tag>
+                    <tag v-for="(item,index) in node.before" :key="index">{{item.name}}</tag>
                 </div>
             </panel>
             <panel name="going">
                 装修中
                 <div class="tag-div" slot="content">
-                    <tag v-for="item in node.going">{{item.name}}</tag>
+                    <tag v-for="(item,index) in node.going" :key="index">{{item.name}}</tag>
                 </div>
             </panel>
             <panel name="after">
                 装修后
                 <div class="tag-div" slot="content">
-                    <tag v-for="item in node.after">{{item.name}}</tag>
+                    <tag v-for="(item,index) in node.after" :key="index">{{item.name}}</tag>
                 </div>
             </panel>
             <panel name="other">
                 其他功能
                 <div class="tag-div" slot="content">
-                    <tag v-for="item in node.other">{{item.name}}</tag>
+                    <tag v-for="(item,index) in node.other" :key="index">{{item.name}}</tag>
                 </div>
             </panel>
         </collapse>

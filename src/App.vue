@@ -5,11 +5,12 @@
             <!-- 占位,标题不居中-->
             <mu-icon-button icon="" slot="right"/>
         </mu-appbar>
-        {{$route.query.notKeepAlive}}
-        <keep-alive>
-            <router-view v-if="!$route.query.notKeepAlive"></router-view>
+        <!--<transition name="fade"></transition>-->
+<!--        <keep-alive>
+            <router-view v-if="!$route.meta.notKeepAlive"></router-view>
         </keep-alive>
-        <router-view v-if="$route.query.notKeepAlive"></router-view>
+        <router-view v-if="$route.meta.notKeepAlive"></router-view>-->
+        <router-view ></router-view>
 
         <mu-toast v-if="toast" :message="toast_message"/>
     </div>
@@ -71,17 +72,16 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-    }
-
-    .page {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        height: 100%;
-    }
-
-    .content {
-        flex-grow: 1;
+        .page {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            height: 100%;
+            overflow: scroll;
+            .content {
+                flex-grow: 1;
+            }
+        }
     }
 
     //list基础样式
@@ -138,8 +138,13 @@
     .mu-dialog-title {
         font-size: 16px;
     }
+
     .mu-dialog-body {
         font-size: 14px;
     }
 
 </style>
+<docs>
+    ### 程序入口文件
+    测试A
+</docs>

@@ -1,7 +1,9 @@
 <template>
     <div class="page">
         <div class="content">
-            <router-view></router-view>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
         </div>
         <uz-tabs :tabs="tabs" :activeTab="activeTab" @change="handleTabChange"></uz-tabs>
     </div>
@@ -19,11 +21,11 @@
         data() {
             return {
                 activeTab: 0,
-                tabs:[]
+                tabs: []
             }
         },
         created(){
-            if(this.tabs.length == 0){
+            if (this.tabs.length == 0) {
                 EventBus.$on(Constants.EventBus.update_main_tab_index, value => {
                     this.activeTab = value;
                 });

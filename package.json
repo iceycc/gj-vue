@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
+    "build:doc": "webpack --config ./build/webpack.doc.conf.js",
     "build:dll": "webpack --config ./build/webpack.dll.conf.js",
     "build:dll:report": "npm run build:dll --report",
     "build:report": "npm run build --report",
