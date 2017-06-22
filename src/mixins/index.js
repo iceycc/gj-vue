@@ -1,4 +1,4 @@
-import {EventBus, Constants} from  '../service/index';
+import {EventBus, Constants, JsBridge} from  '../service/index';
 
 export default {
     methods: {
@@ -6,23 +6,23 @@ export default {
             EventBus.$emit(Constants.EventBus.setTitle, title);
         },
         getUser(){
-            let str = this.$localStorage.get('user') ;
-            if(!str)
-                return ;
-            return JSON.parse(this.$localStorage.get('user'));
+            let str = JsBridge.getStorage('user');
+            if (!str)
+                return;
+            return JSON.parse(str);
         },
         router_push(action){
             let rou = {
                 name: action.path
             };
 
-            if(action.query){
+            if (action.query) {
                 rou.query = action.query;
             }
             this.$router.push(rou);
         },
         logout(){
-            this.$localStorage.remove('user');
+            JsBridge.removeStorage('user');
             this.$router.push({name: 'user_login'});
         }
     }

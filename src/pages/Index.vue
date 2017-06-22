@@ -1,11 +1,9 @@
 <template>
     <div class="page">
-        <div class="content">
-            <keep-alive>
-                <router-view></router-view>
-            </keep-alive>
-        </div>
-        <uz-tabs :tabs="tabs" :activeTab="activeTab" @change="handleTabChange"></uz-tabs>
+        <keep-alive>
+            <router-view></router-view>
+        </keep-alive>
+        <uz-tabs :tabs="tabs" :activeTab="activeTab" @change="handleTabChange" class="tab"></uz-tabs>
     </div>
 </template>
 
@@ -30,7 +28,7 @@
                     this.activeTab = value;
                 });
 
-                this.tabs = Constants.Tabs;
+                this.tabs = Constants.Tabs.csjl;
 
                 this.handleTabChange(this.activeTab);
             }

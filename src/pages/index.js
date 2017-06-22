@@ -13,9 +13,15 @@ import Order_Info from './order/order_info.vue'
 import Order_Node from './order/order_node.vue'
 import order_test from './order/order_test.vue'
 
-
 import Evaluate_List from './other/evaluate_list.vue'
 import Guanjia_Data from './other/guanjia_data.vue'
+
+/**
+ * 城市经理页面
+ */
+import CM_Order_Index from './cityManager/order/order_index.vue'
+import CM_Order_Allot_Manager from './cityManager/order/order_allot_manager.vue'
+import CM_Order_Allot_Company from './cityManager/order/order_allot_company.vue'
 
 export default {
     Index,
@@ -30,5 +36,8 @@ export default {
     Order_Node,
     order_test,
     Guanjia_Data,
-    Evaluate_List
+    Evaluate_List,
+    CM_Order_Index,
+    CM_Order_Allot_Manager,
+    CM_Order_Allot_Company
 }

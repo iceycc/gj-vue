@@ -15,15 +15,18 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API} from  '../../service/index';
+    import {EventBus, Constants, API, mixins, JsBridge} from  '../../service/index';
     let api;
 
     export default {
         name: 'user_login',
+        mixins: [mixins],
         data() {
+            /*            username: 'guanjia02',
+             pass: '123456',*/
             return {
-                username: 'guanjia02',
-                pass: '123456',
+                username: 'gzjl',
+                pass: 'wuzhi1',
                 error_user: '',
                 error_pass: ''
             }
@@ -50,7 +53,7 @@
                     username: this.username,
                     password: this.pass
                 }, (result) => {
-                    this.$localStorage.set('user', JSON.stringify(result.data));
+                    JsBridge.setStorage('user', result.data)
 
                     this.$router.push({name: 'index'});
                 });

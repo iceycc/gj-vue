@@ -11,13 +11,16 @@ export const method = {
     login: "m=bang&f=memberSt&v=login",
     orderlist: 'm=hkapp&f=order2&v=orderList',
     nodelist: 'm=hkapp&f=order&v=nodeList',
-    getNowNode: 'm=hkapp&f=order&v=getNowNode',                 //获取订单当前节点
-    checkUnadd: 'm=hkapp&f=order&v=checkUnadd',                 //检测节点
+    getNowNode: 'm=hkapp&f=order&v=getNowNode',                             //获取订单当前节点
+    checkUnadd: 'm=hkapp&f=order&v=checkUnadd',                             //检测节点
     myLoglist: 'm=hkapp&f=orderLog&v=myLoglist',
-    hkDataList: 'm=hkapp&f=evaluate&v=hkDataList',              //个人中心-管家数据
-    schedule: 'm=hkapp&f=evaluate&v=schedule',                  //个人中心-badge
-    evaluateList: 'm=hkapp&f=evaluate&v=evaluateList',          //业主评价列表
-    save_photo: 'm=hkapp&f=uploadImage&v=save_photo'            //上传图片
+    hkDataList: 'm=hkapp&f=evaluate&v=hkDataList',                          //个人中心-管家数据
+    schedule: 'm=hkapp&f=evaluate&v=schedule',                              //个人中心-badge
+    evaluateList: 'm=hkapp&f=evaluate&v=evaluateList',                      //业主评价列表
+    save_photo: 'm=hkapp&f=uploadImage&v=save_photo',                       //上传图片
+    cm_orderList: 'm=hkapp&f=allotOrder&v=orderList' ,                      //城市经理订单列表
+    cm_stewardJList:'m=hkapp&f=allotOrder&v=stewardJList',                    //城市经理-管家列表
+    cm_companyList:'m=hkapp&f=allotOrder&v=companyList'                     //城市经理-装修公司列表
 }
 
 export const EventBus = {
@@ -29,36 +32,52 @@ export const EventBus = {
 };
 
 //主页tab数据
-export const Tabs = [{
-    url: '/order',
-    img: require('../assets/image/icon_tab_order.png'),
-    act_img: require('../assets/image/icon_tab_order_act.png'),
-    name: '订单管理',
-    index: 0
-}, {
-    url: '/zhuge',
-    img: require('../assets/image/icon_tab_zgzxb.png'),
-    act_img: require('../assets/image/icon_tab_zgzxl_act.png'),
-    name: '诸葛装修',
-    index: 1
-}, {
-    url: '/log',
-    img: require('../assets/image/icon_tab_log.png'),
-    act_img: require('../assets/image/icon_tab_log_act.png'),
-    name: '日志',
-    title: '日志管理',
-    index: 2
-}, {
-    url: '/userinfo',
-    img: require('../assets/image/icon_tab_userb.png'),
-    act_img: require('../assets/image/icon_tab_userl_act.png'),
-    name: '个人中心',
-    index: 3
-}];
+
+export const Tabs = {
+    gj: [{
+        url: '/order',
+        img: require('../assets/image/icon_tab_order.png'),
+        act_img: require('../assets/image/icon_tab_order_act.png'),
+        name: '订单管理',
+        index: 0
+    }, {
+        url: '/zhuge',
+        img: require('../assets/image/icon_tab_zgzxb.png'),
+        act_img: require('../assets/image/icon_tab_zgzxl_act.png'),
+        name: '诸葛装修',
+        index: 1
+    }, {
+        url: '/log',
+        img: require('../assets/image/icon_tab_log.png'),
+        act_img: require('../assets/image/icon_tab_log_act.png'),
+        name: '日志',
+        title: '日志管理',
+        index: 2
+    }, {
+        url: '/userinfo',
+        img: require('../assets/image/icon_tab_userb.png'),
+        act_img: require('../assets/image/icon_tab_userl_act.png'),
+        name: '个人中心',
+        index: 3
+    }],
+    csjl: [{
+        url: '/cm_order_index',
+        img: require('../assets/image/icon_tab_order.png'),
+        act_img: require('../assets/image/icon_tab_order_act.png'),
+        name: '订单管理',
+        index: 0
+    }, {
+        url: '/userinfo',
+        img: require('../assets/image/icon_tab_userb.png'),
+        act_img: require('../assets/image/icon_tab_userl_act.png'),
+        name: '个人中心',
+        index: 3
+    }]
+}
 
 const role_gj = '22';
 const role_gjjl = '21';
-
+const role_csjl = '38';
 
 export const User = {
     menus: [{
@@ -66,13 +85,13 @@ export const User = {
         path: '',
         role: [role_gj, role_gjjl],
     }, {
-        title: '未处理订单',
+        title: '待处理订单',
         path: 'my_order',
-        role: [role_gj, role_gjjl],
+        role: [role_gj, role_gjjl, role_csjl],
     }, {
         title: '业主评价',
         path: 'evaluate_list',
-        role: [role_gj, role_gjjl],
+        role: [role_gj, role_gjjl, role_csjl],
     }, {
         title: '异常日志',
         path: 'my_log',
@@ -90,7 +109,7 @@ export const Order = {
         title: '测试',
         path: 'order_test',
         role: [role_gj, role_gjjl],
-    },{
+    }, {
         img: require('../assets/image/icon_order_apply_manage.png'),
         title: '我的订单',
         path: 'my_order',
@@ -265,6 +284,93 @@ export const Log = {
         value: '2'
     }]
 }
+
+//////////////////////////////////////// 城市经理
+/**
+ *  订单列表页 查询选项
+ */
+export const CM_Order = {
+    tabs: [{
+        name: '待处理',
+        count: 0,
+        value: '1'
+    }, {
+        name: '已分配',
+        count: 0,
+        value: '2'
+    }, {
+        name: '无法承接',
+        count: 0,
+        value: '3'
+    }, {
+        name: '全部订单',
+        value: '4'
+    }],
+    search_field: Order.search_field,
+    node: {
+        before: [{
+            name: '预约见面'
+        }, {
+            name: '见面'
+        }, {
+            name: '预约量房'
+        }, {
+            name: '上面量房'
+        }, {
+            name: '报价审核'
+        }, {
+            name: '签订意向定金'
+        }, {
+            name: '预交底'
+        }, {
+            name: '签订三方合同'
+        }],
+        going: [{
+            name: '开工仪式'
+        }, {
+            name: '水电材料验收'
+        }, {
+            name: '水电工程验收'
+        }, {
+            name: '防水工程验收'
+        }, {
+            name: '瓦木材料验收'
+        }, {
+            name: '瓦木工程验收'
+        }, {
+            name: '油漆材料验收'
+        }, {
+            name: '油漆工程验收'
+        }, {
+            name: '安装工程验收'
+        }, {
+            name: '竣工验收'
+        }],
+        after: [{
+            name: '第一次环保监测'
+        }, {
+            name: '第二次环保监测'
+        }, {
+            name: '维保'
+        }, {
+            name: '环保治理'
+        }, {
+            name: '环保治理后复测'
+        }],
+        other: [{
+            name: '日志封面'
+        }, {
+            name: '上门服务'
+        }, {
+            name: '装修对比图'
+        }, {
+            name: '添加日程'
+        }, {
+            name: '编辑订单信息'
+        }]
+    }
+}
+
 
 export const Tips = {
     input_null: '输入内容为空',

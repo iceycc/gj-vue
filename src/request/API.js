@@ -6,7 +6,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import config from './config'
 import Qs from 'qs'
-import {EventBus, Constants} from  '../service/index';
+import {EventBus, Constants, JsBridge} from  '../service/index';
 
 class API {
 
@@ -37,7 +37,8 @@ class API {
         }
 
         //默认添加登录参数
-        let userStr = Vue.localStorage.get('user');
+        let userStr = JsBridge.getStorage('user');
+
         if (userStr) {
             let user = JSON.parse(userStr);
             param.uid = user.uid;

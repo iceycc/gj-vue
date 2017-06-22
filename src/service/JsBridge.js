@@ -4,6 +4,44 @@
 
 const name = 'native';
 
+function setStorage(key, val) {
+    val = JSON.stringify(val);
+
+    if (isAppcan() && appcan.locStorage) {
+        appcan.locStorage.setVal(key, val);
+    } else if (window && window.localStorage) {
+        window.localStorage.setItem(key, val)
+    }
+}
+
+function getStorage(key) {
+    if (isAppcan() && appcan.locStorage) {
+        return appcan.locStorage.getVal(key);
+    } else if (window && window.localStorage) {
+        return window.localStorage.getItem(key);
+    }
+
+    return null;
+}
+
+function removeStorage(key) {
+    if (key) {
+        if (isAppcan() && appcan.locStorage) {
+            appcan.locStorage.remove(key);
+        } else if (window && window.localStorage) {
+            window.localStorage.removeItem(key);
+        }
+    }
+}
+
+function clearStorage() {
+    if (isAppcan() && appcan.locStorage) {
+        appcan.locStorage.remove();
+    } else if (window && window.localStorage) {
+        window.localStorage.clear();
+    }
+}
+
 /**
  * 选择图片数量
  * @param count
@@ -35,6 +73,15 @@ function sendRequest(url, values, files, callback) {
     }
 };
 
+
+function isAppcan() {
+    return window.appcan
+}
+
+/**
+ * native模块是否可用
+ * @returns {boolean}
+ */
 function isSupport() {
 
     if (window[name]) {
@@ -43,4 +90,4 @@ function isSupport() {
     alert('设备不支持.');
 }
 
-export {seletcAlbum, sendRequest};
+export {seletcAlbum, sendRequest, setStorage, getStorage, removeStorage, clearStorage};

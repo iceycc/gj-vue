@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import {EventBus, Constants} from  '../service/index';
+import {EventBus, Constants, JsBridge} from  '../service/index';
 import pages from '../pages/index.js'
 
 Vue.use(Router)
@@ -32,6 +32,11 @@ let router = new Router({
                 name: 'userinfo',
                 component: pages.User_Index,
                 meta: {title: '个人中心', notKeepAlive: true}
+            }, {
+                path: '/cm_order_index',
+                name: 'cm_order_index',
+                component: pages.CM_Order_Index,
+                meta: {title: '订单管理'}
             }]
         },
         {
@@ -52,7 +57,6 @@ let router = new Router({
             component: pages.Order_My,
             meta: {title: '我的订单'}
         },
-
         {
             path: '/order_info',
             name: 'order_info',
@@ -78,18 +82,35 @@ let router = new Router({
             meta: {title: '更多数据'}
         },
         {
+            path: '/cm_allot_manager',
+            name: 'cm_allot_manager',
+            component: pages.CM_Order_Allot_Manager,
+            meta: {title: '分配经理'}
+        },
+        {
+            path: '/cm_allot_manager',
+            name: 'cm_allot_manager',
+            component: pages.CM_Order_Allot_Manager,
+            meta: {title: '管家列表'}
+        },
+        {
+            path: '/cm_allot_company',
+            name: 'cm_allot_company',
+            component: pages.CM_Order_Allot_Company,
+            meta: {title: '装修公司列表'}
+        },
+        {
             path: '/order_test',
             name: 'order_test',
             component: pages.order_test,
             meta: {title: '测试'}
         }
-
     ]
 })
 
 router.beforeEach((to, from, next) => {
 
-    let user = Vue.localStorage.get('user');
+    let user = JsBridge.getStorage('user');
 
     if (!user && to.name != 'user_login') {
         console.log('用户未登录');

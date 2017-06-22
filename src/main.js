@@ -29,6 +29,7 @@ import infiniteScroll from 'muse-ui/src/infiniteScroll'
 import avatar from 'muse-ui/src/avatar'
 import list from 'muse-ui/src/list/list.vue'
 import listItem from 'muse-ui/src/list/listItem.vue'
+import dialog from 'muse-ui/src/dialog/dialog.vue'
 
 Vue.component(appBar.name, appBar);
 Vue.component(toast.name, toast);
@@ -44,6 +45,7 @@ Vue.component(divider.name, divider);
 
 Vue.component(infiniteScroll.name, infiniteScroll);
 Vue.component(avatar.name, avatar);
+Vue.component(dialog.name, dialog);
 
 import 'material-design-icons/iconfont/material-icons.css'
 //加载iview

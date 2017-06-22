@@ -3,14 +3,14 @@
         <div class="layout userinfo">
             <mu-avatar class="user-image" :src="user.personalphoto"/>
             <div>
-                <div class="user-text">昵称:{{user.nickname}}</div>
+                <div class="user-text">昵称:{{user.truename}}</div>
                 <div class="user-text">账号:{{user.username}}</div>
             </div>
         </div>
         <div class="layout">
-            <uz-grid :grids="menus" :cols="col" @change="handleGridChange"></uz-grid>
+            <uz-grid :grids="menus" :cols="col" :role="user.role" @change="handleGridChange"></uz-grid>
         </div>
-        <div class="layout">
+        <div class="layout" v-if="!isCSJL">
             <div class="guanjia-data-title">
                 <div class="title">管家数据(本月)</div>
                 <div @click="toGuanjiaData">更多</div>
@@ -21,6 +21,20 @@
                 <div class="data">量房客户数:{{hkData.homeSurvey}}</div>
                 <div class="data">已交定金的订单数:{{hkData.intentDeposit}}</div>
                 <div class="data">已签合同的订单数:{{hkData.schemeSubmit}}</div>
+            </div>
+        </div>
+        <div class="layout" v-else>
+            <div class="guanjia-data-title">
+                <div class="title">城市经理数据(本月)</div>
+                <div @click="toGuanjiaData">更多</div>
+            </div>
+            <div class="guanjia-data">
+                <div class="data">本月派单数:{{hkData.allocationHk}}</div>
+                <div class="data">见面客户数:{{hkData.meeting}}</div>
+                <div class="data">量房客户数:{{hkData.homeSurvey}}</div>
+                <div class="data">已交定金总数据:{{hkData.intentDeposit}}</div>
+                <div class="data">已签合同平台单数据:{{hkData.intentDeposit}}</div>
+                <div class="data">已签合同反推单数据:{{hkData.schemeSubmit}}</div>
             </div>
         </div>
         <br/>
@@ -47,6 +61,11 @@
                 menus: Constants.User.menus
             }
         },
+        computed: {
+            isCSJL: function () {
+                return this.user.role == '38';
+            }
+        },
         created(){
             this.user = this.getUser();
             api = new API(this);
@@ -59,7 +78,12 @@
                 this.logout();
             },
             getGuanjiaData(){
-                api.post(Constants.method.hkDataList, null, (result) => {
+                let url = Constants.method.hkDataList;
+
+                if (this.isCSJL)
+                    url = Constants.method.hkDataList;
+
+                api.post(url, null, (result) => {
                     this.hkData = result.data;
                 });
             },

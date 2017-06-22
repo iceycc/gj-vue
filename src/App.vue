@@ -6,11 +6,11 @@
             <mu-icon-button icon="" slot="right"/>
         </mu-appbar>
         <!--<transition name="fade"></transition>-->
-<!--        <keep-alive>
-            <router-view v-if="!$route.meta.notKeepAlive"></router-view>
-        </keep-alive>
-        <router-view v-if="$route.meta.notKeepAlive"></router-view>-->
-        <router-view ></router-view>
+        <!--        <keep-alive>
+                    <router-view v-if="!$route.meta.notKeepAlive"></router-view>
+                </keep-alive>
+                <router-view v-if="$route.meta.notKeepAlive"></router-view>-->
+        <router-view></router-view>
 
         <mu-toast v-if="toast" :message="toast_message"/>
     </div>
@@ -77,10 +77,6 @@
             flex-direction: column;
             flex-grow: 1;
             height: 100%;
-            overflow: scroll;
-            .content {
-                flex-grow: 1;
-            }
         }
     }
 
@@ -111,9 +107,9 @@
     .search_bar {
         display: flex;
         flex-direction: row;
-        margin: 10px;
+        margin: 10px 10px 0 10px;
         .search_type {
-            width: 30vw;
+            width: 50vw;
             margin-left: 10px;
         }
         .search_text {
