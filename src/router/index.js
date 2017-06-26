@@ -100,6 +100,18 @@ let router = new Router({
             meta: {title: '装修公司列表'}
         },
         {
+            path: '/cm_order_detail',
+            name: 'cm_order_detail',
+            component: pages.CM_Order_Detail,
+            meta: {title: '订单详情页'}
+        },
+        {
+            path: '/cm_user_allot_list',
+            name: 'cm_user_allot_list',
+            component: pages.CM_User_Allot_List,
+            meta: {title: '本月派单列表页'}
+        },
+        {
             path: '/order_test',
             name: 'order_test',
             component: pages.order_test,

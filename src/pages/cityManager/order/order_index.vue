@@ -35,9 +35,9 @@
                 </div>
                 <div class="filed">房屋面积:{{props.item.area}}平  管家经理:{{props.item.managername}}</div>
 
-                <div class="filed">装修公司：<span v-for="(name,index) in props.item.company">{{name}}<br></span></div>
+                <div class="filed">装修公司：<br><span v-for="(name,index) in props.item.company">{{name}}<br></span></div>
 
-                <div class="filed">下单时间:{{props.item.addtime}} 分单时间:{{props.item.fdtime}}</div>
+                <div class="filed">下单时间:{{props.item.addtime}}<br>分单时间:{{props.item.fdtime}}</div>
                 <div class="filed">装修预算:{{props.item.budget}}万元 装修方式:{{props.item.way}} 装修风格:{{props.item.style}}</div>
                 <div class="filed">客服备注:</div>
                 <div class="filed">城市经理备注:</div>
@@ -201,6 +201,7 @@
         padding: 10px;
         font-size: 14px;
         width: 100%;
+        border-bottom: 1px solid #a7aec2;
     }
 
     .title {

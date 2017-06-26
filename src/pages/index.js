@@ -19,9 +19,12 @@ import Guanjia_Data from './other/guanjia_data.vue'
 /**
  * 城市经理页面
  */
+import CM_User_Allot_List from './cityManager/user/user_allot_list.vue'
+
 import CM_Order_Index from './cityManager/order/order_index.vue'
 import CM_Order_Allot_Manager from './cityManager/order/order_allot_manager.vue'
 import CM_Order_Allot_Company from './cityManager/order/order_allot_company.vue'
+import CM_Order_Detail from './cityManager/order/order_detail.vue'
 
 export default {
     Index,
@@ -39,5 +42,7 @@ export default {
     Evaluate_List,
     CM_Order_Index,
     CM_Order_Allot_Manager,
-    CM_Order_Allot_Company
+    CM_Order_Allot_Company,
+    CM_Order_Detail,
+    CM_User_Allot_List
 }
