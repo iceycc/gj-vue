@@ -11,7 +11,7 @@
             <template slot="item" scope="props">
                 <div class="filed title">
                     <div class="name">管家姓名:{{props.item.gjname}}</div>
-                    <i-button type="primary" size="small" @click="openDialog(props.item.gjname.uid)">分配</i-button>
+                    <i-button type="primary" size="small" @click="action(props.item)">分配</i-button>
                 </div>
             </template>
         </uz-auto-list>
@@ -23,7 +23,7 @@
     import UzGrid from "../../../components/Grid";
     import UzTabs from "../../../components/Tabs";
     import UzAutoList from "../../../components/AutoList";
-    import Button from "iview/src/components/button/button";
+    import Button from "iview/src/components/button";
 
     let api;
 
@@ -34,19 +34,10 @@
             UzTabs,
             UzGrid
         },
-        name: 'cm-order-index',
+        name: 'cm-order-allot-manager',
         data() {
             return {
-                dialog: {
-                    note: false,
-                    unable: false,
-                    charge: false,
-                    info: false,
-                    type: '',
-                    title: ''
-                },
                 search_word: '',
-                search_type: 0,
                 url: Constants.method.cm_stewardJList,
             }
         },
@@ -60,61 +51,26 @@
         },
         methods: {
             doSearch(){
-                if (this.search_word.trim()) {
-                    this.listview.initList();
-                    this.listview.getdata();
-                } else {
-                    EventBus.$emit(Constants.EventBus.showToast, {
-                        message: Constants.Tips.search_word_null
-                    });
-                }
+                this.listview.initList();
+                this.listview.getdata();
             },
             handleparam(){//处理参数
                 let param = {};
                 if (this.search_word.trim()) {
-                    param.keyWord = this.search_word
+                    param.keyword = this.search_word.trim()
                 }
                 return param;
             },
-            itemOnClick(index){
-                let temp = this.list[index];
-                temp.spread = !temp.spread;
-                this.list[index] = temp;
+            action(item){
+                let param = {};
+                param.uid = item.uid;
+                this.allot_manager(param);
             },
-            closeDialog(){
-                this.dialog[this.dialog.type] = false;
+            allot_manager(param){
+                api.post(Constants.method.cm_fpjl, param, (result) => {
+                    console.log(result);
+                });
             },
-            openDialog(type){
-                switch (type) {
-                    case 'note':
-                        this.dialog.title = '城市经理备注';
-                        this.dialog.desc = '城市经理备注';
-                        break;
-                    case 'unable':
-                        this.dialog.title = '无法承接';
-                        this.dialog.desc = '请添加无法承接原因';
-                        break;
-                    case 'charge':
-                        this.dialog.title = '设置';
-                        this.dialog.title = '此订单是否确定为收费订单';
-                        break;
-                    case 'info':
-                        this.dialog.title = '信息费';
-                        this.dialog.title = '此订单是否确定为信息费订单';
-                        break;
-                }
-
-                this.dialog[type] = true;
-                this.dialog.type = type;
-            },
-            handleTabChange(val)
-            {
-                this.activeTab = val;
-
-                this.search_word = '';
-                this.initList();
-                this.getdata();
-            }
         }
     }
 </script>

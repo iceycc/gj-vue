@@ -2,7 +2,7 @@
  * Created by zhangweiwei on 16/9/7.
  */
 
-let test = 'http://10.1.40.42/bang/www/';
+let test = 'http://10.1.40.41/bang/www/';
 let test1 = 'http://bpre.uz.com/';
 let test2 = 'http://bang.uz.com/';
 
@@ -18,9 +18,11 @@ export const method = {
     schedule: 'm=hkapp&f=evaluate&v=schedule',                              //个人中心-badge
     evaluateList: 'm=hkapp&f=evaluate&v=evaluateList',                      //业主评价列表
     save_photo: 'm=hkapp&f=uploadImage&v=save_photo',                       //上传图片
-    cm_orderList: 'm=hkapp&f=allotOrder&v=orderList' ,                      //城市经理订单列表
-    cm_stewardJList:'m=hkapp&f=allotOrder&v=stewardJList',                    //城市经理-管家列表
-    cm_companyList:'m=hkapp&f=allotOrder&v=companyList'                     //城市经理-装修公司列表
+    cm_orderList: 'm=hkapp&f=allotOrder&v=orderList',                      //城市经理订单列表
+    cm_stewardJList: 'm=hkapp&f=allotOrder&v=stewardJList',                  //城市经理-管家列表
+    cm_fpjl: 'm=hkapp&f=allotOrder&v=fpJL',                                  //城市经理-分配管家操作
+    cm_fpComp: 'm=hkapp&f=allotOrder&v=fpComp',                              //城市经理-分配公司操作
+    cm_companyList: 'm=hkapp&f=allotOrder&v=companyList'                     //城市经理-装修公司列表
 }
 
 export const EventBus = {
@@ -292,15 +294,12 @@ export const Log = {
 export const CM_Order = {
     tabs: [{
         name: '待处理',
-        count: 0,
         value: '1'
     }, {
         name: '已分配',
-        count: 0,
         value: '2'
     }, {
         name: '无法承接',
-        count: 0,
         value: '3'
     }, {
         name: '全部订单',

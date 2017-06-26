@@ -1,6 +1,11 @@
 <template>
     <div class="_page">
         <uz-tabs :tabs="tabs" :activeTab="activeTab" :border="true" @change="handleTabChange"></uz-tabs>
+        <uz-tabs :tabs="tabs1" v-if="activeTab ==2" :activeTab="activeTab1" :border="true"
+                 @change="handleTabChange1"></uz-tabs>
+        <uz-tabs :tabs="tabs2" v-if="activeTab ==3" :activeTab="activeTab2" :border="true"
+                 @change="handleTabChange1"></uz-tabs>
+
         <div class="search_bar">
             <mu-select-field v-model="search_type" class="search_type">
                 <template v-for="item in search_field">
@@ -16,11 +21,14 @@
             <template slot="item" scope="props">
                 <div class="filed title">订单编号:{{props.item.order_no}}</div>
                 <div class="filed">
-                    <i-button type="primary" size="small">分配公司</i-button>
-                    <i-button type="primary" size="small">分配经理</i-button>
+                    <i-button v-if="activeTab == 0" type="primary" size="small">分配经理</i-button>
+                    <i-button v-if="props.item.managername && props.item.company.length <3" type="primary" size="small">
+                        分配公司
+                    </i-button>
                     <i-button type="primary" size="small" @click="openDialog('unable')">无法承接</i-button>
                     <i-button type="primary" size="small" @click="openDialog('charge')">收费单</i-button>
-                    <i-button type="primary" size="small" @click="openDialog('info')">信息费</i-button>
+                    <i-button v-if="activeTab == 0" type="primary" size="small" @click="openDialog('info')">信息费
+                    </i-button>
                 </div>
                 <div class="filed">
                     用户名:{{props.item.title}}  订单来源:{{props.item.source}}  订单状态:{{props.item.orderstatus}}
@@ -51,7 +59,7 @@
     import {EventBus, Constants, API} from  '../../../service/index';
     import UzGrid from "../../../components/Grid";
     import UzTabs from "../../../components/Tabs";
-    import Button from "iview/src/components/button/button";
+    import Button from "iview/src/components/button";
     import UzAutoList from "../../../components/AutoList";
 
     let api;
@@ -60,6 +68,7 @@
         components: {
             UzAutoList,
             'i-button': Button,
+            'i-buttongroup': Button.Group,
             UzTabs,
             UzGrid
         },
@@ -76,6 +85,22 @@
                 },
                 activeTab: 0,
                 tabs: Constants.CM_Order.tabs,
+                activeTab1: 0,
+                tabs1: [{
+                    name: '无法承接',
+                    value: '1'
+                }, {
+                    name: '信息费',
+                    value: '2'
+                }],
+                activeTab2: 0,
+                tabs2: [{
+                    name: '全部订单',
+                    value: '1'
+                }, {
+                    name: '收费单',
+                    value: '2'
+                }],
                 search_word: '',
                 search_type: 0,
                 search_field: Constants.CM_Order.search_field,
@@ -104,8 +129,10 @@
             handleparam(){
                 let param = {};
                 if (this.search_word.trim()) {
-                    param.keyword = this.search_word
+                    param.keyword = this.search_word;
                 }
+
+                param.type = this.activeTab;
                 return param;
             },
             closeDialog(){
@@ -141,6 +168,18 @@
                 this.search_word = '';
                 this.listview.initList();
                 this.listview.getdata();
+            },
+            handleTabChange1(val)
+            {
+                if (this.activeTab == 2) {
+                    this.activeTab1 = val;
+                } else if (this.activeTab == 3) {
+                    this.activeTab2 = val;
+                }
+
+                this.search_word = '';
+                this.listview.initList();
+                this.listview.getdata();
             }
         }
     }
@@ -162,7 +201,6 @@
         padding: 10px;
         font-size: 14px;
         width: 100%;
-        border-bottom: 1px #cccccc solid;
     }
 
     .title {

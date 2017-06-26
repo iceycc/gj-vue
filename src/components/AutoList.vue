@@ -65,6 +65,15 @@
                     this.loading = false;
                 });
             },
+            getCheckList(){
+                let temp = [];
+                this.list.forEach((item) => {
+                    if (item.checked) {
+                        temp.push(item);
+                    }
+                });
+                return temp;
+            },
             loadMore(){
                 this.page = this.page + 1;
                 this.getdata();

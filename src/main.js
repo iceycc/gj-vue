@@ -23,13 +23,13 @@ import iconButton from 'muse-ui/src/iconButton'
 import selectField from 'muse-ui/src/selectField'
 import textField from 'muse-ui/src/textField'
 import menu from 'muse-ui/src/menu/menu.vue'
-import divider from 'muse-ui/src/divider'
 import menuItem from 'muse-ui/src/menu/menuItem.vue'
+import divider from 'muse-ui/src/divider'
 import infiniteScroll from 'muse-ui/src/infiniteScroll'
 import avatar from 'muse-ui/src/avatar'
 import list from 'muse-ui/src/list/list.vue'
 import listItem from 'muse-ui/src/list/listItem.vue'
-import dialog from 'muse-ui/src/dialog/dialog.vue'
+import dialog from 'muse-ui/src/dialog'
 
 Vue.component(appBar.name, appBar);
 Vue.component(toast.name, toast);
