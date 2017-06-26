@@ -1,13 +1,14 @@
 const path = require('path');
 
 var config = require('../config')
+process.env.NODE_ENV = config.build.env.NODE_ENV;
+
 var utils = require('./utils')
 var vueLoaderConfig = require('./vue-loader.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const webpack = require('webpack');
 
-process.env.NODE_ENV = config.build.env
 const srcPath = path.join(__dirname, '../static/dll/');
 const vendors = ['vue/dist/vue.esm.js',
     'vue-router',
@@ -20,19 +21,25 @@ const vendors = ['vue/dist/vue.esm.js',
     'iview/src/components/collapse/panel.vue',
     'iview/src/components/collapse/collapse.vue',
     'iview/src/components/date-picker/',
+    'iview/src/components/button/',
+    'iview/src/components/checkbox/checkbox',
+    /*    'muse-ui',
+     'muse-ui/dist/muse-ui.css',
+     'muse-ui/dist/theme-light.css'*/
     'muse-ui/src/appBar',
     'muse-ui/src/toast',
     'muse-ui/src/raisedButton',
     'muse-ui/src/iconButton',
     'muse-ui/src/selectField',
     'muse-ui/src/textField',
-    'muse-ui/src/menu/menu.vue',
     'muse-ui/src/divider',
     'muse-ui/src/infiniteScroll',
-    'muse-ui/src/menu/menuItem.vue',
     'muse-ui/src/avatar',
+    'muse-ui/src/menu/menu.vue',
+    'muse-ui/src/menu/menuItem.vue',
     'muse-ui/src/list/list.vue',
-    'muse-ui/src/list/listItem.vue'
+    'muse-ui/src/list/listItem.vue',
+    'muse-ui/src/dialog'
 ];
 
 webpackConfig = {
