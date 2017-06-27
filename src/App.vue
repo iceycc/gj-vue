@@ -61,6 +61,8 @@
 </script>
 
 <style lang="scss">
+    @import "style/px2rem";
+
     html, body {
         height: 100%;
     }
@@ -88,12 +90,12 @@
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            padding: 10px 20px;
+            padding: px2rem(10) px2rem(20);
             .title {
-                font-size: 18px;
+                font-size: px2rem(14);
             }
             .content {
-                margin-bottom: 5px;
+                margin-bottom: px2rem(5);
             }
             .btns {
                 width: 100%;
@@ -107,18 +109,18 @@
     .search_bar {
         display: flex;
         flex-direction: row;
-        margin: 10px 10px 0 10px;
+        margin: px2rem(10) px2rem(10) 0 px2rem(10);
         .search_type {
             width: 50vw;
-            margin-left: 10px;
+            margin-left: px2rem(10);
         }
         .search_text {
             flex-grow: 1;
-            margin-left: 10px;
+            margin-left: px2rem(10);
         }
         .search_icon {
-            width: 40px;
-            height: 40px;
+            width: px2rem(10);
+            height: px2rem(10);
         }
     }
 
@@ -132,11 +134,11 @@
 
     //dialog 样式
     .mu-dialog-title {
-        font-size: 16px;
+        font-size: px2rem(16);
     }
 
     .mu-dialog-body {
-        font-size: 14px;
+        font-size: px2rem(14);
     }
 
 </style>

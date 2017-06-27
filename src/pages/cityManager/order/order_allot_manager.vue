@@ -76,6 +76,7 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "../../../style/px2rem";
 
     ._page {
         height: 100%;
@@ -84,14 +85,14 @@
     }
 
     .tabs {
-        border-top: 0px;
+        border-top: 0;
     }
 
     .filed {
-        padding: 10px;
-        font-size: 14px;
+        padding: px2rem(10);
+        font-size: px2rem(14);
         width: 100%;
-        font-size: 16px;
+        font-size: px2rem(16);
         display: flex;
         flex-direction: row;
         .name {

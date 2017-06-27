@@ -106,12 +106,14 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+    @import "../../style/px2rem";
+
     .page {
-        padding: 10px 0;
+        padding: px2rem(5) 0;
 
         .layout {
-            padding: 20px;
-            border-bottom: 10px solid #CCCCCC;
+            padding: px2rem(15);
+            border-bottom: px2rem(10) solid #CCCCCC;
         }
         .layout:nth-child(2) {
             padding: 0;
@@ -125,21 +127,21 @@
             flex-direction: row;
             align-items: center;
             .user-image {
-                width: 60px;
-                height: 60px;
-                margin-right: 20px;
+                width: px2rem(60);
+                height: px2rem(60);
+                margin-right: px2rem(20);
             }
             .user-text {
-                font-size: 14px;
+                font-size: px2rem(14);
             }
             .user-text:first-child {
-                padding-bottom: 10px;
+                padding-bottom: px2rem(5);
             }
         }
 
         .guanjia-data-title {
             display: flex;
-            font-size: 14px;
+            font-size: px2rem(14);
             .title {
                 flex-grow: 1;
                 text-align: left;
@@ -152,7 +154,7 @@
             .data {
                 width: 50%;
                 text-align: left;
-                margin-top: 10px;
+                margin-top: px2rem(10);
             }
         }
     }

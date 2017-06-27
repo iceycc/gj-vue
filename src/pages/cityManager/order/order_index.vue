@@ -186,6 +186,7 @@
 </script>
 
 <style lang="scss" scoped>
+    @import "../../../style/px2rem";
 
     ._page {
         height: 100%;
@@ -197,15 +198,15 @@
         border-top: 0px;
     }
 
-    .filed {
-        padding: 10px;
-        font-size: 14px;
-        width: 100%;
-        border-bottom: 1px solid #a7aec2;
+    .search_bar {
+        margin-top: 0;
     }
 
-    .title {
-        font-size: 16px;
+    .filed {
+        padding: px2rem(10);
+        font-size: px2rem(8);
+        width: 100%;
+        border-bottom: 1px solid #a7aec2;
     }
 
     .filed:first-child {
@@ -213,6 +214,6 @@
     }
 
     .filed:last-child {
-        border-bottom: 0px;
+        border-bottom: 0;
     }
 </style>

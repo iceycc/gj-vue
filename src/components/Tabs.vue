@@ -56,6 +56,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+    @import "../style/px2rem";
     @import './scss/variable.scss';
 
     .tabs {
@@ -64,7 +65,7 @@
         flex-wrap: wrap;
         background: $default-color;
         border-top: 1px solid $divideline-color;
-        padding: 20px 10px 0 10px;
+        padding: px2rem(10) 0;
         .tab-item {
             flex-grow: 1;
             display: flex;
@@ -72,19 +73,19 @@
             justify-content: center;
             align-items: center;
             .tab-img {
-                width: 25px;
-                height: 25px;
+                width: px2rem(25);
+                height: px2rem(25);
                 margin-bottom: 5px;
             }
             .tab-title {
-                font-size: 14px;
+                font-size: px2rem(14);
                 color: #333333;
             }
             .tab-title-act {
                 color: $primary-color;
             }
             .tab-title-border-act {
-                border-bottom: 1px solid $primary-color;
+                border-bottom: px2rem(1) solid $primary-color;
             }
 
         }
