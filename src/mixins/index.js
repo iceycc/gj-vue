@@ -3,7 +3,7 @@ import {EventBus, Constants, JsBridge} from  '../service/index';
 export default {
     methods: {
         setTitle(title){
-            EventBus.$emit(Constants.EventBus.setTitle, title);
+            //EventBus.$emit(Constants.EventBus.setTitle, title);
         },
         getUser(){
             let str = JsBridge.getStorage('user');

@@ -21,7 +21,7 @@
             <template slot="item" scope="props">
                 <div class="filed title">订单编号:{{props.item.order_no}}</div>
                 <div class="filed">
-                    <i-button v-if="activeTab == 0" type="primary" size="small">分配经理</i-button>
+                    <i-button v-if="activeTab == 0" type="primary" size="small" @click="allot_manager(props.item.id)">分配经理</i-button>
                     <i-button v-if="props.item.managername && props.item.company.length <3" type="primary" size="small">
                         分配公司
                     </i-button>
@@ -46,7 +46,10 @@
             </template>
         </uz-auto-list>
         <mu-dialog :open="dialog[dialog.type]" :title="dialog.title" @close="closeDialog">
-            此订单为信息费订单：
+
+            <div v-if="dialog.type != 'unable'">{{dialog.desc}}</div>
+            <mu-text-field v-if="dialog.type == 'unable'" class="input_text"
+                           :hintText="dialog.desc" v-model="dialog.input" multiLine :rows="3" :rowsMax="6"/>
             <i-button slot="actions" size="small" @click="closeDialog(false)">取消</i-button>
             <i-button slot="actions" type="primary" size="small" @click="closeDialog(true)" style="margin-left: 20px">
                 确定
@@ -81,7 +84,8 @@
                     charge: false,
                     info: false,
                     type: '',
-                    title: ''
+                    title: '',
+                    input: ''
                 },
                 activeTab: 0,
                 tabs: Constants.CM_Order.tabs,
@@ -135,8 +139,16 @@
                 param.type = this.activeTab;
                 return param;
             },
-            closeDialog(){
+            closeDialog(flag){
                 this.dialog[this.dialog.type] = false;
+
+                if (flag) {
+                    if (this.dialog.type == 'unable') {
+                        console.log(this.dialog.input);
+                    }
+                    console.log(flag);
+                }
+
             },
             openDialog(type){
                 switch (type) {
@@ -150,27 +162,25 @@
                         break;
                     case 'charge':
                         this.dialog.title = '设置';
-                        this.dialog.title = '此订单是否确定为收费订单';
+                        this.dialog.desc = '此订单是否确定为收费订单';
                         break;
                     case 'info':
                         this.dialog.title = '信息费';
-                        this.dialog.title = '此订单是否确定为信息费订单';
+                        this.dialog.desc = '此订单是否确定为信息费订单';
                         break;
                 }
 
                 this.dialog[type] = true;
                 this.dialog.type = type;
             },
-            handleTabChange(val)
-            {
+            handleTabChange(val){
                 this.activeTab = val;
 
                 this.search_word = '';
                 this.listview.initList();
                 this.listview.getdata();
             },
-            handleTabChange1(val)
-            {
+            handleTabChange1(val){
                 if (this.activeTab == 2) {
                     this.activeTab1 = val;
                 } else if (this.activeTab == 3) {
@@ -180,6 +190,10 @@
                 this.search_word = '';
                 this.listview.initList();
                 this.listview.getdata();
+            },
+            allot_manager(order_id){
+                console.log(order_id);
+                this.$router.push({name: 'cm_allot_manager', query: {order_id: order_id}});
             }
         }
     }
@@ -202,11 +216,16 @@
         margin-top: 0;
     }
 
+    //dialog 内输入框
+    .input_text {
+        width: 100%;
+    }
+
     .filed {
         padding: px2rem(10);
         font-size: px2rem(8);
         width: 100%;
-        border-bottom: 1px solid #a7aec2;
+        border-bottom: 1px solid #e2e2e2;
     }
 
     .filed:first-child {

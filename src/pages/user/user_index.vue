@@ -67,6 +67,8 @@
             }
         },
         created(){
+            EventBus.$emit(Constants.EventBus.update_main_tab_index, 1);
+
             this.user = this.getUser();
             api = new API(this);
 
@@ -89,10 +91,8 @@
             },
             getScheduleData(){
                 api.post(Constants.method.schedule, null, (result) => {
-                    console.log(result.data);
                 });
             },
-            //
             toGuanjiaData(){
                 this.router_push({path: 'guanjia_data'});
             },

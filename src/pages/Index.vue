@@ -1,17 +1,14 @@
 <template>
     <div class="page">
-        <keep-alive>
-            <router-view></router-view>
-        </keep-alive>
+        <router-view></router-view>
         <uz-tabs :tabs="tabs" :activeTab="activeTab" @change="handleTabChange" class="tab"></uz-tabs>
     </div>
 </template>
 
 <script>
-    import {EventBus, Constants, API} from  '../service/index';
+    import {EventBus, Constants} from  '../service/index';
 
     import UzTabs from "../components/Tabs";
-    let api;
 
     export default {
         components: {UzTabs},
@@ -29,10 +26,8 @@
                 });
 
                 this.tabs = Constants.Tabs.csjl;
-
-                this.handleTabChange(this.activeTab);
+                //this.handleTabChange(this.activeTab);
             }
-
         },
         methods: {
             handleTabChange(val){

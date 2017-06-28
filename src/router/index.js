@@ -28,8 +28,8 @@ let router = new Router({
                 component: pages.Log_Index,
                 meta: {title: '日志管理', notKeepAlive: false}
             }, {
-                path: 'userinfo',
-                name: 'userinfo',
+                path: '/user_info',
+                name: 'user_info',
                 component: pages.User_Index,
                 meta: {title: '个人中心', notKeepAlive: true}
             }, {
@@ -80,12 +80,6 @@ let router = new Router({
             name: 'guanjia_data',
             component: pages.Guanjia_Data,
             meta: {title: '更多数据'}
-        },
-        {
-            path: '/cm_allot_manager',
-            name: 'cm_allot_manager',
-            component: pages.CM_Order_Allot_Manager,
-            meta: {title: '分配经理'}
         },
         {
             path: '/cm_allot_manager',

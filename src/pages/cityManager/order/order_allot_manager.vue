@@ -11,7 +11,8 @@
             <template slot="item" scope="props">
                 <div class="filed title">
                     <div class="name">管家姓名:{{props.item.gjname}}</div>
-                    <i-button type="primary" size="small" @click="action(props.item)">分配</i-button>
+                    <mu-raised-button label="分配" @click="action(props.item)" primary/>
+                    <!--<i-button type="primary" size="small" @click="action(props.item)">分配</i-button>-->
                 </div>
             </template>
         </uz-auto-list>
@@ -95,6 +96,7 @@
         font-size: px2rem(16);
         display: flex;
         flex-direction: row;
+        align-items: center;
         .name {
             flex-grow: 1;
         }

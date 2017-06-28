@@ -56,7 +56,7 @@ export const Tabs = {
         title: '日志管理',
         index: 2
     }, {
-        url: '/userinfo',
+        url: '/user_info',
         img: require('../assets/image/icon_tab_userb.png'),
         act_img: require('../assets/image/icon_tab_userl_act.png'),
         name: '个人中心',
@@ -69,7 +69,7 @@ export const Tabs = {
         name: '订单管理',
         index: 0
     }, {
-        url: '/userinfo',
+        url: '/user_info',
         img: require('../assets/image/icon_tab_userb.png'),
         act_img: require('../assets/image/icon_tab_userl_act.png'),
         name: '个人中心',
