@@ -1,14 +1,13 @@
+process.env.NODE_ENV = 'production'
+
 const path = require('path');
 
 var config = require('../config')
-process.env.NODE_ENV = config.build.env.NODE_ENV;
-
 var utils = require('./utils')
 var vueLoaderConfig = require('./vue-loader.conf')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const webpack = require('webpack');
-
 const srcPath = path.join(__dirname, '../static/dll/');
 const vendors = ['vue/dist/vue.esm.js',
     'vue-router',
@@ -41,6 +40,8 @@ const vendors = ['vue/dist/vue.esm.js',
     'muse-ui/src/list/listItem.vue',
     'muse-ui/src/dialog'
 ];
+var env = config.build.env;
+
 
 webpackConfig = {
     entry: {
@@ -86,6 +87,9 @@ webpackConfig = {
         library: '[name]_library' // 暴露出的全局变量名
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': env
+        }),
         new ExtractTextPlugin({
             filename: '[name].dll.css'
         }),

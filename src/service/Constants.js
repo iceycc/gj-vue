@@ -2,12 +2,7 @@
  * Created by zhangweiwei on 16/9/7.
  */
 
-let test = 'http://10.1.40.41/bang/www/';
-let test1 = 'http://bpre.uz.com/';
-let test2 = 'http://bang.uz.com/';
-
 export const method = {
-    baseURL: test2 + 'index.php',
     login: "m=bang&f=memberSt&v=login",
     orderlist: 'm=hkapp&f=order2&v=orderList',
     nodelist: 'm=hkapp&f=order&v=nodeList',

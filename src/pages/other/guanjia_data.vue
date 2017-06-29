@@ -72,7 +72,7 @@
                     end: this.endDate + '-' + date.getDate()
                 };
                 api.post(Constants.method.hkDataList, param, (result) => {
-                    this.hkData = result.data;
+                    this.hkData = result;
                 }, (result) => {
 
                 });

@@ -89,7 +89,7 @@
                 api.post(Constants.method.getNowNode, {
                     orderId: orderId
                 }).then((response) => {
-                    let result = response.data;
+                    let result = response;
                     this.current_node = result.data;
                 });
             },
@@ -98,7 +98,7 @@
                     orderid: this.$route.query.orderId,
                     nodeid: node_id
                 }).then((response) => {
-                    let result = response.data;
+                    let result = response;
                     this.dialog.isShow = true;
                     this.dialog.message = `您将跳过:\n${result.data}\n节点` + '';
                 });

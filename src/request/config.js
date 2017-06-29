@@ -3,12 +3,17 @@
  */
 import Qs from 'qs'
 
-//process.env.NODE_ENV
+let test = 'http://10.1.40.41/bang/www/';
+let test1 = 'http://bpre.uz.com/';
+let test2 = 'http://bang.uz.com/';
+
 export default {
-    url: '',
     method: 'post',
-    baseURL: 'http://10.1.40.42/bang/www/index.php',
+    baseURL: test2 + 'index.php',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+    // `transformRequest`允许在请求数据发送到服务器之前对其进行更改
+    // 这只适用于请求方法'PUT'，'POST'和'PATCH'
+    // 数组中的最后一个函数必须返回一个字符串，一个 ArrayBuffer或一个 Stream
     transformRequest: [function (data) {
         if (data) {
             data = Qs.stringify(data);
@@ -17,25 +22,34 @@ export default {
             return;
         }
     }],
+    // `transformResponse`允许在 then / catch之前对响应数据进行更改
     transformResponse: [function (data) {
         return data;
     }],
+    // `paramsSerializer`是一个可选的函数，负责序列化`params`
     paramsSerializer: function (params) {
         return Qs.stringify(params, {arrayFormat: 'brackets'})
     },
-    timeout: 30000,
-    withCredentials: false, // default
-    responseType: 'json', // default
+    // `timeout`指定请求超时之前的毫秒数。
+    timeout: 3000,
+    // `withCredentials`指示是否跨站点访问控制请求
+    withCredentials: false,
+    // “responseType”表示服务器将响应的数据类型
+    // 包括 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
+    responseType: 'json',
+    // `onUploadProgress`允许处理上传的进度事件
     onUploadProgress: function (progressEvent) {
-        // Do whatever you want with the native progress event
     },
+    // `onDownloadProgress`允许处理下载的进度事件
     onDownloadProgress: function (progressEvent) {
         // Do whatever you want with the native progress event
     },
     maxContentLength: 2000,
+    // `validateStatus`定义是否解析或拒绝给定的promise
     validateStatus: function (status) {
-        return status >= 200 && status < 300; // default
+        return status >= 200 && status < 300;
     },
-    maxRedirects: 5, // default
+    // `maxRedirects`定义在node.js中要遵循的重定向的最大数量。
+    maxRedirects: 5,
     handleError: true //自增参数,是否在interceptors处理错误状态.
 }

@@ -2,9 +2,9 @@
     <div class="list">
         <mu-list>
             <template v-for="(item,index) in list">
-                <div class="item" @click="itemOnClick(index)">
+                <mu-list-item class="item" @click="itemOnClick(index)">
                     <slot name="item" :item="item" :index="index"></slot>
-                </div>
+                </mu-list-item>
                 <mu-divider/>
             </template>
         </mu-list>
@@ -57,8 +57,8 @@
                 Object.assign(param, this.handleparam());
 
                 api.post(this.url, param, (result) => {
-                    if (result.data instanceof Array) {
-                        this.list = this.list.concat(result.data);
+                    if (result instanceof Array) {
+                        this.list = this.list.concat(result);
                     } else {
                         this.isMore = false;
                     }

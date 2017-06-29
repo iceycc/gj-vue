@@ -86,7 +86,7 @@
                     url = Constants.method.hkDataList;
 
                 api.post(url, null, (result) => {
-                    this.hkData = result.data;
+                    this.hkData = result;
                 });
             },
             getScheduleData(){

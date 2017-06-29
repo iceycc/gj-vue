@@ -53,7 +53,7 @@
                     username: this.username,
                     password: this.pass
                 }, (result) => {
-                    JsBridge.setStorage('user', result.data)
+                    JsBridge.setStorage('user', result)
 
                     this.$router.push({name: 'index'});
                 });

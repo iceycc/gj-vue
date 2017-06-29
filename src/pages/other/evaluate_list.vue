@@ -52,7 +52,7 @@
 
                 api.post(Constants.method.evaluateList, param, (result) => {
 
-                    if (result.data instanceof Array) {
+                    if (result instanceof Array) {
                         let tempArray = [];
                         result.data.forEach((item, index) => {
                             if (item != null) {

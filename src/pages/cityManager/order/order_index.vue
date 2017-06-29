@@ -148,7 +148,6 @@
                     }
                     console.log(flag);
                 }
-
             },
             openDialog(type){
                 switch (type) {
