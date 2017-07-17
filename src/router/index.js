@@ -76,6 +76,12 @@ let router = new Router({
             meta: {title: '业主评价'}
         },
         {
+            path: '/evaluate_detail',
+            name: 'evaluate_detail',
+            component: pages.Evaluate_Detail,
+            meta: {title: '业主评价'}
+        },
+        {
             path: '/guanjia_data',
             name: 'guanjia_data',
             component: pages.Guanjia_Data,
@@ -132,7 +138,6 @@ router.beforeEach((to, from, next) => {
         EventBus.$emit(Constants.EventBus.setTitleLeftIcon, 'arrow_back');
     }
 
-    console.log(to, from);
 
     if (to.meta && to.meta.title) {
         EventBus.$emit(Constants.EventBus.setTitle, to.meta.title);

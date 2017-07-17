@@ -51,6 +51,14 @@ import 'material-design-icons/iconfont/material-icons.css'
 //加载iview
 import 'iview/dist/styles/iview.css';    // 使用 CSS
 
+import axios from 'axios';
+axios.interceptors.response.use((response) => {
+    console.log(response);
+    return response.data;
+}, (error) => {
+
+});
+
 /* eslint-disable no-new */
 new Vue({
     el: '#app',

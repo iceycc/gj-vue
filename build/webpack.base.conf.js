@@ -71,12 +71,12 @@ let webpackConfig = {
     plugins: []
 }
 
-if (fs.existsSync(resolve('static/dll/vendor-mainfest.json'))) {
+/*if (fs.existsSync(resolve('static/dll/vendor-mainfest.json'))) {
     console.log('build with DllReferencePlugin');
     webpackConfig.plugins.push(new webpack.DllReferencePlugin({
         context: __dirname,
         manifest: require('../static/dll/vendor-mainfest.json') // 指向这个json
     }))
-}
+}*/
 
 module.exports = webpackConfig

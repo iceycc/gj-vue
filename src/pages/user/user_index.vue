@@ -3,7 +3,7 @@
         <div class="layout userinfo">
             <mu-avatar class="user-image" :src="user.personalphoto"/>
             <div>
-                <div class="user-text">昵称:{{user.truename}}</div>
+                <div class="user-text">昵称:{{hkData.mName}}</div>
                 <div class="user-text">账号:{{user.username}}</div>
             </div>
         </div>
@@ -29,12 +29,12 @@
                 <div @click="toGuanjiaData">更多</div>
             </div>
             <div class="guanjia-data">
-                <div class="data">本月派单数:{{hkData.allocationHk}}</div>
-                <div class="data">见面客户数:{{hkData.meeting}}</div>
-                <div class="data">量房客户数:{{hkData.homeSurvey}}</div>
-                <div class="data">已交定金总数据:{{hkData.intentDeposit}}</div>
-                <div class="data">已签合同平台单数据:{{hkData.intentDeposit}}</div>
-                <div class="data">已签合同反推单数据:{{hkData.schemeSubmit}}</div>
+                <div class="data">本月派单数:{{hkData.orderQty}}</div>
+                <div class="data">见面客户数:{{hkData.meetQty}}</div>
+                <div class="data data-full">量房客户数:{{hkData.measureQty}}</div>
+                <div class="data data-full">定金总数据:{{hkData.depositMoney}}元({{hkData.despositQty}}单)</div>
+                <div class="data data-full">平台单合同总数据:{{hkData.customersContractMoney}}元({{hkData.customersContractQty}}单)</div>
+                <div class="data data-full">工地托管单合同数据:{{hkData.corpContractMoney}}元({{hkData.corpContractQty}}单)</div>
             </div>
         </div>
         <br/>
@@ -61,19 +61,13 @@
                 menus: Constants.User.menus
             }
         },
-        computed: {
-            isCSJL: function () {
-                return this.user.role == '38';
-            }
-        },
         created(){
             EventBus.$emit(Constants.EventBus.update_main_tab_index, 1);
 
-            this.user = this.getUser();
             api = new API(this);
 
             this.getGuanjiaData();
-            this.getScheduleData();
+            //this.getScheduleData();
         },
         methods: {
             doLogout(){
@@ -83,10 +77,21 @@
                 let url = Constants.method.hkDataList;
 
                 if (this.isCSJL)
-                    url = Constants.method.hkDataList;
+                    url = Constants.method.cm_profile;
 
                 api.post(url, null, (result) => {
                     this.hkData = result;
+
+                    this.menus.forEach((item, index) => {
+
+                        if(this.menus[index].path == 'my_order'){
+                            this.menus[index].count = result.unhandledQty;
+                        }
+
+                        if(this.menus[index].path == 'evaluate_list'){
+                            this.menus[index].count = result.commentQty;
+                        }
+                    });
                 });
             },
             getScheduleData(){
@@ -155,6 +160,9 @@
                 width: 50%;
                 text-align: left;
                 margin-top: px2rem(10);
+            }
+            .data-full {
+                width: 100%;
             }
         }
     }

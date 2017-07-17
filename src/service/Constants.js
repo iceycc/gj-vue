@@ -13,11 +13,14 @@ export const method = {
     schedule: 'm=hkapp&f=evaluate&v=schedule',                              //个人中心-badge
     evaluateList: 'm=hkapp&f=evaluate&v=evaluateList',                      //业主评价列表
     save_photo: 'm=hkapp&f=uploadImage&v=save_photo',                       //上传图片
-    cm_orderList: 'm=hkapp&f=allotOrder&v=orderList',                      //城市经理订单列表
-    cm_stewardJList: 'm=hkapp&f=allotOrder&v=stewardJList',                  //城市经理-管家列表
-    cm_fpjl: 'm=hkapp&f=allotOrder&v=fpJL',                                  //城市经理-分配管家操作
-    cm_fpComp: 'm=hkapp&f=allotOrder&v=fpComp',                              //城市经理-分配公司操作
-    cm_companyList: 'm=hkapp&f=allotOrder&v=companyList'                     //城市经理-装修公司列表
+    cm_profile: 'r=order/profile',                                        //城市经理-个人中心页面
+    cm_evaluateList: 'r=owner/owner-comment-list',                        //城市经理-评价列表
+    cm_evaluateDetail: 'r=owner/owner-comment',                           //城市经理-评价详情
+    cm_orderList: 'm=hkapp&f=allotOrder&v=orderList',                       //城市经理订单列表
+    cm_stewardJList: 'm=hkapp&f=allotOrder&v=stewardJList',                 //城市经理-管家列表
+    cm_fpjl: 'm=hkapp&f=allotOrder&v=fpJL',                                 //城市经理-分配管家操作
+    cm_fpComp: 'm=hkapp&f=allotOrder&v=fpComp',                             //城市经理-分配公司操作
+    cm_companyList: 'm=hkapp&f=allotOrder&v=companyList'                    //城市经理-装修公司列表
 }
 
 export const EventBus = {
@@ -74,26 +77,30 @@ export const Tabs = {
 
 const role_gj = '22';
 const role_gjjl = '21';
-const role_csjl = '38';
+export const role_csjl = '38';
 
 export const User = {
     menus: [{
         title: '工作日程',
         path: '',
         role: [role_gj, role_gjjl],
+        count:0
     }, {
         title: '待处理订单',
         path: 'my_order',
         role: [role_gj, role_gjjl, role_csjl],
+        count:0
     }, {
         title: '业主评价',
         path: 'evaluate_list',
         role: [role_gj, role_gjjl, role_csjl],
+        count:0
     }, {
         title: '异常日志',
         path: 'my_log',
         query: {tab: 2},
         role: [role_gj, role_gjjl],
+        count:0
     }]
 }
 

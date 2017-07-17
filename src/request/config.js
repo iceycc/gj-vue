@@ -6,10 +6,11 @@ import Qs from 'qs'
 let test = 'http://10.1.40.41/bang/www/';
 let test1 = 'http://bpre.uz.com/';
 let test2 = 'http://bang.uz.com/';
+let test3 = 'http://10.1.40.81/basic/web/';
 
 export default {
     method: 'post',
-    baseURL: test2 + 'index.php',
+    baseURL: test3 + 'index.php',
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     // `transformRequest`允许在请求数据发送到服务器之前对其进行更改
     // 这只适用于请求方法'PUT'，'POST'和'PATCH'

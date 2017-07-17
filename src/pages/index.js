@@ -13,7 +13,6 @@ import Order_Info from './order/order_info.vue'
 import Order_Node from './order/order_node.vue'
 import order_test from './order/order_test.vue'
 
-import Evaluate_List from './other/evaluate_list.vue'
 import Guanjia_Data from './other/guanjia_data.vue'
 
 /**
@@ -25,6 +24,9 @@ import CM_Order_Index from './cityManager/order/order_index.vue'
 import CM_Order_Allot_Manager from './cityManager/order/order_allot_manager.vue'
 import CM_Order_Allot_Company from './cityManager/order/order_allot_company.vue'
 import CM_Order_Detail from './cityManager/order/order_detail.vue'
+
+import Evaluate_List from './other/evaluate_list.vue'
+import Evaluate_Detail from './other/evaluate_detail.vue'
 
 export default {
     Index,
@@ -44,5 +46,6 @@ export default {
     CM_Order_Allot_Manager,
     CM_Order_Allot_Company,
     CM_Order_Detail,
-    CM_User_Allot_List
+    CM_User_Allot_List,
+    Evaluate_Detail
 }

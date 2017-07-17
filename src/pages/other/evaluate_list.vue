@@ -1,16 +1,23 @@
 <template>
     <div class="page">
-        <uz-list :list="list" :isMore="isMore" :loading="loading" @loadMore="loadMore">
+        <uz-list :list="list" :isMore="isMore" :loading="loading" @loadMore="loadMore" @itemOnClick="itemOnClick">
             <template slot="item" scope="props">
-                <div class="content">业主:{{props.item.title}}</div>
-                <div class="content">节点:{{props.item.nodename}}</div>
+                <div class="sub-point" :style="{background:props.item.readStatus == 0 ? '#e13c13':'#FFFFFF'}"></div>
+                <div class="sub-item">
+                    <div class="content">业主:{{props.item.customersName}}</div>
+                    <div class="content">节点:{{props.item.nodename}}</div>
+                    <div class="content">日期:{{props.item.commentDate}}</div>
+                </div>
+                <div class="sub-more">
+                    查看详情>
+                </div>
             </template>
         </uz-list>
     </div>
 </template>
 
 <script>
-    import {EventBus, Constants, API} from  '../../service/index';
+    import {EventBus, Constants, API, mixins} from  '../../service/index';
     import UzList from "../../components/List";
     import UzTabs from "../../components/Tabs";
 
@@ -20,7 +27,8 @@
             UzTabs,
             UzList
         },
-        name: 'order_info',
+        mixins: [mixins],
+        name: 'evaluate_list',
         data() {
             return {
                 list: [],
@@ -30,6 +38,7 @@
             }
         },
         mounted(){
+            this.setTitle('评价列表');
             api = new API(this);
 
             if (this.$route.query && this.$route.query.tab) {
@@ -38,6 +47,15 @@
             this.getdata()
         },
         methods: {
+            itemOnClick(index){
+                this.router_push({
+                    path: 'evaluate_detail',
+                    query: {
+                        order_no: this.list[index].orderNo,
+                        node_no: this.list[index].node
+                    }
+                });
+            },
             initList(){
                 this.list = [];
                 this.page = 1;
@@ -50,17 +68,14 @@
                     page: this.page,
                 };
 
-                api.post(Constants.method.evaluateList, param, (result) => {
+                let url = Constants.method.evaluateList;
+                if (this.isCSJL) {
+                    url = Constants.method.cm_evaluateList;
+                }
 
+                api.post(url, param, (result) => {
                     if (result instanceof Array) {
-                        let tempArray = [];
-                        result.data.forEach((item, index) => {
-                            if (item != null) {
-                                tempArray.push(item)
-                            }
-                        });
-
-                        this.list = this.list.concat(tempArray);
+                        this.list = this.list.concat(result);
                     } else {
                         this.isMore = false;
                     }
@@ -84,4 +99,19 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+    .sub-point {
+        background: #e13c13;
+        border-radius: 50%;
+        min-height: 12px;
+        min-width: 12px;
+        margin: 0 20px;
+    }
+
+    .sub-item {
+        flex-grow: 1;
+    }
+
+    .sub-more {
+        padding-right: 20px;
+    }
 </style>

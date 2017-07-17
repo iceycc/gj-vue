@@ -29,6 +29,7 @@
         },
         created(){
             EventBus.$on(Constants.EventBus.setTitle, value => {
+                console.log(value);
                 this.title = value;
             });
 

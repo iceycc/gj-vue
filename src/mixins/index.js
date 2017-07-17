@@ -1,6 +1,11 @@
 import {EventBus, Constants, JsBridge} from  '../service/index';
 
 export default {
+    computed: {
+        isCSJL: function () {
+            return this.user.role == '38';
+        }
+    },
     methods: {
         setTitle(title){
             //EventBus.$emit(Constants.EventBus.setTitle, title);
@@ -25,5 +30,8 @@ export default {
             JsBridge.removeStorage('user');
             this.$router.push({name: 'user_login'});
         }
+    },
+    created(){
+        this.user = this.getUser();
     }
 }

@@ -19,11 +19,11 @@ class API {
         return this._request(_url, 'post', param, success, fail, finish)
     }
 
-    get(url, param) {
+    get(url, param, success, fail, finish) {
         let _url = url;
         if (param)
-            _url = url + '?' + Qs.stringify(param)
-        return this._request(_url, 'get')
+            _url = config.baseURL + '?' + url +'&'+ Qs.stringify(param);
+        return this._request(_url, 'get', success, fail, finish)
     }
 
     _request(url, type, param, success, fail, finish) {
@@ -42,13 +42,10 @@ class API {
             param.app_model = navigator.userAgent;
         }
 
-        //拦截器
-        axios.interceptors.response.use((response) => {
-            let result = response.data;
-            return result;
-        }, (error) => {
-
-        });
+        if (url.indexOf('10.1.40.81') != -1) {//测试数据
+            param.mid = 21910;
+            param.m_city = 3360;
+        }
 
         let request;
         switch (config.method) {

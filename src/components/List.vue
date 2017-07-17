@@ -49,7 +49,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style lang="scss" >
     .grid {
         display: flex;
         flex-direction: row;
@@ -69,6 +69,18 @@
             }
         }
         .grid-item:active {
+            background-color: #cccccc;
+        }
+    }
+
+    .list {
+        .item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 10px;
+        }
+        .item:active {
             background-color: #cccccc;
         }
     }

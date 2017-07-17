@@ -5,6 +5,7 @@
                  v-if="item.role.indexOf(role) > -1">
                 <img class="grid-item-img" :src="item.img" v-if="item.img"/>
                 <span>{{item.title}}</span>
+                <span class="badge">{{item.count}}</span>
             </div>
         </template>
 
@@ -62,10 +63,25 @@
             align-items: center;
             justify-content: center;
             background-color: #FFFFFF;
+            position: relative;
             .grid-item-img {
                 height: 50px;
                 width: 50px;
                 margin-bottom: 10px;
+            }
+            .badge {
+                min-width: 24px;
+                min-height: 24px;
+                line-height: 1;
+                text-align: center;
+                color: #FFFFFF;
+                position: absolute;
+                top: 5px;
+                font-weight: 500;
+                right: 5px;
+                background: #e13c13;
+                padding: 5px;
+                border-radius: 50%;
             }
         }
         .grid-item:active {
