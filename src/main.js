@@ -55,9 +55,23 @@ import 'iview/dist/styles/iview.css';    // 使用 CSS
 
 import axios from 'axios';
 axios.interceptors.response.use((response) => {
-    return response.data;
+    if (response.data.code === 0) {
+        return response.data;
+    } else if ('code' in response.data) {
+        return Promise.reject({
+            msg: '接口调用失败',
+            data: response
+        });
+    } else {
+        return Promise.reject({
+            msg: 'api 不符合规范',
+            data: response
+        });
+    }
 }, (error) => {
-
+    if(error.response.status !== 200){
+        alert('服务器异常.');
+    }
 });
 
 /* eslint-disable no-new */

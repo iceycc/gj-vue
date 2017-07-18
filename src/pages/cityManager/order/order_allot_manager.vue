@@ -10,7 +10,7 @@
         <uz-auto-list ref="listview" :parent="this" :url="url" :handleparam="handleparam">
             <template slot="item" scope="props">
                 <div class="filed title">
-                    <div class="name">管家姓名:{{props.item.gjname}}</div>
+                    <div class="name">管家姓名:{{props.item.smName}}</div>
                     <mu-raised-button label="分配" @click="action(props.item)" primary/>
                     <!--<i-button type="primary" size="small" @click="action(props.item)">分配</i-button>-->
                 </div>
@@ -64,7 +64,8 @@
             },
             action(item){
                 let param = {};
-                param.uid = item.uid;
+                param.smNo = item.smNo;
+                param.orderNo = this.$route.query.orderNo;
                 this.allot_manager(param);
             },
             allot_manager(param){

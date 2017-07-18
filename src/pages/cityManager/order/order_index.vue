@@ -17,11 +17,13 @@
                            v-model="search_word"/>
             <mu-icon-button icon="search" slot="right" @click="doSearch"/>
         </div>
-        <uz-auto-list ref="listview" :url="url" >
+        <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
-                <div class="filed title">订单编号:{{props.item.order_no}}</div>
+                <div class="filed title">订单编号:{{props.item.orderNo}}</div>
                 <div class="filed">
-                    <i-button v-if="activeTab == 0" type="primary" size="small" @click="allot_manager(props.item.id)">分配经理</i-button>
+                    <i-button v-if="activeTab == 0" type="primary" size="small"
+                              @click="allot_manager(props.item.orderNo)">分配经理
+                    </i-button>
                     <i-button v-if="props.item.managername && props.item.company.length <3" type="primary" size="small">
                         分配公司
                     </i-button>
@@ -31,18 +33,24 @@
                     </i-button>
                 </div>
                 <div class="filed">
-                    用户名:{{props.item.title}}  订单来源:{{props.item.source}}  订单状态:{{props.item.orderstatus}}
+                    用户名:{{props.item.customersName}}  订单来源:{{props.item.orderFrom}}  订单状态:{{props.item.orderStatus}}
                 </div>
-                <div class="filed">房屋面积:{{props.item.area}}平  管家经理:{{props.item.managername}}</div>
+                <div class="filed">
+                    手机号码:{{props.item.customersPhoneNumber}} 房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
+                </div>
 
-                <div class="filed">装修公司：<br><span v-for="(name,index) in props.item.company">{{name}}<br></span></div>
+                <div class="filed">装修公司：<br>
+                    <span v-for="(item,index) in props.item.corpInfo">{{item.corpName}}<br></span>
+                </div>
 
-                <div class="filed">下单时间:{{props.item.addtime}}<br>分单时间:{{props.item.fdtime}}</div>
-                <div class="filed">装修预算:{{props.item.budget}}万元 装修方式:{{props.item.way}} 装修风格:{{props.item.style}}</div>
-                <div class="filed">客服备注:</div>
-                <div class="filed">城市经理备注:</div>
-                <div class="filed">城市区域:{{props.item.cityName}}</div>
-                <div class="filed">详细地址:{{props.item.address}}</div>
+                <div class="filed">下单时间:{{props.item.orderGeneratedTime}}<br>分单时间:{{props.item.orderAssignTime}}</div>
+                <div class="filed">
+                    装修预算:{{props.item.budget}}万元 装修方式:{{props.item.decorateType}} 装修风格:{{props.item.decorateStyle}}
+                </div>
+                <div class="filed">客服备注:{{props.item.serviceRemark}}</div>
+                <div class="filed">城市经理备注:{{props.item.cityManagerRemark}}</div>
+                <div class="filed">城市区域:{{props.item.addr}}</div>
+                <div class="filed">详细地址:{{props.item.detailAddr}}</div>
             </template>
         </uz-auto-list>
         <mu-dialog :open="dialog[dialog.type]" :title="dialog.title" @close="closeDialog">
@@ -191,8 +199,7 @@
                 this.listview.getdata();
             },
             allot_manager(order_id){
-                console.log(order_id);
-                this.$router.push({name: 'cm_allot_manager', query: {order_id: order_id}});
+                this.$router.push({name: 'cm_allot_manager', query: {orderNo: order_id}});
             }
         }
     }
@@ -224,7 +231,7 @@
         padding: px2rem(10);
         font-size: px2rem(8);
         width: 100%;
-        border-bottom: 1px solid #e2e2e2;
+        border-bottom: 1px solid #e4e4e4;
     }
 
     .filed:first-child {
