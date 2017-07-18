@@ -21,7 +21,10 @@
         props: {
             parent: {},
             url: {},       //
-            handleparam: {} //请求时参数处理方法
+            notify: {
+                type: [Object, String],
+                default: null
+            }
         },
         data () {
             return {
@@ -32,15 +35,25 @@
                 loading: false
             }
         },
-        updated () {
+        watch: {
+            notify: function (val, oldVal) {
+                if (val) {
+                    this.rest();
+                } else {
+                    this.initList();
+                }
+            }
         },
         mounted () {
             api = new API(parent);
             this.scroller = this.$el;
-
             this.getdata();
         },
         methods: {
+            rest(){
+                this.initList();
+                this.getdata();
+            },
             initList(){
                 //初始化
                 this.list = [];
@@ -54,16 +67,29 @@
                     page: this.page,
                 };
 
-                Object.assign(param, this.handleparam());
+                if (this.$parent.handleParam) {
+                    param = Object.assign(this.$parent.handleParam(), param)
+                }
 
                 api.post(this.url, param, (result) => {
-                    if (result instanceof Array) {
-                        this.list = this.list.concat(result);
+                    let datas;
+                    if ('handleResult' in this.$parent) {
+                        datas = this.$parent.handleResult(result);
                     } else {
-                        this.isMore = false;
+                        datas = result;
                     }
+
+                    this.list = this.list.concat(datas);
+
+                    if (datas.length == 0) {
+                        this.isMore = false;
+                    } else {
+                        this.page = this.page + 1;
+                    }
+
+                }, null, () => {
                     this.loading = false;
-                });
+                })
             },
             getCheckList(){
                 let temp = [];
@@ -75,13 +101,10 @@
                 return temp;
             },
             loadMore(){
-                this.page = this.page + 1;
                 this.getdata();
-
-                this.$emit('loadMore');
             },
             itemOnClick(index){
-                this.$emit('itemOnClick', index);
+                this.$emit('itemOnClick', this.list[index], index);
             }
         }
     }

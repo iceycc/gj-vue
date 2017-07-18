@@ -29,13 +29,25 @@
         },
         data () {
             return {
-                scroller: null
+                scroller: null,
+                scrollTop: 0
             }
         },
         updated () {
         },
         mounted () {
             this.scroller = this.$el;
+        },
+        mounted () {
+            this.scroller = this.$el;
+            this.scroller.onscroll = () => {
+                this.scrollTop = this.scroller.scrollTop;
+            }
+        },
+        activated(){
+            if (this.scrollTop !== 0) {
+                this.scroller.scrollTop = this.scrollTop;
+            }
         },
         methods: {
             loadMore(){
@@ -49,7 +61,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" >
+<style lang="scss">
     .grid {
         display: flex;
         flex-direction: row;

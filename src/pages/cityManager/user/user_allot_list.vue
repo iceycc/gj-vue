@@ -38,11 +38,86 @@
                            v-model="search_word"/>
             <mu-icon-button icon="search" slot="right" @click="doSearch"/>
         </div>
-        <uz-auto-list ref="listview" :parent="this" :url="url" :handleparam="handleparam">
+        <div class="count">共{{orderQty}}单订单</div>
+        <div style="padding: 0 16px">
+            <div class="tr" v-if="type ==0">
+                <div class="cell">订单编号</div>
+                <div class="cell">分配装修公司</div>
+                <div class="cell">管家经理</div>
+                <div class="cell"></div>
+            </div>
+            <div class="tr" v-if="type ==1">
+                <div class="cell">订单编号</div>
+                <div class="cell">已见面</div>
+                <div class="cell">管家经理</div>
+                <div class="cell"></div>
+            </div>
+            <div class="tr" v-if="type ==2">
+                <div class="cell">订单编号</div>
+                <div class="cell">已量房</div>
+                <div class="cell">管家经理</div>
+                <div class="cell"></div>
+            </div>
+            <div class="tr" v-if="type ==3">
+                <div class="cell">订单编号</div>
+                <div class="cell">业主姓名</div>
+                <div class="cell">已交定金</div>
+                <div class="cell"></div>
+            </div>
+            <div class="tr" v-if="type ==4">
+                <div class="cell-5">订单编号</div>
+                <div class="cell-5">业主姓名</div>
+                <div class="cell-5">合同金额</div>
+                <div class="cell-5">订单来源</div>
+                <div class="cell-5"></div>
+            </div>
+            <div class="tr" v-if="type ==5">
+                <div class="cell">装修公司</div>
+                <div class="cell">业主姓名</div>
+                <div class="cell">合同金额</div>
+                <div class="cell"></div>
+            </div>
+        </div>
+        <uz-auto-list ref="listview" v-if="url.length > 0" :url="url" :notify="url+tab" @itemOnClick="itemOnClick">
             <template slot="item" scope="props">
-                <div class="filed title">
-                    <div class="name">管家姓名:{{props.item.gjname}}</div>
-                    <i-button type="primary" size="small" @click="action(props.item)">分配</i-button>
+                <div class="tr" v-if="type == 0">
+                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.corpQty}}家</span>
+                    <span class="cell">{{props.item.smName}}</span>
+                    <div class="cell"> > </div>
+                </div>
+                <div class="tr" v-if="type == 1">
+                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.meetQty}}家</span>
+                    <span class="cell">{{props.item.smName}}</span>
+                    <div class="cell"> > </div>
+                </div>
+
+                <div class="tr" v-if="type == 2">
+                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.measureQty}}家</span>
+                    <span class="cell">{{props.item.smName}}</span>
+                    <div class="cell"> > </div>
+                </div>
+
+                <div class="tr" v-if="type == 3 ">
+                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.customersName}}</span>
+                    <span class="cell">{{props.item.deposit}}</span>
+                    <div class="cell"> > </div>
+                </div>
+                <div class="tr" v-if="type == 4 ">
+                    <span class="cell-5">{{props.item.orderNo}}</span>
+                    <span class="cell-5">{{props.item.customersName}}</span>
+                    <span class="cell-5">{{props.item.contractMoney}}</span>
+                    <span class="cell-5">{{props.item.orderFrom}}</span>
+                    <div class="cell-5"> > </div>
+                </div>
+                <div class="tr" v-if="type == 5">
+                    <span class="cell">{{props.item.corpName}}</span>
+                    <span class="cell">{{props.item.customersName}}</span>
+                    <span class="cell">{{props.item.contractMoney}}</span>
+                    <div class="cell"> > </div>
                 </div>
             </template>
         </uz-auto-list>
@@ -75,7 +150,10 @@
                 search_word: '',
                 search_type: 0,
                 search_field: Constants.CM_Order.search_field,
-                url: Constants.method.cm_stewardJList,
+                url: '',
+                type: 0,
+                tab: 0,
+                orderQty: 0
             }
         },
         computed: {
@@ -97,14 +175,67 @@
         mounted () {
             api = new API(this);
         },
+        activated(){
+            if (this.$route.query && 'type' in this.$route.query) {
+                this.type = this.$route.query.type;
+                switch (parseInt(this.type)) {
+                    case 0:
+                        this.tab = 0;
+                        this.url = Constants.method.cm_month_info;
+                        break;
+                    case 1:
+                        this.tab = 1;
+                        this.url = Constants.method.cm_month_info;
+                        break;
+                    case 2:
+                        this.tab = 2;
+                        this.url = Constants.method.cm_month_info;
+                        break;
+                    case 3:
+                        this.tab = 0;
+                        this.url = Constants.method.cm_month_money;
+                        break;
+                    case 4:
+                        this.tab = 1;
+                        this.url = Constants.method.cm_month_money;
+                        break;
+                    case 5:
+                        this.tab = 2;
+                        this.url = Constants.method.cm_month_money;
+                        break;
+                }
+            } else {
+                console.log('参数异常');
+            }
+        },
         methods: {
             doSearch(){
-                this.listview.initList();
-                this.listview.getdata();
+                if (this.search_word) {
+                    this.$refs.listview.rest();
+                } else {
+                    EventBus.$emit(Constants.EventBus.showToast, {
+                        message: Constants.Tips.params_null
+                    });
+                }
             },
-            handleparam(){//处理参数
-                let param = {};
+            handleParam(){//处理参数
+                let param = {
+                    tab: this.tab
+                };
+
+                if (this.search_word) {
+                    param.keyword = this.search_word;
+                    param.search_type = this.search_type;
+                }
+
                 return param;
+            },
+            itemOnClick(item, index){
+                //item.orderNo
+            },
+            handleResult(result){
+                this.orderQty = result.orderQty;
+                return result.orderList;
             },
             action(item){
                 let param = {};
@@ -147,9 +278,26 @@
     .search_bar {
         margin: 0;
     }
+
+    .count {
+        padding: 10px 16px;
+    }
+
+    .tr {
+        .cell {
+            width: 24%;
+            display: inline-block;
+            text-align: center;
+        }
+        .cell-5 {
+            width: 19%;
+            display: inline-block;
+            text-align: center;
+        }
+    }
 </style>
 <style>
     .mu-menu-item {
-        padding: 0 4px !important;
+        padding: 0 0px !important;
     }
 </style>

@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import {EventBus, Constants, JsBridge} from  '../service/index';
 import pages from '../pages/index.js'
 
-Vue.use(Router)
+Vue.use(Router);
 
 let router = new Router({
     routes: [
@@ -16,22 +16,22 @@ let router = new Router({
                 path: 'order',
                 name: 'order',
                 component: pages.Order_Index,
-                meta: {title: '订单管理', notKeepAlive: false}
+                meta: {title: '订单管理', keepAlive: true}
             }, {
                 path: 'zhuge',
                 name: 'zhuge',
                 component: pages.QA_Index,
-                meta: {title: '诸葛装修', notKeepAlive: false}
+                meta: {title: '诸葛装修', keepAlive: true}
             }, {
                 path: 'log',
                 name: 'log',
                 component: pages.Log_Index,
-                meta: {title: '日志管理', notKeepAlive: false}
+                meta: {title: '日志管理', keepAlive: true}
             }, {
                 path: '/user_info',
                 name: 'user_info',
                 component: pages.User_Index,
-                meta: {title: '个人中心', notKeepAlive: true}
+                meta: {title: '个人中心', keepAlive: true}
             }, {
                 path: '/cm_order_index',
                 name: 'cm_order_index',
@@ -97,19 +97,19 @@ let router = new Router({
             path: '/cm_allot_company',
             name: 'cm_allot_company',
             component: pages.CM_Order_Allot_Company,
-            meta: {title: '装修公司列表'}
+            meta: {title: '装修公司列表' ,keepAlive: false}
         },
         {
             path: '/cm_order_detail',
             name: 'cm_order_detail',
             component: pages.CM_Order_Detail,
-            meta: {title: '订单详情页'}
+            meta: {title: '订单详情页' ,keepAlive: false}
         },
         {
             path: '/cm_user_allot_list',
             name: 'cm_user_allot_list',
             component: pages.CM_User_Allot_List,
-            meta: {title: '本月派单列表页'}
+            meta: {title: '订单列表页' ,keepAlive: false}
         },
         {
             path: '/order_test',
@@ -117,7 +117,14 @@ let router = new Router({
             component: pages.order_test,
             meta: {title: '测试'}
         }
-    ]
+    ],
+    scrollBehavior (to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition
+        } else {
+            return { x: 0, y: 0 }
+        }
+    }
 })
 
 router.beforeEach((to, from, next) => {

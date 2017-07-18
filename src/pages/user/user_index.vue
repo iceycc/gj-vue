@@ -1,10 +1,10 @@
 <template>
     <div class="page">
         <div class="layout userinfo">
-            <mu-avatar class="user-image" :src="user.personalphoto"/>
+            <mu-avatar class="user-image" :src="hkData.avatar"/>
             <div>
                 <div class="user-text">昵称:{{hkData.mName}}</div>
-                <div class="user-text">账号:{{user.username}}</div>
+                <div class="user-text">账号:{{hkData.userName}}</div>
             </div>
         </div>
         <div class="layout">
@@ -29,12 +29,12 @@
                 <div @click="toGuanjiaData">更多</div>
             </div>
             <div class="guanjia-data">
-                <div class="data">本月派单数:{{hkData.orderQty}}</div>
-                <div class="data">见面客户数:{{hkData.meetQty}}</div>
-                <div class="data data-full">量房客户数:{{hkData.measureQty}}</div>
-                <div class="data data-full">定金总数据:{{hkData.depositMoney}}元({{hkData.despositQty}}单)</div>
-                <div class="data data-full">平台单合同总数据:{{hkData.customersContractMoney}}元({{hkData.customersContractQty}}单)</div>
-                <div class="data data-full">工地托管单合同数据:{{hkData.corpContractMoney}}元({{hkData.corpContractQty}}单)</div>
+                <div class="data" @click="openPage(0)">本月派单数:{{hkData.orderQty}}</div>
+                <div class="data" @click="openPage(1)">见面客户数:{{hkData.meetQty}}</div>
+                <div class="data data-full" @click="openPage(2)">量房客户数:{{hkData.measureQty}}</div>
+                <div class="data data-full" @click="openPage(3)">定金总数据:{{hkData.depositMoney}}元({{hkData.despositQty}}单)</div>
+                <div class="data data-full" @click="openPage(4)">平台单合同总数据:{{hkData.customersContractMoney}}元({{hkData.customersContractQty}}单)</div>
+                <div class="data data-full" @click="openPage(5)">工地托管单合同数据:{{hkData.corpContractMoney}}元({{hkData.corpContractQty}}单)</div>
             </div>
         </div>
         <br/>
@@ -84,15 +84,23 @@
 
                     this.menus.forEach((item, index) => {
 
-                        if(this.menus[index].path == 'my_order'){
+                        if (this.menus[index].path == 'my_order') {
                             this.menus[index].count = result.unhandledQty;
                         }
 
-                        if(this.menus[index].path == 'evaluate_list'){
+                        if (this.menus[index].path == 'evaluate_list') {
                             this.menus[index].count = result.commentQty;
                         }
                     });
                 });
+            },
+            openPage(type){
+                this.router_push({
+                    path: 'cm_user_allot_list',
+                    query: {
+                        type: type
+                    }
+                })
             },
             getScheduleData(){
                 api.post(Constants.method.schedule, null, (result) => {

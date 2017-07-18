@@ -17,7 +17,7 @@
                            v-model="search_word"/>
             <mu-icon-button icon="search" slot="right" @click="doSearch"/>
         </div>
-        <uz-auto-list ref="listview" :parent="this" :url="url" :handleparam="handleparam">
+        <uz-auto-list ref="listview" :url="url" >
             <template slot="item" scope="props">
                 <div class="filed title">订单编号:{{props.item.order_no}}</div>
                 <div class="filed">

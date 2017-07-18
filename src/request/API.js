@@ -22,7 +22,7 @@ class API {
     get(url, param, success, fail, finish) {
         let _url = url;
         if (param)
-            _url = config.baseURL + '?' + url +'&'+ Qs.stringify(param);
+            _url = config.baseURL + '?' + url + '&' + Qs.stringify(param);
         return this._request(_url, 'get', success, fail, finish)
     }
 
@@ -43,7 +43,7 @@ class API {
         }
 
         if (url.indexOf('10.1.40.81') != -1) {//测试数据
-            param.mid = 21910;
+            param.mid = 21922;
             param.m_city = 3360;
         }
 
@@ -51,7 +51,7 @@ class API {
         switch (config.method) {
             case 'get':
                 config.params = param;
-                request = axios.get(url, config)
+                request = axios.get(url, config);
                 break;
             default:
                 config.data = param;
@@ -60,12 +60,7 @@ class API {
 
         request.then((response) => {
             let result = response.data;
-
-            if (!('code' in result)) {
-                success(result);
-                return;
-            }
-            if (result.code == 1) {
+            if (response.code === 0) {
                 if (success) {
                     success(result);
                 }
@@ -77,8 +72,14 @@ class API {
                     message: result.message
                 });
             }
+
+            if (finish)
+                finish();
         }).catch((error) => {
-        })
+
+            if (finish)
+                finish();
+        });
 
         return request;
     }

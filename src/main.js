@@ -30,6 +30,7 @@ import avatar from 'muse-ui/src/avatar'
 import list from 'muse-ui/src/list/list.vue'
 import listItem from 'muse-ui/src/list/listItem.vue'
 import dialog from 'muse-ui/src/dialog'
+import icon from 'muse-ui/src/icon'
 
 Vue.component(appBar.name, appBar);
 Vue.component(toast.name, toast);
@@ -46,6 +47,7 @@ Vue.component(divider.name, divider);
 Vue.component(infiniteScroll.name, infiniteScroll);
 Vue.component(avatar.name, avatar);
 Vue.component(dialog.name, dialog);
+Vue.component(icon.name, icon);
 
 import 'material-design-icons/iconfont/material-icons.css'
 //加载iview
@@ -53,7 +55,6 @@ import 'iview/dist/styles/iview.css';    // 使用 CSS
 
 import axios from 'axios';
 axios.interceptors.response.use((response) => {
-    console.log(response);
     return response.data;
 }, (error) => {
 
