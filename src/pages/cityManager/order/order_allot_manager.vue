@@ -65,7 +65,7 @@
             action(item){
                 let param = {};
                 param.smNo = item.smNo;
-                param.orderNo = this.$route.query.orderNo;
+                param.order_no = this.$route.query.orderNo;
                 this.allot_manager(param);
             },
             allot_manager(param){

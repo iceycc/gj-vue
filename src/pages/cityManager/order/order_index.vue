@@ -19,7 +19,7 @@
         </div>
         <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
-                <div class="filed title">订单编号:{{props.item.orderNo}}</div>
+                <div class="filed title">订单编号:{{props.item.orderNo}}  <span v-if="props.item.orderMsgFee">信息费</span> <span v-if="props.item.orderCharge">收费单</span></div>
                 <div class="filed">
                     <i-button v-if="activeTab == 0" type="primary" size="small"
                               @click="allot_manager(props.item.orderNo)">分配经理
@@ -164,6 +164,11 @@
                 }
 
                 param.tab = this.activeTab;
+                if (this.activeTab === 2 && this.activeTab1 === 1) {
+                    param.tab = 4;
+                } else if (this.activeTab === 3 && this.activeTab2 === 1) {
+                    param.tab = 5;
+                }
                 return param;
             },
             handleTabChange(val){
