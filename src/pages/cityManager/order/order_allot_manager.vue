@@ -69,8 +69,11 @@
                 this.allot_manager(param);
             },
             allot_manager(param){
-                api.post(Constants.method.cm_fpjl, param, (result) => {
-                    console.log(result);
+                api.post(Constants.method.cm_fpjl, param, (data, result) => {
+                    EventBus.$emit(Constants.EventBus.showToast, {
+                        message: result.message
+                    });
+                    this.$router.go(-1);
                 });
             },
         }

@@ -19,8 +19,11 @@ export const method = {
     cm_month_info: 'r=order/month-info',                                    //城市经理-本月派单/见面/量房
     cm_month_money: 'r=order/month-money',                                  //城市经理-定金列表/合同列表/反推单列表
     cm_orderList: 'r=order/get-order-base-info',                            //城市经理订单列表
+    cm_add_remark: 'r=order/add-city-manager-remark',                       //城市经理订单列表-添加管家备注
     cm_stewardJList: 'r=order/steward-manager-list ',                       //城市经理-管家列表
     cm_fpjl: 'r=order/add-steward-manager',                                 //城市经理-分配管家操作
+    cm_wfcj: 'r=order/cant-deal-remark',                                    //城市经理-无法承接
+    cm_set_order_status :'r=order/set-order-status',                        //城市经理-设置收费单和信息费接口
 
     cm_fpComp: 'm=hkapp&f=allotOrder&v=fpComp',                             //城市经理-分配公司操作
     cm_companyList: 'm=hkapp&f=allotOrder&v=companyList'                    //城市经理-装修公司列表
@@ -87,23 +90,23 @@ export const User = {
         title: '工作日程',
         path: '',
         role: [role_gj, role_gjjl],
-        count:0
+        count: 0
     }, {
         title: '待处理订单',
-        path: 'my_order',
+        path: 'cm_order_index',//my_order
         role: [role_gj, role_gjjl, role_csjl],
-        count:0
+        count: 0
     }, {
         title: '业主评价',
         path: 'evaluate_list',
         role: [role_gj, role_gjjl, role_csjl],
-        count:0
+        count: 0
     }, {
         title: '异常日志',
         path: 'my_log',
         query: {tab: 2},
         role: [role_gj, role_gjjl],
-        count:0
+        count: 0
     }]
 }
 
@@ -138,11 +141,11 @@ export const Order = {
         role: [role_gj]
     }],
     search_field: [{
-        title: '小区地址',
+        title: '订单编号',
         value: 0,
-        key: 'address',
-        hintText: '请输入小区地址',
-        type: 'text'
+        key: 'order_no',
+        hintText: '请输入订单编号',
+        type: 'number'
     }, {
         title: '用户名称',
         value: 1,
@@ -150,18 +153,12 @@ export const Order = {
         hintText: '请输入用户名称',
         type: 'text'
     }, {
-        title: '手机号码',
+        title: '小区地址',
         value: 2,
-        key: 'telephone',
-        hintText: '请输入手机号码',
-        type: 'number'
-    }, {
-        title: '订单编号',
-        value: 3,
-        key: 'order_no',
-        hintText: '请输入订单编号',
-        type: 'number'
-    }],
+        key: 'address',
+        hintText: '请输入小区地址',
+        type: 'text'
+    },],
     tabs: [{
         name: '待处理',
         count: 0,

@@ -6,8 +6,9 @@
             <mu-icon-button icon="" slot="right"/>
         </mu-appbar>
         <keep-alive>
-            <router-view></router-view>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
         </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
 
         <mu-toast v-if="toast" :message="toast_message"/>
     </div>

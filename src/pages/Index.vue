@@ -1,6 +1,9 @@
 <template>
     <div class="page">
-        <router-view></router-view>
+        <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"></router-view>
         <uz-tabs :tabs="tabs" :activeTab="activeTab" @change="handleTabChange" class="tab"></uz-tabs>
     </div>
 </template>

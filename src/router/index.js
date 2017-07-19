@@ -16,7 +16,7 @@ let router = new Router({
                 path: 'order',
                 name: 'order',
                 component: pages.Order_Index,
-                meta: {title: '订单管理', keepAlive: true}
+                meta: {title: '订单管理', keepAlive: false}
             }, {
                 path: 'zhuge',
                 name: 'zhuge',
@@ -36,80 +36,80 @@ let router = new Router({
                 path: '/cm_order_index',
                 name: 'cm_order_index',
                 component: pages.CM_Order_Index,
-                meta: {title: '订单管理'}
+                meta: {title: '订单管理', keepAlive: true}
             }]
         },
         {
             path: '/user_login',
             name: 'user_login',
             component: pages.User_Login,
-            meta: {title: '登录'}
+            meta: {title: '登录', keepAlive: false}
         },
         {
             path: '/my_log',
             name: 'my_log',
             component: pages.Log_My,
-            meta: {title: '我的日志'}
+            meta: {title: '我的日志', keepAlive: true}
         },
         {
             path: '/my_order',
             name: 'my_order',
             component: pages.Order_My,
-            meta: {title: '我的订单'}
+            meta: {title: '我的订单', keepAlive: true}
         },
         {
             path: '/order_info',
             name: 'order_info',
             component: pages.Order_Info,
-            meta: {title: '订单信息'}
+            meta: {title: '订单信息', keepAlive: true}
         },
         {
             path: '/order_node',
             name: 'order_node',
             component: pages.Order_Node,
-            meta: {title: '节点导航'}
+            meta: {title: '节点导航', keepAlive: true}
         },
         {
             path: '/evaluate_list',
             name: 'evaluate_list',
             component: pages.Evaluate_List,
-            meta: {title: '业主评价'}
+            meta: {title: '业主评价', keepAlive: false}
         },
         {
             path: '/evaluate_detail',
             name: 'evaluate_detail',
             component: pages.Evaluate_Detail,
-            meta: {title: '业主评价'}
+            meta: {title: '业主评价', keepAlive: false}
         },
         {
             path: '/guanjia_data',
             name: 'guanjia_data',
             component: pages.Guanjia_Data,
-            meta: {title: '更多数据'}
+            meta: {title: '更多数据', keepAlive: true}
         },
         {
             path: '/cm_allot_manager',
             name: 'cm_allot_manager',
             component: pages.CM_Order_Allot_Manager,
-            meta: {title: '管家列表'}
+            meta: {title: '管家列表', keepAlive: false}
         },
         {
             path: '/cm_allot_company',
             name: 'cm_allot_company',
             component: pages.CM_Order_Allot_Company,
-            meta: {title: '装修公司列表' ,keepAlive: false}
+            meta: {title: '装修公司列表', keepAlive: false}
         },
         {
             path: '/cm_order_detail',
             name: 'cm_order_detail',
             component: pages.CM_Order_Detail,
-            meta: {title: '订单详情页' ,keepAlive: false}
+            meta: {title: '订单详情页', keepAlive: false}
         },
         {
             path: '/cm_user_allot_list',
             name: 'cm_user_allot_list',
             component: pages.CM_User_Allot_List,
-            meta: {title: '订单列表页' ,keepAlive: false}
+            meta: {title: '订单列表页', keepAlive: false}
         },
         {
             path: '/order_test',
@@ -122,7 +122,7 @@ let router = new Router({
         if (savedPosition) {
             return savedPosition
         } else {
-            return { x: 0, y: 0 }
+            return {x: 0, y: 0}
         }
     }
 })

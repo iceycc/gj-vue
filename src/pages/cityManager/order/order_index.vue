@@ -27,16 +27,19 @@
                     <i-button v-if="props.item.managername && props.item.company.length <3" type="primary" size="small">
                         分配公司
                     </i-button>
-                    <i-button type="primary" size="small" @click="openDialog('unable')">无法承接</i-button>
-                    <i-button type="primary" size="small" @click="openDialog('charge')">收费单</i-button>
-                    <i-button v-if="activeTab == 0" type="primary" size="small" @click="openDialog('info')">信息费
+                    <i-button type="info" size="small" @click="openDialog('unable',props.item.orderNo)">无法承接
+                    </i-button>
+                    <i-button type="info" size="small" @click="openDialog('charge',props.item.orderNo)">收费单
+                    </i-button>
+                    <i-button v-if="activeTab == 0" type="info" size="small"
+                              @click="openDialog('info',props.item.orderNo)">信息费
                     </i-button>
                 </div>
                 <div class="filed">
                     用户名:{{props.item.customersName}}  订单来源:{{props.item.orderFrom}}  订单状态:{{props.item.orderStatus}}
                 </div>
                 <div class="filed">
-                    手机号码:{{props.item.customersPhoneNumber}} 房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
+                    房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
                 </div>
 
                 <div class="filed">装修公司：<br>
@@ -48,11 +51,21 @@
                     装修预算:{{props.item.budget}}万元 装修方式:{{props.item.decorateType}} 装修风格:{{props.item.decorateStyle}}
                 </div>
                 <div class="filed">客服备注:{{props.item.serviceRemark}}</div>
-                <div class="filed">城市经理备注:{{props.item.cityManagerRemark}}</div>
+                <div class="filed" @click="addCityManagerRemark(props.item.orderNo,props.item.cityManagerRemark)">
+                    城市经理备注:{{props.item.cityManagerRemark}}
+                </div>
                 <div class="filed">城市区域:{{props.item.addr}}</div>
                 <div class="filed">详细地址:{{props.item.detailAddr}}</div>
             </template>
         </uz-auto-list>
+        <mu-dialog :open="isShowRemark" title="城市经理备注" @close="closeDialog">
+            <mu-text-field class="input_text" v-model="cityManagerRemark" multiLine :rows="3" :rowsMax="6"/>
+            <i-button slot="actions" size="small" @click="closeDialogManagerRemark(false)">取消</i-button>
+            <i-button slot="actions" type="primary" size="small" @click="closeDialogManagerRemark(true)"
+                      style="margin-left: 20px">
+                编辑
+            </i-button>
+        </mu-dialog>
         <mu-dialog :open="dialog[dialog.type]" :title="dialog.title" @close="closeDialog">
 
             <div v-if="dialog.type != 'unable'">{{dialog.desc}}</div>
@@ -95,6 +108,9 @@
                     title: '',
                     input: ''
                 },
+                isShowRemark: false,    //城市经理备注对话框
+                cityManagerRemark: '',  //城市经理备注内容
+                orderNo: '',            //操作中的订单号
                 activeTab: 0,
                 tabs: Constants.CM_Order.tabs,
                 activeTab1: 0,
@@ -127,37 +143,102 @@
         mounted () {
             api = new API(this);
         },
+        activated(){
+            EventBus.$emit(Constants.EventBus.update_main_tab_index, 0);
+        },
         methods: {
             doSearch(){
                 if (this.search_word.trim()) {
-                    this.listview.initList();
-                    this.listview.getdata();
+                    this.listview.rest();
                 } else {
                     EventBus.$emit(Constants.EventBus.showToast, {
                         message: Constants.Tips.search_word_null
                     });
                 }
             },
-            handleparam(){
+            handleParam(){
                 let param = {};
                 if (this.search_word.trim()) {
                     param.keyword = this.search_word;
+                    param.search_type = this.search_type;
                 }
 
-                param.type = this.activeTab;
+                param.tab = this.activeTab;
                 return param;
+            },
+            handleTabChange(val){
+                this.activeTab = val;
+
+                this.search_word = '';
+                this.listview.rest();
+            },
+            handleTabChange1(val){
+                if (this.activeTab == 2) {
+                    this.activeTab1 = val;
+                } else if (this.activeTab == 3) {
+                    this.activeTab2 = val;
+                }
+
+                this.search_word = '';
+                this.listview.rest();
+            },
+            allot_manager(order_id){
+                this.$router.push({name: 'cm_allot_manager', query: {orderNo: order_id}});
+            },
+            addCityManagerRemark(orderNo, cityManagerRemark){
+                this.orderNo = orderNo;
+                this.cityManagerRemark = cityManagerRemark;
+                this.isShowRemark = true;
+            },
+            closeDialogManagerRemark(flag){
+                if (flag) {
+                    api.post(Constants.method.cm_add_remark, {
+                        order_no: this.orderNo,
+                        remark: this.cityManagerRemark
+                    }, (result) => {
+                        this.showToast('备注添加成功');
+                        this.listview.rest();
+                    }, null, () => {
+                        this.orderNo = '';
+                        this.cityManagerRemark = '';
+                        this.isShowRemark = false;
+                    })
+                } else {
+                    this.orderNo = '';
+                    this.cityManagerRemark = '';
+                    this.isShowRemark = false;
+                }
             },
             closeDialog(flag){
                 this.dialog[this.dialog.type] = false;
 
                 if (flag) {
-                    if (this.dialog.type == 'unable') {
-                        console.log(this.dialog.input);
+                    if (this.dialog.type === 'unable' || this.dialog.type === 'info' || this.dialog.type === 'charge') {//无法承接
+                        let url = Constants.method.cm_set_order_status;
+                        let param = {
+                            order_no: this.orderNo
+                        };
+
+                        if (this.dialog.type === 'unable') {
+                            url = Constants.method.cm_wfcj;
+                            param.remark = this.dialog.input;
+                        } else if (this.dialog.type === 'info') {
+                            param.set_type = 1;
+                        } else if (this.dialog.type === 'charge') {
+                            param.set_type = 0;
+                        }
+
+                        api.post(url, param, () => {
+                            this.showToast('设置成功');
+                            this.listview.rest();
+                        }, null, () => {
+                            this.dialog.input = '';
+                            this.orderNo = '';
+                        })
                     }
-                    console.log(flag);
                 }
             },
-            openDialog(type){
+            openDialog(type, orderNo){
                 switch (type) {
                     case 'note':
                         this.dialog.title = '城市经理备注';
@@ -177,29 +258,14 @@
                         break;
                 }
 
+                this.orderNo = orderNo;
                 this.dialog[type] = true;
                 this.dialog.type = type;
             },
-            handleTabChange(val){
-                this.activeTab = val;
-
-                this.search_word = '';
-                this.listview.initList();
-                this.listview.getdata();
-            },
-            handleTabChange1(val){
-                if (this.activeTab == 2) {
-                    this.activeTab1 = val;
-                } else if (this.activeTab == 3) {
-                    this.activeTab2 = val;
-                }
-
-                this.search_word = '';
-                this.listview.initList();
-                this.listview.getdata();
-            },
-            allot_manager(order_id){
-                this.$router.push({name: 'cm_allot_manager', query: {orderNo: order_id}});
+            showToast(message){
+                EventBus.$emit(Constants.EventBus.showToast, {
+                    message: message
+                });
             }
         }
     }
