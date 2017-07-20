@@ -19,20 +19,28 @@
         </div>
         <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
-                <div class="filed title">订单编号:{{props.item.orderNo}}  <span v-if="props.item.orderMsgFee">信息费</span> <span v-if="props.item.orderCharge">收费单</span></div>
-                <div class="filed">
-                    <i-button v-if="activeTab == 0" type="primary" size="small"
+                <div class="filed title"><span class="tag" v-if="props.item.orderMsgFee">信息费</span>
+                    <span class="tag" v-if="props.item.orderCharge">收费单</span>订单编号:{{props.item.orderNo}}
+                </div>
+                <div class="filed" v-if="props.item.buttons.length > 0">
+                    <i-button v-if="props.item.buttons.indexOf(0) > -1" type="primary" size="small"
                               @click="allot_manager(props.item.orderNo)">分配经理
                     </i-button>
-                    <i-button v-if="props.item.managername && props.item.company.length <3" type="primary" size="small">
+                    <i-button v-if="props.item.buttons.indexOf(1) > -1" type="primary" size="small">
                         分配公司
                     </i-button>
-                    <i-button type="info" size="small" @click="openDialog('unable',props.item.orderNo)">无法承接
+                    <i-button v-if="props.item.buttons.indexOf(2) > -1" type="info" size="small"
+                              @click="openDialog('unable',props.item.orderNo)">无法承接
                     </i-button>
-                    <i-button type="info" size="small" @click="openDialog('charge',props.item.orderNo)">收费单
+                    <i-button v-if="props.item.buttons.indexOf(3) > -1" type="info" size="small"
+                              @click="openDialog('charge',props.item.orderNo)">收费单
                     </i-button>
-                    <i-button v-if="activeTab == 0" type="info" size="small"
+                    <i-button v-if="props.item.buttons.indexOf(4) > -1" type="info"
+                              size="small"
                               @click="openDialog('info',props.item.orderNo)">信息费
+                    </i-button>
+                    <i-button v-if="props.item.buttons.indexOf(5) > -1" type="info" size="small"
+                              @click="openDialog('uncharge',props.item.orderNo)">取消收费单
                     </i-button>
                 </div>
                 <div class="filed">
@@ -71,6 +79,8 @@
             <div v-if="dialog.type != 'unable'">{{dialog.desc}}</div>
             <mu-text-field v-if="dialog.type == 'unable'" class="input_text"
                            :hintText="dialog.desc" v-model="dialog.input" multiLine :rows="3" :rowsMax="6"/>
+            <mu-text-field v-if="dialog.type == 'info'" class="input_text"
+                           hintText="请填写公司名称" v-model="dialog.input"/>
             <i-button slot="actions" size="small" @click="closeDialog(false)">取消</i-button>
             <i-button slot="actions" type="primary" size="small" @click="closeDialog(true)" style="margin-left: 20px">
                 确定
@@ -80,7 +90,7 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API} from  '../../../service/index';
+    import {EventBus, Constants, API, Util} from  '../../../service/index';
     import UzGrid from "../../../components/Grid";
     import UzTabs from "../../../components/Tabs";
     import Button from "iview/src/components/button";
@@ -104,6 +114,7 @@
                     unable: false,
                     charge: false,
                     info: false,
+                    uninfo: false,
                     type: '',
                     title: '',
                     input: ''
@@ -171,6 +182,13 @@
                 }
                 return param;
             },
+            handleResult(datas){
+                datas.forEach((item, index) => {
+                    console.log(item.status, Util.handleOrderButton(item));
+                    datas[index].buttons = Util.handleOrderButton(item);
+                });
+                return datas;
+            },
             handleTabChange(val){
                 this.activeTab = val;
 
@@ -228,6 +246,7 @@
                             url = Constants.method.cm_wfcj;
                             param.remark = this.dialog.input;
                         } else if (this.dialog.type === 'info') {
+                            param.sell_to_corp = this.dialog.input;
                             param.set_type = 1;
                         } else if (this.dialog.type === 'charge') {
                             param.set_type = 0;
@@ -260,6 +279,9 @@
                     case 'info':
                         this.dialog.title = '信息费';
                         this.dialog.desc = '此订单是否确定为信息费订单';
+                    case 'rminfo':
+                        this.dialog.title = '取消信息费';
+                        this.dialog.desc = '取消信息费设置';
                         break;
                 }
 
@@ -312,4 +334,10 @@
     .filed:last-child {
         border-bottom: 0;
     }
+
+    .tag {
+        background: #2d8cf0;
+        color: #FFFFFF;
+    }
+
 </style>

@@ -54,12 +54,18 @@ import 'material-design-icons/iconfont/material-icons.css'
 import 'iview/dist/styles/iview.css';    // 使用 CSS
 
 import axios from 'axios';
+import EventBus from "./service/EventBus";
+import * as Constants from "./service/Constants";
+
 axios.interceptors.response.use((response) => {
     if (response.data.code === 0) {
         return response.data;
     } else if ('code' in response.data) {
+        EventBus.$emit(Constants.EventBus.showToast, {
+            message: response.data.message
+        });
         return Promise.reject({
-            msg: '接口调用失败',
+            msg: response.data.message,
             data: response
         });
     } else {
@@ -69,8 +75,13 @@ axios.interceptors.response.use((response) => {
         });
     }
 }, (error) => {
-    if(error.response.status !== 200){
-        alert('服务器异常.');
+    console.log(error);
+    if (error.response.status !== 200) {
+        console.error('服务器异常.');
+    } else {
+        EventBus.$emit(Constants.EventBus.showToast, {
+            message: 'test'
+        });
     }
 });
 

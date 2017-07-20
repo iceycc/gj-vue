@@ -174,8 +174,6 @@
         },
         mounted () {
             api = new API(this);
-        },
-        activated(){
             if (this.$route.query && 'type' in this.$route.query) {
                 this.type = this.$route.query.type;
                 switch (parseInt(this.type)) {
@@ -207,6 +205,9 @@
             } else {
                 console.log('参数异常');
             }
+        },
+        activated(){
+
         },
         methods: {
             doSearch(){
