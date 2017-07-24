@@ -26,9 +26,7 @@ export const method = {
     cm_set_order_status: 'r=order/set-order-status',                        //城市经理-设置收费单和信息费接口
     cm_get_month_info: 'r=order/get-month-info',                            //城市经理-订单列表-订单详情
     cm_corp_list: 'r=order/corp-list',                                      //城市经理-分配装修公司列表
-
-    cm_fpComp: 'm=hkapp&f=allotOrder&v=fpComp',                             //城市经理-分配公司操作
-    cm_companyList: 'm=hkapp&f=allotOrder&v=companyList'                    //城市经理-装修公司列表
+    cm_assign_corp: 'r=order/assign-corp',                                  //城市经理-分配公司操作
 }
 
 export const EventBus = {

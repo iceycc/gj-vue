@@ -50,7 +50,6 @@
                     房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
                 </div>
 
-                <!--  corpStatus为公司状态，0：已分配，1：被删除，2：被替换 replaceReason: null -->
                 <div class="filed">装修公司：<br>
                     <span v-for="(item,index) in props.item.corpList" :class="item.corpStatus != 0 ?'decoration' : ''">{{item.corpName}}<br></span>
                 </div>

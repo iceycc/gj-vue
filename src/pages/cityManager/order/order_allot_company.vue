@@ -10,7 +10,7 @@
                 <div class="filed title">
                     <div class="name">
                         <span class="tag"
-                              v-if="props.item.like_corp || props.item.promp_corp">{{props.item.like_corp ? '意向' : ''}} {{props.item.promp_corp ? '活动' : ''}} </span>{{props.item.companyname}}
+                              v-if="props.item.like_corp || props.item.promp_corp">{{props.item.like_corp ? '意向' : ''}} {{props.item.promp_corp ? '活动' : ''}} </span>{{props.item.corpName}}
                     </div>
                     <i-checkbox v-model="props.item.checked"></i-checkbox>
                 </div>
@@ -84,19 +84,19 @@
                     });
                 } else {
                     let param = {};
-                    param.orderid = this.order_id;
+                    param.order_no = this.order_no;
 
                     let company = '';
                     list.forEach((item) => {
-                        company = company + item.uid + ',';
-                    })
-                    param.compid = company;
+                        company = company + item.corpNo + ',';
+                    });
+                    param.corp_no = company.substring(0, company.length - 1);
 
-                    //this.allot_company(param);
+                    this.allot_company(param);
                 }
             },
             allot_company(param) {
-                api.post(Constants.method.cm_fpComp, param, (result) => {
+                api.post(Constants.method.cm_assign_corp, param, (result) => {
                     console.log(result);
                 });
             }
