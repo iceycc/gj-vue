@@ -1,28 +1,53 @@
 <template>
     <div class="_page">
-        <collapse>
+        <collapse v-model="state">
             <panel name="base">
                 基本信息
                 <div slot="content">
-                    <div></div>
+                    <div>
+                        <div class="filed">
+                            用户名:{{data.customersName}} | 订单来源:{{data.orderFrom}}|  订单状态:{{data.orderStatus}}
+                        </div>
+                        <div class="filed">
+                            房屋面积:{{data.houseArea}}平 | 管家经理:{{data.smName}}
+                        </div>
+                        <div class="filed">下单时间:{{data.orderGeneratedTime}}<br>分单时间:{{data.orderAssignTime}}
+                        </div>
+                        <div class="filed">
+                            装修预算:{{data.budget}}万元 装修方式:{{data.decorateType}} 装修风格:{{data.decorateStyle}}
+                        </div>
+                        <div class="filed">客服备注:{{data.serviceRemark}}</div>
+                        <div class="filed"
+                             @click="addCityManagerRemark(data.orderNo,data.cityManagerRemark)">
+                            城市经理备注:{{data.cityManagerRemark}}
+                        </div>
+                        <div class="filed">城市区域:{{data.addr}}</div>
+                        <div class="filed">详细地址:{{data.detailAddr}}</div>
+                    </div>
                 </div>
             </panel>
             <panel name="company">
                 装修公司
                 <div slot="content">
-                    wahahahah
+                    <div class="filed">
+                        <span v-for="(item,index) in data.corpList" :class="item.corpStatus != 0 ?'decoration' : ''">{{item.corpName}}<br></span>
+                    </div>
                 </div>
             </panel>
-            <panel name="payinfo">
+            <panel name="payinfo" v-if="data.deposit">
                 支付信息
                 <div slot="content">
-                    wahahahah
-                </div>
-            </panel>
-            <panel name="payinfo1">
-                支付信息录入
-                <div slot="content">
-                    wahahahah
+                    <div class="filed">签署情况</div>
+                    <div class="filed">签署情况：{{data.deposit.signatureInfo}}</div>
+                    <div class="filed">支付方式：{{data.deposit.paymentMethod}}</div>
+                    <div class="filed">备注信息：{{data.deposit.depositRemark}}</div>
+                    <div class="filed">支付信息录入</div>
+                    <div class="filed">实收金额: {{data.deposit.paidIn}}元</div>
+                    <div class="filed">支付凭证: {{data.deposit.receipt}}</div>
+                    <div class="filed">支付凭证:
+                        <img :src="data.deposit.receiptPhoto" >
+                    </div>
+                    <div class="filed">付款人: {{data.deposit.payer}}</div>
                 </div>
             </panel>
         </collapse>
@@ -30,7 +55,7 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API} from  '../../../service/index';
+    import {EventBus, Constants, API} from '../../../service/index';
     import Button from "iview/src/components/button";
     import Collapse from "iview/src/components/collapse";
 
@@ -45,52 +70,26 @@
         name: 'cm-order-detail',
         data() {
             return {
-                dialog: {
-                    note: false,
-                    unable: false,
-                    charge: false,
-                    info: false,
-                    type: '',
-                    title: ''
-                },
-                search_word: '',
-                search_type: 0,
-                url: Constants.method.cm_companyList,
+                state: ['base', 'company'],
+                data: {}
             }
         },
-        computed: {
-            listview: function () {
-                return this.$refs.listview;
-            }
-        },
-        mounted () {
+        mounted() {
             api = new API(this);
+            this.getdata();
         },
-        created(){
+        created() {
         },
         methods: {
-            doSearch(){
-                if (this.search_word.trim()) {
-                    this.listview.initList();
-                    this.listview.getdata();
-                } else {
-                    EventBus.$emit(Constants.EventBus.showToast, {
-                        message: Constants.Tips.search_word_null
-                    });
-                }
-            },
-            handleparam(){
-                let param = {};
-                if (this.search_word.trim()) {
-                    param.keyword = this.search_word
-                }
-                return param;
-            },
-            closeDialog(){
-                this.dialog[this.dialog.type] = false;
-            },
-            openDialog(type){
-
+            getdata() {
+                api.post(Constants.method.cm_get_month_info, {
+                    //order_no: this.$route.query.orderNo,
+                    order_no: 11643,
+                    tab: this.$route.query.tab,
+                }, (result) => {
+                    console.log(result);
+                    this.data = result;
+                });
             }
         }
     }
@@ -104,19 +103,27 @@
         flex-direction: column;
     }
 
-    .tabs {
-        border-top: 0px;
-    }
-
     .filed {
         padding: 10px;
         font-size: 14px;
         width: 100%;
-        font-size: 16px;
-        display: flex;
-        flex-direction: row;
-        .name {
-            flex-grow: 1;
-        }
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    .filed:first-child {
+        padding-top: 0;
+    }
+
+    .filed:last-child {
+        border-bottom: 0;
+    }
+
+    .decoration{
+        text-decoration: line-through #ed3f14;
+    }
+
+    .photo {
+        width: 100px;
+        height: 100px;
     }
 </style>

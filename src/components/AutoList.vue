@@ -72,13 +72,12 @@
                 }
 
                 api.post(this.url, param, (result) => {
-                    let datas;
+                    let datas = [];
                     if ('handleResult' in this.$parent) {
                         datas = this.$parent.handleResult(result);
                     } else {
                         datas = result;
                     }
-
                     this.list = this.list.concat(datas);
 
                     if (datas.length == 0) {

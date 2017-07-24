@@ -12,13 +12,22 @@
  */
 function handleOrderButton(order) {
     let array = [];
+    let count = getCount(order.corpList);
 
     switch (order.status) {
         case 0: //待处理
-            array = array.concat([0, 2, 3, 4]);
+            array = array.concat([2, 3, 4]);
+
+            if (count === 0) {
+                array = array.concat([1]);
+            } else if (count < 3) {
+                array = array.concat([0, 1]);
+            } else {
+                array = array.concat([0]);
+            }
             break;
         case 1: //已分配
-            if (order.corpInfo.length < 3) {
+            if (count < 3) {
                 array = array.concat([1]);
             }
 
@@ -39,6 +48,16 @@ function handleOrderButton(order) {
             break;
     }
     return array;
+}
+
+function getCount(list) {
+    let count = 0;
+    list.forEach((item) => {
+        if (item.corpStatus == 0) {
+            count++;
+        }
+    });
+    return count;
 }
 
 export {handleOrderButton};

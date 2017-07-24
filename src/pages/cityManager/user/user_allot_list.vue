@@ -125,7 +125,7 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API} from  '../../../service/index';
+    import {EventBus, Constants, API, mixins} from '../../../service/index';
     import UzGrid from "../../../components/Grid";
     import UzTabs from "../../../components/Tabs";
     import UzAutoList from "../../../components/AutoList";
@@ -141,6 +141,7 @@
             UzGrid
         },
         name: 'cm-user-allot-list',
+        mixins: [mixins],
         data() {
             return {
                 start_year: new Date().getFullYear(),
@@ -172,7 +173,7 @@
                 return temp;
             }
         },
-        mounted () {
+        mounted() {
             api = new API(this);
             if (this.$route.query && 'type' in this.$route.query) {
                 this.type = this.$route.query.type;
@@ -206,11 +207,11 @@
                 console.log('参数异常');
             }
         },
-        activated(){
+        activated() {
 
         },
         methods: {
-            doSearch(){
+            doSearch() {
                 if (this.search_word) {
                     this.$refs.listview.rest();
                 } else {
@@ -219,7 +220,7 @@
                     });
                 }
             },
-            handleParam(){//处理参数
+            handleParam() {//处理参数
                 let param = {
                     tab: this.tab
                 };
@@ -231,19 +232,20 @@
 
                 return param;
             },
-            itemOnClick(item, index){
-                //item.orderNo
+            itemOnClick(item) {
+                this.router_push({path: 'cm_order_detail', query: {orderNo: item.orderNo, tab: this.type}});
+                console.log(item.orderNo, this.tab);
             },
-            handleResult(result){
+            handleResult(result) {
                 this.orderQty = result.orderQty;
                 return result.orderList;
             },
-            action(item){
+            action(item) {
                 let param = {};
                 param.uid = item.uid;
                 this.allot_manager(param);
             },
-            allot_manager(param){
+            allot_manager(param) {
                 api.post(Constants.method.cm_fpjl, param, (result) => {
                     console.log(result);
                 });

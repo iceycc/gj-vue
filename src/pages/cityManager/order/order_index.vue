@@ -26,8 +26,8 @@
                     <i-button v-if="props.item.buttons.indexOf(0) > -1" type="primary" size="small"
                               @click="allot_manager(props.item.orderNo)">分配经理
                     </i-button>
-                    <i-button v-if="props.item.buttons.indexOf(1) > -1" type="primary" size="small">
-                        分配公司
+                    <i-button v-if="props.item.buttons.indexOf(1) > -1" type="primary" size="small"
+                              @click="allot_company(props.item.orderNo)">分配公司
                     </i-button>
                     <i-button v-if="props.item.buttons.indexOf(2) > -1" type="info" size="small"
                               @click="openDialog('unable',props.item.orderNo)">无法承接
@@ -50,8 +50,9 @@
                     房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
                 </div>
 
+                <!--  corpStatus为公司状态，0：已分配，1：被删除，2：被替换 replaceReason: null -->
                 <div class="filed">装修公司：<br>
-                    <span v-for="(item,index) in props.item.corpInfo">{{item.corpName}}<br></span>
+                    <span v-for="(item,index) in props.item.corpList" :class="item.corpStatus != 0 ?'decoration' : ''">{{item.corpName}}<br></span>
                 </div>
 
                 <div class="filed">下单时间:{{props.item.orderGeneratedTime}}<br>分单时间:{{props.item.orderAssignTime}}</div>
@@ -90,7 +91,7 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API, Util} from  '../../../service/index';
+    import {EventBus, Constants, API, Util} from '../../../service/index';
     import UzGrid from "../../../components/Grid";
     import UzTabs from "../../../components/Tabs";
     import Button from "iview/src/components/button";
@@ -151,14 +152,14 @@
                 return this.$refs.listview;
             }
         },
-        mounted () {
+        mounted() {
             api = new API(this);
         },
-        activated(){
+        activated() {
             EventBus.$emit(Constants.EventBus.update_main_tab_index, 0);
         },
         methods: {
-            doSearch(){
+            doSearch() {
                 if (this.search_word.trim()) {
                     this.listview.rest();
                 } else {
@@ -167,7 +168,7 @@
                     });
                 }
             },
-            handleParam(){
+            handleParam() {
                 let param = {};
                 if (this.search_word.trim()) {
                     param.keyword = this.search_word;
@@ -182,20 +183,19 @@
                 }
                 return param;
             },
-            handleResult(datas){
+            handleResult(datas) {
                 datas.forEach((item, index) => {
-                    console.log(item.status, Util.handleOrderButton(item));
                     datas[index].buttons = Util.handleOrderButton(item);
                 });
                 return datas;
             },
-            handleTabChange(val){
+            handleTabChange(val) {
                 this.activeTab = val;
 
                 this.search_word = '';
                 this.listview.rest();
             },
-            handleTabChange1(val){
+            handleTabChange1(val) {
                 if (this.activeTab == 2) {
                     this.activeTab1 = val;
                 } else if (this.activeTab == 3) {
@@ -205,15 +205,18 @@
                 this.search_word = '';
                 this.listview.rest();
             },
-            allot_manager(order_id){
+            allot_manager(order_id) {
                 this.$router.push({name: 'cm_allot_manager', query: {orderNo: order_id}});
             },
-            addCityManagerRemark(orderNo, cityManagerRemark){
+            allot_company(order_id) {
+                this.$router.push({name: 'cm_allot_company', query: {orderNo: order_id}});
+            },
+            addCityManagerRemark(orderNo, cityManagerRemark) {
                 this.orderNo = orderNo;
                 this.cityManagerRemark = cityManagerRemark;
                 this.isShowRemark = true;
             },
-            closeDialogManagerRemark(flag){
+            closeDialogManagerRemark(flag) {
                 if (flag) {
                     api.post(Constants.method.cm_add_remark, {
                         order_no: this.orderNo,
@@ -232,7 +235,7 @@
                     this.isShowRemark = false;
                 }
             },
-            closeDialog(flag){
+            closeDialog(flag) {
                 this.dialog[this.dialog.type] = false;
 
                 if (flag) {
@@ -262,7 +265,7 @@
                     }
                 }
             },
-            openDialog(type, orderNo){
+            openDialog(type, orderNo) {
                 switch (type) {
                     case 'note':
                         this.dialog.title = '城市经理备注';
@@ -289,7 +292,7 @@
                 this.dialog[type] = true;
                 this.dialog.type = type;
             },
-            showToast(message){
+            showToast(message) {
                 EventBus.$emit(Constants.EventBus.showToast, {
                     message: message
                 });
@@ -333,6 +336,10 @@
 
     .filed:last-child {
         border-bottom: 0;
+    }
+
+    .decoration {
+        text-decoration: line-through #ed3f14;
     }
 
     .tag {

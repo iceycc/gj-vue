@@ -2,14 +2,16 @@
     <div class="_page">
         <div class="search_bar">
             <mu-text-field class="search_text" hintText="请输入装修公司名称"
-                           type="text"
-                           v-model="search_word"/>
+                           type="text" v-model="search_word"/>
             <mu-icon-button icon="search" slot="right" @click="doSearch"/>
         </div>
-        <uz-auto-list ref="listview" :parent="this" :url="url" :handleparam="handleparam">
+        <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
                 <div class="filed title">
-                    <div class="name">公司名称:{{props.item.companyname}}</div>
+                    <div class="name">
+                        <span class="tag"
+                              v-if="props.item.like_corp || props.item.promp_corp">{{props.item.like_corp ? '意向' : ''}} {{props.item.promp_corp ? '活动' : ''}} </span>{{props.item.companyname}}
+                    </div>
                     <i-checkbox v-model="props.item.checked"></i-checkbox>
                 </div>
             </template>
@@ -19,7 +21,7 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API} from  '../../../service/index';
+    import {EventBus, Constants, API} from '../../../service/index';
     import UzGrid from "../../../components/Grid";
     import UzTabs from "../../../components/Tabs";
     import UzAutoList from "../../../components/AutoList";
@@ -39,48 +41,39 @@
         name: 'cm-order-allot-company',
         data() {
             return {
-                dialog: {
-                    note: false,
-                    unable: false,
-                    charge: false,
-                    info: false,
-                    type: '',
-                    title: ''
-                },
                 search_word: '',
-                search_type: 0,
-                url: Constants.method.cm_companyList,
+                url: Constants.method.cm_corp_list,
             }
         },
         computed: {
             listview: function () {
                 return this.$refs.listview;
             },
-            order_id: function () {
-                return this.$route.query.order_id;
+            order_no: function () {
+                return this.$route.query.orderNo;
             }
         },
-        mounted () {
+        mounted() {
             api = new API(this);
         },
-        created(){
+        created() {
         },
         methods: {
-            doSearch(){
-                this.listview.initList();
-                this.listview.getdata();
+            doSearch() {
+                this.listview.rest();
             },
-            handleparam(){
+            handleParam() {
                 let param = {};
                 if (this.search_word.trim()) {
-                    param.keyWord = this.search_word.trim()
+                    param.keyword = this.search_word.trim()
                 }
-                param.orderid = this.order_id;
+                param.order_no = this.order_no;
 
                 return param;
             },
-            action(){
+            action() {
                 let list = this.listview.getCheckList();
+                console.log(list);
                 if (list.length == 0) {
                     EventBus.$emit(Constants.EventBus.showToast, {
                         message: "至少选择1家装修公司"
@@ -99,19 +92,13 @@
                     })
                     param.compid = company;
 
-                    this.allot_company(param);
+                    //this.allot_company(param);
                 }
             },
-            allot_company(param){
+            allot_company(param) {
                 api.post(Constants.method.cm_fpComp, param, (result) => {
                     console.log(result);
                 });
-            },
-            closeDialog(){
-                this.dialog[this.dialog.type] = false;
-            },
-            openDialog(type){
-
             }
         }
     }
@@ -125,13 +112,8 @@
         flex-direction: column;
     }
 
-    .tabs {
-        border-top: 0px;
-    }
-
     .filed {
         padding: 10px;
-        font-size: 14px;
         width: 100%;
         font-size: 16px;
         display: flex;
@@ -142,6 +124,12 @@
             text-overflow: ellipsis;
             white-space: nowrap;
             flex-grow: 1;
+            .tag {
+                background: #ed3f14;
+                color: #FFFFFF;
+                padding: 3px;
+                margin-right: 5px;
+            }
         }
     }
 

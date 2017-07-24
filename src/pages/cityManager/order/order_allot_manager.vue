@@ -7,7 +7,7 @@
             <mu-icon-button icon="search" slot="right" @click="doSearch"/>
         </div>
         <!--   @loadMore="loadMore" @itemOnClick="itemOnClick"-->
-        <uz-auto-list ref="listview" :parent="this" :url="url" :handleparam="handleparam">
+        <uz-auto-list ref="listview" :parent="this" :url="url">
             <template slot="item" scope="props">
                 <div class="filed title">
                     <div class="name">管家姓名:{{props.item.smName}}</div>
@@ -55,7 +55,7 @@
                 this.listview.initList();
                 this.listview.getdata();
             },
-            handleparam(){//处理参数
+            handleParam(){//处理参数
                 let param = {};
                 if (this.search_word.trim()) {
                     param.keyword = this.search_word.trim()
