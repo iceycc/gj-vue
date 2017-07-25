@@ -27,6 +27,9 @@ export const method = {
     cm_get_month_info: 'r=order/get-month-info',                            //城市经理-订单列表-订单详情
     cm_corp_list: 'r=order/corp-list',                                      //城市经理-分配装修公司列表
     cm_assign_corp: 'r=order/assign-corp',                                  //城市经理-分配公司操作
+    cm_replace_corp: 'r=order/replace-corp',                                //城市经理-替换公司操作
+    cm_get_corps: 'r=order/get-corps',                                      //城市经理-申请替换详情页
+    cm_del_corps: 'r=order/del-corp',                                       //城市经理-删除公司操作
 }
 
 export const EventBus = {
@@ -307,7 +310,61 @@ export const CM_Order = {
         name: '全部订单',
         value: '4'
     }],
-    search_field: Order.search_field,
+    search_field_index: [{
+        title: '订单编号',
+        value: 0,
+        key: 'order_no',
+        hintText: '请输入订单编号',
+        type: 'number'
+    }, {
+        title: '用户名称',
+        value: 1,
+        key: 'title',
+        hintText: '请输入用户名称',
+        type: 'text'
+    }, {
+        title: '小区地址',
+        value: 2,
+        key: 'address',
+        hintText: '请输入小区地址',
+        type: 'text'
+    }],
+    search_field: [{
+        title: '装修公司',
+        value: 0,
+        key: 'company',
+        hintText: '请输入装修公司名称',
+        type: 'text',
+        types: [0, 1, 2, 3, 4, 5]
+    }, {
+        title: '订单编号',
+        value: 1,
+        key: 'title',
+        hintText: '请输入订单编号',
+        type: 'text',
+        types: [0, 1, 2, 3, 4, 5]
+    }, {
+        title: '管家经理',
+        value: 2,
+        key: 'manager',
+        hintText: '请输入管家经理名称',
+        type: 'text',
+        types: [0, 1, 2]
+    }, {
+        title: '业主姓名',
+        value: 3,
+        key: 'name',
+        hintText: '请输入业主姓名',
+        type: 'text',
+        types: [3, 4, 5]
+    }, {
+        title: '订单来源',
+        value: 4,
+        key: 'name',
+        hintText: '请输入订单来源',
+        type: 'text',
+        types: [4]
+    }],
     node: {
         before: [{
             name: '预约见面'

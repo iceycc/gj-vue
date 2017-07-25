@@ -50,7 +50,8 @@
                     房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
                 </div>
 
-                <div class="filed">装修公司：<br>
+                <div class="filed">
+                    <div>装修公司：<span @click="allot_applyfor_company(props.item.orderNo)">申请替换</span></div>
                     <span v-for="(item,index) in props.item.corpList" :class="item.corpStatus != 0 ?'decoration' : ''">{{item.corpName}}<br></span>
                 </div>
 
@@ -75,7 +76,6 @@
             </i-button>
         </mu-dialog>
         <mu-dialog :open="dialog[dialog.type]" :title="dialog.title" @close="closeDialog">
-
             <div v-if="dialog.type != 'unable'">{{dialog.desc}}</div>
             <mu-text-field v-if="dialog.type == 'unable'" class="input_text"
                            :hintText="dialog.desc" v-model="dialog.input" multiLine :rows="3" :rowsMax="6"/>
@@ -142,7 +142,7 @@
                 }],
                 search_word: '',
                 search_type: 0,
-                search_field: Constants.CM_Order.search_field,
+                search_field: Constants.CM_Order.search_field_index,
                 url: Constants.method.cm_orderList
             }
         },
@@ -209,6 +209,9 @@
             },
             allot_company(order_id) {
                 this.$router.push({name: 'cm_allot_company', query: {orderNo: order_id}});
+            },
+            allot_applyfor_company(order_id) {
+                this.$router.push({name: 'cm_allot_applyfor_company', query: {orderNo: order_id}});
             },
             addCityManagerRemark(orderNo, cityManagerRemark) {
                 this.orderNo = orderNo;

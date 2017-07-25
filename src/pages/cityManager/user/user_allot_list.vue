@@ -1,27 +1,27 @@
 <template>
     <div class="_page">
         <div class="date-class">
-            <mu-select-field v-model="start_year" class="select-class">
+            <mu-select-field v-model="start_year" class="select-class" @change="updateDate">
                 <template v-for="item in year_field">
                     <mu-menu-item :value="item" :title="item+''"/>
                 </template>
             </mu-select-field>
             <div class="str">年</div>
-            <mu-select-field v-model="start_month" class="select-class">
-                <template v-for="item in start_field">
+            <mu-select-field v-model="start_month" class="select-class" @change="updateDate">
+                <template v-for="item in month_field">
                     <mu-menu-item :value="item" :title="item+''"/>
                 </template>
             </mu-select-field>
             <div class="str">月</div>
             <div class="str divider">至</div>
-            <mu-select-field v-model="end_year" class="select-class">
+            <mu-select-field v-model="end_year" class="select-class" @change="updateDate">
                 <template v-for="item in year_field">
                     <mu-menu-item :value="item" :title="item+''"/>
                 </template>
             </mu-select-field>
             <div class="str">年</div>
-            <mu-select-field v-model="end_month" class="select-class">
-                <template v-for="item in start_field">
+            <mu-select-field v-model="end_month" class="select-class" @change="updateDate">
+                <template v-for="item in month_field">
                     <mu-menu-item :value="item" :title="item+''"/>
                 </template>
             </mu-select-field>
@@ -30,7 +30,8 @@
         <div class="search_bar">
             <mu-select-field v-model="search_type" class="search_type">
                 <template v-for="item in search_field">
-                    <mu-menu-item :value="item.value" :title="item.title"/>
+                    <mu-menu-item :value="item.value" :title="item.title"
+                                  v-if="item.types.indexOf(parseInt(type)) > -1"/>
                 </template>
             </mu-select-field>
             <mu-text-field class="search_text" :hintText="search_field[search_type].hintText"
@@ -165,7 +166,7 @@
                 }
                 return temp;
             },
-            start_field: function () {
+            month_field: function () {
                 let temp = [];
                 for (let i = 0; i < 12; i++) {
                     temp.push(i + 1);
@@ -208,9 +209,13 @@
             }
         },
         activated() {
-
         },
         methods: {
+            updateDate() {
+                setTimeout(()=>{
+                    this.$refs.listview.rest();
+                },1);
+            },
             doSearch() {
                 if (this.search_word) {
                     this.$refs.listview.rest();
@@ -230,6 +235,8 @@
                     param.search_type = this.search_type;
                 }
 
+                param.start_date = this.start_year + '-' + this.start_month;
+                param.end_date = this.end_year + '-' + this.end_month;
                 return param;
             },
             itemOnClick(item) {

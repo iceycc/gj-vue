@@ -23,6 +23,7 @@ import CM_User_Allot_List from './cityManager/user/user_allot_list.vue'
 import CM_Order_Index from './cityManager/order/order_index.vue'
 import CM_Order_Allot_Manager from './cityManager/order/order_allot_manager.vue'
 import CM_Order_Allot_Company from './cityManager/order/order_allot_company.vue'
+import CM_Order_Allot_Applyfor_Company from './cityManager/order/order_allot_applyfor_company.vue'
 import CM_Order_Detail from './cityManager/order/order_detail.vue'
 
 import Evaluate_List from './other/evaluate_list.vue'
@@ -45,6 +46,7 @@ export default {
     CM_Order_Index,
     CM_Order_Allot_Manager,
     CM_Order_Allot_Company,
+    CM_Order_Allot_Applyfor_Company,
     CM_Order_Detail,
     CM_User_Allot_List,
     Evaluate_Detail

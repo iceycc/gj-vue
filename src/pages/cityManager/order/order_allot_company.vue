@@ -7,7 +7,7 @@
         </div>
         <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
-                <div class="filed title">
+                <div class="filed title" :class="props.item.corp_status == 2 ?'ed' : ''">
                     <div class="name">
                         <span class="tag"
                               v-if="props.item.like_corp || props.item.promp_corp">{{props.item.like_corp ? '意向' : ''}} {{props.item.promp_corp ? '活动' : ''}} </span>{{props.item.corpName}}
@@ -16,12 +16,21 @@
                 </div>
             </template>
         </uz-auto-list>
-        <i-button class="sub-btn" type="primary" size="small" @click="action">提交</i-button>
+        <i-button class="sub-btn" type="primary" size="small" @click="action">{{isReplace ? '替换' : '提交'}}</i-button>
+        <mu-dialog :open="dialog.show" title="替换原因" @close="closeDialog">
+            <mu-text-field class="input_text"
+                           hintText="请填写替换原因" v-model="dialog.input" multiLine :rows="3" :rowsMax="6"/>
+            <i-button slot="actions" size="small" @click="closeDialog(false)">取消</i-button>
+            <i-button slot="actions" type="primary" size="small" @click="closeDialog(true)"
+                      style="margin-left: 20px">
+                提交
+            </i-button>
+        </mu-dialog>
     </div>
 </template>
 
 <script>
-    import {EventBus, Constants, API} from '../../../service/index';
+    import {EventBus, Constants, API, mixins} from '../../../service/index';
     import UzGrid from "../../../components/Grid";
     import UzTabs from "../../../components/Tabs";
     import UzAutoList from "../../../components/AutoList";
@@ -39,9 +48,15 @@
             UzGrid
         },
         name: 'cm-order-allot-company',
+        mixins: [mixins],
         data() {
             return {
+                dialog: {
+                    show: false,
+                    input: ''
+                },
                 search_word: '',
+                isReplace: false,
                 url: Constants.method.cm_corp_list,
             }
         },
@@ -57,6 +72,10 @@
             api = new API(this);
         },
         created() {
+            if (this.$route.query.corpNo) {
+                this.setTitle('申请替换');
+                this.isReplace = true;
+            }
         },
         methods: {
             doSearch() {
@@ -73,16 +92,21 @@
             },
             action() {
                 let list = this.listview.getCheckList();
-                console.log(list);
                 if (list.length == 0) {
                     EventBus.$emit(Constants.EventBus.showToast, {
                         message: "至少选择1家装修公司"
                     });
-                } else if (list.length > 3) {
+                } else if (list.length > 1 && this.isReplace) {
+                    EventBus.$emit(Constants.EventBus.showToast, {
+                        message: "替换模式 只能选择一家公司"
+                    });
+                }
+                else if (list.length > 3) {
                     EventBus.$emit(Constants.EventBus.showToast, {
                         message: "最多选择3家装修公司"
                     });
-                } else {
+                }
+                else {
                     let param = {};
                     param.order_no = this.order_no;
 
@@ -92,13 +116,45 @@
                     });
                     param.corp_no = company.substring(0, company.length - 1);
 
-                    this.allot_company(param);
+                    if (this.isReplace) {
+                        param.corp_no_replaced = this.$route.query.corpNo;
+                        this.showDialog(param);
+                    } else {
+                        this.allot_company(param);
+                    }
+
                 }
             },
             allot_company(param) {
-                api.post(Constants.method.cm_assign_corp, param, (result) => {
-                    console.log(result);
+                let url = Constants.method.cm_assign_corp;
+                if (this.isReplace) {
+                    url = Constants.method.cm_replace_corp;
+                }
+                api.post(url, param, (result) => {
+                    EventBus.$emit(Constants.EventBus.showToast, {
+                        message: '操作成功'
+                    });
+                    this.$router.go(-1);
                 });
+            },
+            showDialog(param) {
+                this.dialog.show = true;
+                this.dialog.param = param;
+            },
+            closeDialog(flag) {
+                if (flag) {
+                    if(this.dialog.input){
+                        this.dialog.param.replace_reason = this.dialog.input;
+                        this.allot_company(this.dialog.param);
+                    }else{
+                        EventBus.$emit(Constants.EventBus.showToast, {
+                            message: '请填写替换原因'
+                        });
+                    }
+                }
+                this.dialog.show = false;
+                this.dialog.input = '';
+                this.dialog.param = null;
             }
         }
     }
@@ -136,5 +192,9 @@
     .sub-btn {
         padding: 10px;
         margin: 10px;
+    }
+
+    .ed {
+        background: #e8e8e8;
     }
 </style>

@@ -100,6 +100,12 @@ let router = new Router({
             meta: {title: '装修公司列表', keepAlive: false}
         },
         {
+            path: '/cm_allot_applyfor_company',
+            name: 'cm_allot_applyfor_company',
+            component: pages.CM_Order_Allot_Applyfor_Company,
+            meta: {title: '申请装修替换', keepAlive: false}
+        },
+        {
             path: '/cm_order_detail',
             name: 'cm_order_detail',
             component: pages.CM_Order_Detail,

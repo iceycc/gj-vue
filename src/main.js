@@ -3,6 +3,7 @@
 import Vue from 'vue'
 
 import VueLocalStorage from 'vue-localstorage'
+
 Vue.use(VueLocalStorage)
 
 import App from './App'
@@ -64,15 +65,9 @@ axios.interceptors.response.use((response) => {
         EventBus.$emit(Constants.EventBus.showToast, {
             message: response.data.message
         });
-        return Promise.reject({
-            msg: response.data.message,
-            data: response
-        });
+        console.log('请求失败,code=' + response.data.code, response.data);
     } else {
-        return Promise.reject({
-            msg: 'api 不符合规范',
-            data: response
-        });
+        console.log('api 不符合规范', response.data);
     }
 }, (error) => {
     console.log(error);
