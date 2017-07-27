@@ -30,7 +30,8 @@
                 装修公司
                 <div slot="content">
                     <div class="filed">
-                        <span v-for="(item,index) in data.corpList" :class="item.corpStatus != 0 ?'decoration' : ''">{{item.corpName}}<br></span>
+                        <span v-for="(item,index) in data.corpList"
+                              :class="('corpStatus' in item && item.corpStatus != 0) ?'decoration' : ''">{{item.corpName}}<br></span>
                     </div>
                 </div>
             </panel>
@@ -45,7 +46,7 @@
                     <div class="filed">实收金额: {{data.deposit.paidIn}}元</div>
                     <div class="filed">支付凭证: {{data.deposit.receipt}}</div>
                     <div class="filed">支付凭证:
-                        <img :src="data.deposit.receiptPhoto" >
+                        <img :src="data.deposit.receiptPhoto">
                     </div>
                     <div class="filed">付款人: {{data.deposit.payer}}</div>
                 </div>
@@ -118,7 +119,7 @@
         border-bottom: 0;
     }
 
-    .decoration{
+    .decoration {
         text-decoration: line-through #ed3f14;
     }
 

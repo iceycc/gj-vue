@@ -7,10 +7,13 @@ let test = 'http://10.1.40.41/bang/www/';
 let test1 = 'http://bpre.uz.com/';
 let test2 = 'http://bang.uz.com/';
 let test3 = 'http://10.1.40.81/basic/web/';
+let test4 = 'http://service.intra.uzhuang.com/';
+
+const baseURL = test4 + 'index.php';
 
 export default {
     method: 'post',
-    baseURL: test3 + 'index.php',
+    baseURL: baseURL,
     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
     // `transformRequest`允许在请求数据发送到服务器之前对其进行更改
     // 这只适用于请求方法'PUT'，'POST'和'PATCH'
@@ -32,7 +35,7 @@ export default {
         return Qs.stringify(params, {arrayFormat: 'brackets'})
     },
     // `timeout`指定请求超时之前的毫秒数。
-    timeout: 3000,
+    timeout: 10000,
     // `withCredentials`指示是否跨站点访问控制请求
     withCredentials: false,
     // “responseType”表示服务器将响应的数据类型

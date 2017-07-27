@@ -6,7 +6,7 @@
 import axios from 'axios'
 import config from './config'
 import Qs from 'qs'
-import {EventBus, Constants, JsBridge} from  '../service/index';
+import {EventBus, Constants, JsBridge} from '../service/index';
 
 class API {
 
@@ -15,18 +15,20 @@ class API {
     }
 
     post(url, param, success, fail, finish) {
-        let _url = config.baseURL + '?' + url;
-        return this._request(_url, 'post', param, success, fail, finish)
+        return this._request(url, 'post', param, success, fail, finish)
     }
 
     get(url, param, success, fail, finish) {
-        let _url = url;
-        if (param)
-            _url = config.baseURL + '?' + url + '&' + Qs.stringify(param);
-        return this._request(_url, 'get', success, fail, finish)
+        return this._request(url, 'get', param, success, fail, finish)
+    }
+
+    isHasHttp(url) {
+        return url.indexOf('http') === 0
     }
 
     _request(url, type, param, success, fail, finish) {
+        url = this.isHasHttp(url) ? url : config.baseURL + '?' + url;
+
         config.method = type;
 
         //添加请求参数
@@ -36,16 +38,15 @@ class API {
         let userStr = JsBridge.getStorage('user');
         if (userStr) {
             let user = JSON.parse(userStr);
-            param.uid = user.uid;
+            param.mid = user.uid;
+            param.m_city = user.cityarea;
             param.app_env = '' + process.env.NODE_ENV;
             param.app_version = process.env.NODE_VERSION;
             param.app_model = navigator.userAgent;
         }
 
-        if (url.indexOf('10.1.40.81') != -1) {//测试数据
-            param.mid = 21922;
-            param.m_city = 3360;
-        }
+        /*        param.mid = 21922;
+                param.m_city = 3360;*/
 
         let request;
         switch (config.method) {
@@ -60,18 +61,21 @@ class API {
 
         request.then((response) => {
             let result = response.data;
-            if (response.code === 0) {
-                if (success) {
-                    success(result, response);
-                }
-            } else {
-                if (fail) {
-                    fail(result);
-                }
-                EventBus.$emit(Constants.EventBus.showToast, {
-                    message: result.message
-                });
-            }
+
+            success(result, response);
+
+            /*            if (response.code === 0) {
+                            if (success) {
+
+                            }
+                        } else {
+                            if (fail) {
+                                fail(result);
+                            }
+                            EventBus.$emit(Constants.EventBus.showToast, {
+                                message: result.message
+                            });
+                        }*/
 
             if (finish)
                 finish();
@@ -85,4 +89,5 @@ class API {
     }
 
 }
+
 export default API;

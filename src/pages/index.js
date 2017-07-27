@@ -42,12 +42,12 @@ export default {
     Order_Node,
     order_test,
     Guanjia_Data,
-    Evaluate_List,
     CM_Order_Index,
     CM_Order_Allot_Manager,
     CM_Order_Allot_Company,
     CM_Order_Allot_Applyfor_Company,
     CM_Order_Detail,
     CM_User_Allot_List,
+    Evaluate_List,
     Evaluate_Detail
 }

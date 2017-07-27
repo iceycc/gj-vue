@@ -15,15 +15,18 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API, mixins, JsBridge} from  '../../service/index';
+    import {EventBus, Constants, API, mixins, JsBridge} from '../../service/index';
+
     let api;
 
     export default {
         name: 'user_login',
         mixins: [mixins],
         data() {
-            /*            username: 'guanjia02',
-             pass: '123456',*/
+            /*
+             username: 'guanjia02',
+             pass: '123456'
+             */
             return {
                 username: 'gzjl',
                 pass: 'wuzhi1',
@@ -31,17 +34,16 @@
                 error_pass: ''
             }
         },
-        created(){
+        created() {
             api = new API(this);
         },
         methods: {
-            doLogin(){
+            doLogin() {
                 if (!this.username.trim()) {
                     this.error_user = '用户名不能为空';
                     return;
                 }
                 this.error_user = '';
-
 
                 if (!this.pass.trim()) {
                     this.error_pass = '密码不能为空';
@@ -49,15 +51,13 @@
                 }
                 this.error_pass = '';
 
-                api.post(Constants.method.login, {
+                api.get('http://bang.uz.com/index.php?' + Constants.method.login, {
                     username: this.username,
                     password: this.pass
                 }, (result) => {
-                    JsBridge.setStorage('user', result)
-
-                    this.$router.push({name: 'index'});
+                    JsBridge.setStorage('user', result);
+                    this.$router.push({name: 'cm_order_index'});
                 });
-
             }
         }
     }

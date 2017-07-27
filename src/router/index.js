@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import {EventBus, Constants, JsBridge} from  '../service/index';
+import {EventBus, Constants, JsBridge} from '../service/index';
 import pages from '../pages/index.js'
 
 Vue.use(Router);
@@ -12,6 +12,7 @@ let router = new Router({
             path: '/',
             name: 'index',
             component: pages.Index,
+            redirect: { name: 'cm_order_index' },
             children: [{
                 path: 'order',
                 name: 'order',
@@ -124,7 +125,7 @@ let router = new Router({
             meta: {title: '测试'}
         }
     ],
-    scrollBehavior (to, from, savedPosition) {
+    scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
         } else {
@@ -158,4 +159,4 @@ router.beforeEach((to, from, next) => {
     next();
 })
 
-export default router ;
+export default router;

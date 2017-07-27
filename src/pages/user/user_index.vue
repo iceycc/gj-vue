@@ -26,7 +26,6 @@
         <div class="layout" v-else>
             <div class="guanjia-data-title">
                 <div class="title">城市经理数据(本月)</div>
-                <div @click="toGuanjiaData">更多</div>
             </div>
             <div class="guanjia-data">
                 <div class="data" @click="openPage(0)">本月派单数:{{hkData.orderQty}}</div>

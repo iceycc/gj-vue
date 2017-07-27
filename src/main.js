@@ -59,7 +59,9 @@ import EventBus from "./service/EventBus";
 import * as Constants from "./service/Constants";
 
 axios.interceptors.response.use((response) => {
-    if (response.data.code === 0) {
+    if (response.config.url.indexOf(response.config.baseURL) === -1) {//非内部api接口处理
+        return response.data;
+    } else if (response.data.code === 0) {
         return response.data;
     } else if ('code' in response.data) {
         EventBus.$emit(Constants.EventBus.showToast, {
