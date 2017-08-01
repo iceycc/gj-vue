@@ -28,8 +28,8 @@
              pass: '123456'
              */
             return {
-                username: 'gzjl',
-                pass: 'wuzhi1',
+                username: 'csjl',
+                pass: '123456',
                 error_user: '',
                 error_pass: ''
             }
@@ -51,12 +51,16 @@
                 }
                 this.error_pass = '';
 
-                api.get('http://bang.uz.com/index.php?' + Constants.method.login, {
+                api.get('http://bpre.uz.com/index.php?' + Constants.method.login, {
                     username: this.username,
                     password: this.pass
                 }, (result) => {
-                    JsBridge.setStorage('user', result);
-                    this.$router.push({name: 'cm_order_index'});
+                    if (result.role != 38) {
+                        alert('账户角色异常:' + result.role);
+                    } else {
+                        JsBridge.setStorage('user', result);
+                        this.$router.push({name: 'cm_order_index'});
+                    }
                 });
             }
         }

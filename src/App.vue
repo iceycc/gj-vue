@@ -16,12 +16,11 @@
 
 <script>
     import {EventBus, Constants} from  './service/index';
-
     export default {
         name: 'app',
         data(){
             return {
-                title: '管家端',
+                title: '城市经理',
                 icon_left: 'arrow_back',
                 toast: false,
                 toast_message: '',

@@ -51,7 +51,9 @@
                 </div>
 
                 <div class="filed">
-                    <div>装修公司：<span @click="allot_applyfor_company(props.item.orderNo)">申请替换</span></div>
+                    <div class="company_name"><span>装修公司：</span><span v-if="props.item.corpList.length > 0"
+                                                                      @click="allot_applyfor_company(props.item.orderNo)">申请替换</span>
+                    </div>
                     <span v-for="(item,index) in props.item.corpList" :class="item.corpStatus != 0 ?'decoration' : ''">{{item.corpName}}<br></span>
                 </div>
 
@@ -284,6 +286,7 @@
                     case 'info':
                         this.dialog.title = '信息费';
                         this.dialog.desc = '此订单是否确定为信息费订单';
+                        break;
                     case 'rminfo':
                         this.dialog.title = '取消信息费';
                         this.dialog.desc = '取消信息费设置';
@@ -330,6 +333,17 @@
         font-size: px2rem(8);
         width: 100%;
         border-bottom: 1px solid #e4e4e4;
+
+        .company_name {
+            display: flex;
+            flex-direction: row;
+            span:nth-child(1) {
+                flex-grow: 1;
+            }
+            span:nth-child(2) {
+                color: #2b85e4;
+            }
+        }
     }
 
     .filed:first-child {

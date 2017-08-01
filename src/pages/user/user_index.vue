@@ -31,9 +31,15 @@
                 <div class="data" @click="openPage(0)">本月派单数:{{hkData.orderQty}}</div>
                 <div class="data" @click="openPage(1)">见面客户数:{{hkData.meetQty}}</div>
                 <div class="data data-full" @click="openPage(2)">量房客户数:{{hkData.measureQty}}</div>
-                <div class="data data-full" @click="openPage(3)">定金总数据:{{hkData.depositMoney}}元({{hkData.despositQty}}单)</div>
-                <div class="data data-full" @click="openPage(4)">平台单合同总数据:{{hkData.customersContractMoney}}元({{hkData.customersContractQty}}单)</div>
-                <div class="data data-full" @click="openPage(5)">工地托管单合同数据:{{hkData.corpContractMoney}}元({{hkData.corpContractQty}}单)</div>
+                <div class="data data-full" @click="openPage(3)">
+                    定金总数据:{{hkData.depositMoney}}元({{hkData.despositQty}}单)
+                </div>
+                <div class="data data-full" @click="openPage(4)">
+                    平台单合同总数据:{{hkData.customersContractMoney}}元({{hkData.customersContractQty}}单)
+                </div>
+                <div class="data data-full" @click="openPage(5)">
+                    工地托管单合同数据:{{hkData.corpContractMoney}}元({{hkData.corpContractQty}}单)
+                </div>
             </div>
         </div>
         <br/>
@@ -44,8 +50,9 @@
 </template>
 
 <script>
-    import {EventBus, Constants, mixins, API} from  '../../service/index';
+    import {EventBus, Constants, mixins, API} from '../../service/index';
     import UzGrid from "../../components/Grid";
+
     let api;
 
     export default {
@@ -60,19 +67,20 @@
                 menus: Constants.User.menus
             }
         },
-        created(){
-            EventBus.$emit(Constants.EventBus.update_main_tab_index, 1);
-
+        created() {
             api = new API(this);
 
-            this.getGuanjiaData();
             //this.getScheduleData();
         },
+        activated() {
+            EventBus.$emit(Constants.EventBus.update_main_tab_index, 1);
+            this.getGuanjiaData();
+        },
         methods: {
-            doLogout(){
+            doLogout() {
                 this.logout();
             },
-            getGuanjiaData(){
+            getGuanjiaData() {
                 let url = Constants.method.hkDataList;
 
                 if (this.isCSJL)
@@ -93,7 +101,7 @@
                     });
                 });
             },
-            openPage(type){
+            openPage(type) {
                 this.router_push({
                     path: 'cm_user_allot_list',
                     query: {
@@ -101,15 +109,14 @@
                     }
                 })
             },
-            getScheduleData(){
+            getScheduleData() {
                 api.post(Constants.method.schedule, null, (result) => {
                 });
             },
-            toGuanjiaData(){
+            toGuanjiaData() {
                 this.router_push({path: 'guanjia_data'});
             },
-            handleGridChange(val)
-            {
+            handleGridChange(val) {
                 this.router_push(this.menus[val])
             }
         }
