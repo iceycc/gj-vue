@@ -361,6 +361,8 @@
     .tag {
         background: #2d8cf0;
         color: #FFFFFF;
+        padding: 2px 5px;
+        margin-right: 10px;
     }
 
 </style>

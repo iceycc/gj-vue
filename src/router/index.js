@@ -12,7 +12,7 @@ let router = new Router({
             path: '/',
             name: 'index',
             component: pages.Index,
-            redirect: { name: 'cm_order_index' },
+            redirect: {name: 'cm_order_index'},
             children: [{
                 path: 'order',
                 name: 'order',
@@ -144,7 +144,7 @@ router.beforeEach((to, from, next) => {
         return;
     }
 
-    let tabs = ['/', '/log', '/zhuge', '/order', '/userinfo'];
+    let tabs = ['/', '/log', '/zhuge', '/order', '/userinfo', '/user_login'];
 
     if (tabs.indexOf(to.path) != -1) { //控制返回箭头
         EventBus.$emit(Constants.EventBus.setTitleLeftIcon, '');

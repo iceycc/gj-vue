@@ -35,6 +35,7 @@
             }
         },
         created() {
+            EventBus.$emit(Constants.EventBus.setTitleLeftIcon, '');
             api = new API(this);
         },
         methods: {
@@ -56,7 +57,9 @@
                     password: this.pass
                 }, (result) => {
                     if (result.role != 38) {
-                        alert('账户角色异常:' + result.role);
+                        EventBus.$emit(Constants.EventBus.showToast, {
+                            message: '账户角色异常:' + result.role
+                        });
                     } else {
                         JsBridge.setStorage('user', result);
                         this.$router.push({name: 'cm_order_index'});
