@@ -82,33 +82,33 @@
         <uz-auto-list ref="listview" v-if="url.length > 0" :url="url" :notify="url+tab" @itemOnClick="itemOnClick">
             <template slot="item" scope="props">
                 <div class="tr" v-if="type == 0">
-                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.orderShow}}</span>
                     <span class="cell">{{props.item.corpQty}}家</span>
                     <span class="cell">{{props.item.smName}}</span>
                     <div class="cell"> > </div>
                 </div>
                 <div class="tr" v-if="type == 1">
-                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.orderShow}}</span>
                     <span class="cell">{{props.item.meetQty}}家</span>
                     <span class="cell">{{props.item.smName}}</span>
                     <div class="cell"> > </div>
                 </div>
 
                 <div class="tr" v-if="type == 2">
-                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.orderShow}}</span>
                     <span class="cell">{{props.item.measureQty}}家</span>
                     <span class="cell">{{props.item.smName}}</span>
                     <div class="cell"> > </div>
                 </div>
 
                 <div class="tr" v-if="type == 3 ">
-                    <span class="cell">{{props.item.orderNo}}</span>
+                    <span class="cell">{{props.item.orderShow}}</span>
                     <span class="cell">{{props.item.customersName}}</span>
                     <span class="cell">{{props.item.deposit}}</span>
                     <div class="cell"> > </div>
                 </div>
                 <div class="tr" v-if="type == 4 ">
-                    <span class="cell-5">{{props.item.orderNo}}</span>
+                    <span class="cell-5">{{props.item.orderShow}}</span>
                     <span class="cell-5">{{props.item.customersName}}</span>
                     <span class="cell-5">{{props.item.contractMoney}}</span>
                     <span class="cell-5">{{props.item.orderFrom}}</span>

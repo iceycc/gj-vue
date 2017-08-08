@@ -9,11 +9,15 @@
             </template>
         </mu-list>
         <mu-infinite-scroll v-if="isMore" :scroller="scroller" :loading="loading" @load="loadMore"/>
+        <div v-if="list.length <= 0" style="width: 100%;text-align: center;color: #9e9e9e;text-decoration:underline">
+            数据为空
+        </div>
     </div>
 </template>
 
 <script>
-    import {API} from  '../service/index';
+    import {API} from '../service/index';
+
     let api;
 
     export default {
@@ -26,7 +30,7 @@
                 default: null
             }
         },
-        data () {
+        data() {
             return {
                 scroller: null,
                 page: 1,
@@ -44,24 +48,24 @@
                 }
             }
         },
-        mounted () {
+        mounted() {
             api = new API(parent);
             this.scroller = this.$el;
             this.getdata();
         },
         methods: {
-            rest(){
+            rest() {
                 this.initList();
                 this.getdata();
             },
-            initList(){
+            initList() {
                 //初始化
                 this.list = [];
                 this.page = 1;
                 this.isMore = true;
                 this.loading = false;
             },
-            getdata(){
+            getdata() {
                 this.loading = true;
                 let param = {
                     page: this.page,
@@ -90,7 +94,7 @@
                     this.loading = false;
                 })
             },
-            getCheckList(){
+            getCheckList() {
                 let temp = [];
                 this.list.forEach((item) => {
                     if (item.checked) {
@@ -99,10 +103,10 @@
                 });
                 return temp;
             },
-            loadMore(){
+            loadMore() {
                 this.getdata();
             },
-            itemOnClick(index){
+            itemOnClick(index) {
                 this.$emit('itemOnClick', this.list[index], index);
             }
         }

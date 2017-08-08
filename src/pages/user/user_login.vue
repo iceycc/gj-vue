@@ -28,8 +28,8 @@
              pass: '123456'
              */
             return {
-                username: 'csjl',
-                pass: '123456',
+                username: 'szjl',
+                pass: 'wuzhi1',
                 error_user: '',
                 error_pass: ''
             }
@@ -52,7 +52,7 @@
                 }
                 this.error_pass = '';
 
-                api.get('http://bpre.uz.com/index.php?' + Constants.method.login, {
+                api.get('http://bang.uz.com/index.php?' + Constants.method.login, {
                     username: this.username,
                     password: this.pass
                 }, (result) => {

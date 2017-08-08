@@ -84,8 +84,7 @@
         methods: {
             getdata() {
                 api.post(Constants.method.cm_get_month_info, {
-                    //order_no: this.$route.query.orderNo,
-                    order_no: 11643,
+                    order_no: this.$route.query.orderNo,
                     tab: this.$route.query.tab,
                 }, (result) => {
                     console.log(result);

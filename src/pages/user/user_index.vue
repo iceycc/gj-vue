@@ -91,7 +91,7 @@
 
                     this.menus.forEach((item, index) => {
 
-                        if (this.menus[index].path == 'my_order') {
+                        if (this.menus[index].path == 'cm_order_index') {
                             this.menus[index].count = result.unhandledQty;
                         }
 

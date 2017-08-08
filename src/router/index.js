@@ -144,7 +144,7 @@ router.beforeEach((to, from, next) => {
         return;
     }
 
-    let tabs = ['/', '/log', '/zhuge', '/order', '/userinfo', '/user_login'];
+    let tabs = ['/', '/cm_order_index', '/zhuge', '/order', '/user_info', '/user_login'];
 
     if (tabs.indexOf(to.path) != -1) { //控制返回箭头
         EventBus.$emit(Constants.EventBus.setTitleLeftIcon, '');

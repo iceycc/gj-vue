@@ -3,13 +3,12 @@
  */
 import Qs from 'qs'
 
-let test = 'http://10.1.40.41/bang/www/';
-let test1 = 'http://bpre.uz.com/';
-let test2 = 'http://bang.uz.com/';
 let test3 = 'http://10.1.40.81/basic/web/';
-let test4 = 'http://service.intra.uzhuang.com/';
 
-const baseURL = test4 + 'index.php';
+let testURL = 'http://service.intra.uzhuang.com/';
+let loging = 'http://bang.uz.com/index.php';
+
+const baseURL = testURL + 'index.php';
 
 export default {
     method: 'post',
@@ -41,13 +40,13 @@ export default {
     // “responseType”表示服务器将响应的数据类型
     // 包括 'arraybuffer', 'blob', 'document', 'json', 'text', 'stream'
     responseType: 'json',
-/*    // `onUploadProgress`允许处理上传的进度事件
-    onUploadProgress: function (progressEvent) {
-    },
-    // `onDownloadProgress`允许处理下载的进度事件
-    onDownloadProgress: function (progressEvent) {
-        // Do whatever you want with the native progress event
-    },*/
+    /*    // `onUploadProgress`允许处理上传的进度事件
+        onUploadProgress: function (progressEvent) {
+        },
+        // `onDownloadProgress`允许处理下载的进度事件
+        onDownloadProgress: function (progressEvent) {
+            // Do whatever you want with the native progress event
+        },*/
     maxContentLength: 2000,
     // `validateStatus`定义是否解析或拒绝给定的promise
     validateStatus: function (status) {

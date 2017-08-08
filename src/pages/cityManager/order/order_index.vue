@@ -20,7 +20,7 @@
         <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
                 <div class="filed title"><span class="tag" v-if="props.item.orderMsgFee">信息费</span>
-                    <span class="tag" v-if="props.item.orderCharge">收费单</span>订单编号:{{props.item.orderNo}}
+                    <span class="tag" v-if="props.item.orderCharge">收费单</span>订单编号:{{props.item.orderShow}}
                 </div>
                 <div class="filed" v-if="props.item.buttons.length > 0">
                     <i-button v-if="props.item.buttons.indexOf(0) > -1" type="primary" size="small"
