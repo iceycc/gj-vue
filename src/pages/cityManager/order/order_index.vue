@@ -330,9 +330,9 @@
 
     .filed {
         padding: px2rem(10);
-        font-size: px2rem(8);
+        font-size: px2rem(14);
         width: 100%;
-        border-bottom: 1px solid #e4e4e4;
+        border-bottom: 1px solid #e8e8e8;
 
         .company_name {
             display: flex;

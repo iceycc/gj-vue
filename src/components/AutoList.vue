@@ -137,4 +137,8 @@
             background-color: #cccccc;
         }
     }
+
+    .mu-divider {
+        height: 2px;
+    }
 </style>

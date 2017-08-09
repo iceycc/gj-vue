@@ -151,7 +151,7 @@
                 margin-right: px2rem(20);
             }
             .user-text {
-                font-size: px2rem(14);
+                font-size: px2rem(16);
             }
             .user-text:first-child {
                 padding-bottom: px2rem(5);
@@ -160,7 +160,7 @@
 
         .guanjia-data-title {
             display: flex;
-            font-size: px2rem(14);
+            font-size: px2rem(16);
             .title {
                 flex-grow: 1;
                 text-align: left;
@@ -172,6 +172,7 @@
             flex-wrap: wrap;
             .data {
                 width: 50%;
+                font-size: px2rem(14);
                 text-align: left;
                 margin-top: px2rem(10);
             }
