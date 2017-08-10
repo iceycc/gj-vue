@@ -117,7 +117,15 @@
                 this.router_push({path: 'guanjia_data'});
             },
             handleGridChange(val) {
-                this.router_push(this.menus[val])
+                let value = this.menus[val];
+
+                if (value.path === 'cm_order_index') {
+                    value.params = {
+                        tab: 0
+                    }
+                }
+
+                this.router_push(value)
             }
         }
     }

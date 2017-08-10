@@ -24,6 +24,10 @@ export default {
             if (action.query) {
                 rou.query = action.query;
             }
+
+            if (action.params) {
+                rou.params = action.params;
+            }
             this.$router.push(rou);
         },
         logout() {

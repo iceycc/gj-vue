@@ -133,6 +133,7 @@
     import Button from "iview/src/components/button";
 
     let api;
+    let year = new Date().getFullYear();
 
     export default {
         components: {
@@ -145,8 +146,8 @@
         mixins: [mixins],
         data() {
             return {
-                start_year: new Date().getFullYear(),
-                end_year: new Date().getFullYear(),
+                start_year: year,
+                end_year: year,
                 start_month: new Date().getMonth() + 1,
                 end_month: new Date().getMonth() + 1,
                 search_word: '',
@@ -162,7 +163,7 @@
             year_field: function () {
                 let temp = [];
                 for (let i = 0; i < 5; i++) {
-                    temp.push(this.start_year - i);
+                    temp.push(year - i);
                 }
                 return temp;
             },
@@ -180,26 +181,32 @@
                 this.type = this.$route.query.type;
                 switch (parseInt(this.type)) {
                     case 0:
+                        this.setTitle('本月派单列表');
                         this.tab = 0;
                         this.url = Constants.method.cm_month_info;
                         break;
                     case 1:
+                        this.setTitle('见面客户列表');
                         this.tab = 1;
                         this.url = Constants.method.cm_month_info;
                         break;
                     case 2:
+                        this.setTitle('量房客户列表');
                         this.tab = 2;
                         this.url = Constants.method.cm_month_info;
                         break;
                     case 3:
+                        this.setTitle('已交定金列表');
                         this.tab = 0;
                         this.url = Constants.method.cm_month_money;
                         break;
                     case 4:
+                        this.setTitle('平台单列表');
                         this.tab = 1;
                         this.url = Constants.method.cm_month_money;
                         break;
                     case 5:
+                        this.setTitle('已签合同反推单列表');
                         this.tab = 2;
                         this.url = Constants.method.cm_month_money;
                         break;
@@ -212,9 +219,9 @@
         },
         methods: {
             updateDate() {
-                setTimeout(()=>{
+                setTimeout(() => {
                     this.$refs.listview.rest();
-                },1);
+                }, 1);
             },
             doSearch() {
                 if (this.search_word) {

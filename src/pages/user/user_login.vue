@@ -62,7 +62,7 @@
                         });
                     } else {
                         JsBridge.setStorage('user', result);
-                        this.$router.push({name: 'cm_order_index'});
+                        this.$router.push({name: 'user_info'});
                     }
                 });
             }

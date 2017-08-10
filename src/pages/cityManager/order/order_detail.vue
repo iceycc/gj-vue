@@ -6,21 +6,22 @@
                 <div slot="content">
                     <div>
                         <div class="filed">
-                            用户名:{{data.customersName}} | 订单来源:{{data.orderFrom}}|  订单状态:{{data.orderStatus}}
+                            订单编号:{{data.orderShow}}
+                        </div>
+                        <div class="filed">
+                            姓名:{{data.customersName}} | 订单来源:{{data.orderFrom}}|  订单状态:{{data.orderStatus}}
                         </div>
                         <div class="filed">
                             房屋面积:{{data.houseArea}}平 | 管家经理:{{data.smName}}
                         </div>
-                        <div class="filed">下单时间:{{data.orderGeneratedTime}}<br>分单时间:{{data.orderAssignTime}}
-                        </div>
                         <div class="filed">
                             装修预算:{{data.budget}}万元 装修方式:{{data.decorateType}} 装修风格:{{data.decorateStyle}}
                         </div>
-                        <div class="filed">客服备注:{{data.serviceRemark}}</div>
-                        <div class="filed"
-                             @click="addCityManagerRemark(data.orderNo,data.cityManagerRemark)">
-                            城市经理备注:{{data.cityManagerRemark}}
+                        <div class="filed">下单时间:{{data.orderGeneratedTime}}<br>分单时间:{{data.orderAssignTime}}
                         </div>
+
+                        <div class="filed" @click="showDialog(0)">客服备注:{{data.serviceRemark}}</div>
+                        <div class="filed">城市经理备注:{{data.cityManagerRemark}}</div>
                         <div class="filed">城市区域:{{data.addr}}</div>
                         <div class="filed">详细地址:{{data.detailAddr}}</div>
                     </div>
@@ -52,6 +53,12 @@
                 </div>
             </panel>
         </collapse>
+        <mu-dialog :open="dialog.isShow" :title="dialog.title" @close="closeDialog">
+            <div>{{dialog.msg}}</div>
+            <i-button slot="actions" type="primary" size="small" @click="closeDialog(true)" style="margin-left: 20px">
+                关闭
+            </i-button>
+        </mu-dialog>
     </div>
 </template>
 
@@ -72,7 +79,13 @@
         data() {
             return {
                 state: ['base', 'company'],
-                data: {}
+                tab: 0,
+                data: {},
+                dialog: {
+                    isShow: false,
+                    title: '',
+                    msg: ''
+                }
             }
         },
         mounted() {
@@ -80,6 +93,7 @@
             this.getdata();
         },
         created() {
+            this.tab = this.$route.query.tab;
         },
         methods: {
             getdata() {
@@ -90,6 +104,19 @@
                     console.log(result);
                     this.data = result;
                 });
+            },
+            showDialog(type) {
+                console.log(type);
+                if (type === 0) {
+                    this.dialog.title = '客服备注';
+                    this.dialog.msg = this.data.serviceRemark;
+                    this.dialog.isShow = true;
+                }
+            },
+            closeDialog() {
+                this.dialog.title = '';
+                this.dialog.msg = '';
+                this.dialog.isShow = false;
             }
         }
     }

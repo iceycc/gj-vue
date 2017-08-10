@@ -144,6 +144,7 @@
                 }],
                 search_word: '',
                 search_type: 0,
+                needRefresh: false,
                 search_field: Constants.CM_Order.search_field_index,
                 url: Constants.method.cm_orderList
             }
@@ -158,6 +159,14 @@
         },
         activated() {
             EventBus.$emit(Constants.EventBus.update_main_tab_index, 0);
+            console.log(this.$route);
+            if ('tab' in this.$route.params) {
+                this.handleTabChange(this.$route.params.tab);
+            } else {
+                if(this.needRefresh){
+                    this.handleTabChange(this.tab);
+                }
+            }
         },
         methods: {
             doSearch() {
@@ -207,9 +216,11 @@
                 this.listview.rest();
             },
             allot_manager(order_id) {
+                this.needRefresh = true;
                 this.$router.push({name: 'cm_allot_manager', query: {orderNo: order_id}});
             },
             allot_company(order_id) {
+                this.needRefresh = true;
                 this.$router.push({name: 'cm_allot_company', query: {orderNo: order_id}});
             },
             allot_applyfor_company(order_id) {
