@@ -91,6 +91,7 @@
             flex-direction: row;
             align-items: center;
             padding: 10px;
+            font-size: 14px;
         }
         .item:active {
             background-color: #cccccc;

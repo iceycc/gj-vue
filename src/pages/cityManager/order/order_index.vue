@@ -19,7 +19,7 @@
         </div>
         <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
-                <div class="filed title"><span class="tag" v-if="props.item.orderMsgFee">信息费</span>
+                <div class="filed title"><span class="tag" v-if="props.item.orderMsgFee">外销单</span>
                     <span class="tag" v-if="props.item.orderCharge">收费单</span>订单编号:{{props.item.orderShow}}
                 </div>
                 <div class="filed" v-if="props.item.buttons.length > 0">
@@ -37,7 +37,7 @@
                     </i-button>
                     <i-button v-if="props.item.buttons.indexOf(4) > -1" type="info"
                               size="small"
-                              @click="openDialog('info',props.item.orderNo)">信息费
+                              @click="openDialog('info',props.item.orderNo)">外销单
                     </i-button>
                     <i-button v-if="props.item.buttons.indexOf(5) > -1" type="info" size="small"
                               @click="openDialog('uncharge',props.item.orderNo)">取消收费单
@@ -54,10 +54,12 @@
                     <div class="company_name"><span>装修公司：</span><span v-if="props.item.corpList.length > 0"
                                                                       @click="allot_applyfor_company(props.item.orderNo)">申请替换</span>
                     </div>
-                    <span v-for="(item,index) in props.item.corpList" :class="item.corpStatus != 0 ?'decoration' : ''">{{item.corpName}}<br></span>
+                    <span v-for="(item,index) in props.item.corpList" :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}<br></span>
                 </div>
-
-                <div class="filed">下单时间:{{props.item.orderGeneratedTime}}<br>分单时间:{{props.item.orderAssignTime}}</div>
+                <div class="filed">{{props.item.sellToCorp ? '出售公司:' + props.item.sellToCorp : ''}}</div>
+                <div class="filed">
+                    下单时间:{{props.item.orderGeneratedTime}}<br>{{props.item.orderAssignTime ? '分单时间:' + props.item.orderAssignTime : ''}}
+                </div>
                 <div class="filed">
                     装修预算:{{props.item.budget}}万元 装修方式:{{props.item.decorateType}} 装修风格:{{props.item.decorateStyle}}
                 </div>
@@ -131,7 +133,7 @@
                     name: '无法承接',
                     value: '1'
                 }, {
-                    name: '信息费',
+                    name: '外销单',
                     value: '2'
                 }],
                 activeTab2: 0,
@@ -163,8 +165,8 @@
             if ('tab' in this.$route.params) {
                 this.handleTabChange(this.$route.params.tab);
             } else {
-                if(this.needRefresh){
-                    this.handleTabChange(this.tab);
+                if (this.needRefresh) {
+                    this.handleTabChange(this.activeTab);
                 }
             }
         },
@@ -295,12 +297,12 @@
                         this.dialog.desc = '此订单是否确定为收费订单';
                         break;
                     case 'info':
-                        this.dialog.title = '信息费';
-                        this.dialog.desc = '此订单是否确定为信息费订单';
+                        this.dialog.title = '外销单';
+                        this.dialog.desc = '此订单是否确定为外销单';
                         break;
                     case 'rminfo':
-                        this.dialog.title = '取消信息费';
-                        this.dialog.desc = '取消信息费设置';
+                        this.dialog.title = '取消外销单';
+                        this.dialog.desc = '取消外销单设置';
                         break;
                 }
 
@@ -363,10 +365,6 @@
 
     .filed:last-child {
         border-bottom: 0;
-    }
-
-    .decoration {
-        text-decoration: line-through #ed3f14;
     }
 
     .tag {

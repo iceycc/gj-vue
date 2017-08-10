@@ -1,8 +1,8 @@
 <template>
     <div class="page">
-        <div class="node-title">对{{data.node}}的服务评分</div>
-        <mu-divider></mu-divider>
         <div class="title"><span>业主:{{data.customersName}}</span><span class="date">{{data.commentDate}}</span></div>
+        <div class="node-title">对<span style="color: #2b85e4">{{data.node}}</span>的服务评分</div>
+        <mu-divider></mu-divider>
         <!--<div class="node"><span>节点:{{data.node}}</span></div>-->
         <div v-if="data.commentCorp">
             <div class="rate-title">给装修公司评分:</div>
@@ -34,12 +34,12 @@
             <div class="rate-title">业主评价</div>
             <div class="comment">{{data.comment}}</div>
         </div>
-
+        <div style="margin-top: 40px" @click="openlog">查看装修日志></div>
     </div>
 </template>
 
 <script>
-    import {EventBus, Constants, API, mixins} from  '../../service/index';
+    import {EventBus, Constants, API, mixins} from '../../service/index';
     import UzList from "../../components/List";
     import UzTabs from "../../components/Tabs";
     import rate from "iview/src/components/rate/";
@@ -62,7 +62,7 @@
                 node_no: 0
             }
         },
-        mounted(){
+        mounted() {
             this.setTitle('业主评价');
             api = new API(this);
 
@@ -74,7 +74,7 @@
                 console.log('参数异常');
             }
         },
-        activated(){
+        activated() {
             if (this.order_no != this.$route.query.order_no || this.node_no != this.$route.query.node_no) {
                 this.order_no = this.$route.query.order_no;
                 this.node_no = this.$route.query.node_no;
@@ -82,7 +82,7 @@
             }
         },
         methods: {
-            getdata(){
+            getdata() {
                 let param = {
                     order_no: this.order_no,
                     node_no: this.node_no,
@@ -100,6 +100,11 @@
                         message: result.message
                     });
                 });
+            },
+            openlog() {
+                let url = 'http://m.uzhuang.com/mobile-live_detail.html?live_id=' + this.data.orderNo;
+
+                window.open(url);
             }
         }
     }

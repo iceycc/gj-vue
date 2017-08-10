@@ -20,6 +20,20 @@
                         <div class="filed">下单时间:{{data.orderGeneratedTime}}<br>分单时间:{{data.orderAssignTime}}
                         </div>
 
+                        <div>
+                            <div class="filed">装修公司</div>
+                            <div class="filed" v-for="(item,index) in this.corpList" v-if="(item.corpStatus==0 && item.replaced==0) || item.corpStatus != 0">
+                                <span :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}</span>
+                                <span class="tag" v-if="item.corpStatus == 1" @click="showReason(item)">删除原因</span>
+                                <span class="tag" v-if="item.corpStatus == 2" @click="showReason(item)">替换原因</span>
+                            </div>
+                            <div class="filed">替换公司</div>
+                            <div class="filed" v-for="(item,index) in this.corpList" :class="item.corpStatus != 0 ?'del-line' : ''"
+                                 v-if="item.corpStatus==0 && item.replaced==1">
+                                <span>{{item.corpName}}</span>
+                            </div>
+                        </div>
+
                         <div class="filed" @click="showDialog(0)">客服备注:{{data.serviceRemark}}</div>
                         <div class="filed">城市经理备注:{{data.cityManagerRemark}}</div>
                         <div class="filed">城市区域:{{data.addr}}</div>
@@ -30,26 +44,40 @@
             <panel name="company">
                 装修公司
                 <div slot="content">
-                    <div class="filed">
-                        <span v-for="(item,index) in data.corpList"
-                              :class="('corpStatus' in item && item.corpStatus != 0) ?'decoration' : ''">{{item.corpName}}<br></span>
+                    <div class="filed" v-for="(item,index) in data.corpList">
+                        <div>装修公司:{{item.corpName}}</div>
+                        <div v-if="tab == 1 || tab == 2">
+                            {{item.pic_name ? '负责人:' + item.pic_name : ''}}  {{item.pic_phone ? '手机号:' + item.pic_phone : ''}}
+                        </div>
+                        <div v-if="tab == 2 ">{{item.visited ? '已量房' : '未量房'}} {{item.visitDate}}</div>
+                        <div v-if="tab == 1 ">{{item.meet ? '已见面' : '未见面'}} {{item.meetDate}}</div>
                     </div>
                 </div>
             </panel>
-            <panel name="payinfo" v-if="data.deposit">
+            <panel name="payinfo" v-if="data.payment">
                 支付信息
                 <div slot="content">
-                    <div class="filed">签署情况</div>
-                    <div class="filed">签署情况：{{data.deposit.signatureInfo}}</div>
-                    <div class="filed">支付方式：{{data.deposit.paymentMethod}}</div>
-                    <div class="filed">备注信息：{{data.deposit.depositRemark}}</div>
-                    <div class="filed">支付信息录入</div>
-                    <div class="filed">实收金额: {{data.deposit.paidIn}}元</div>
-                    <div class="filed">支付凭证: {{data.deposit.receipt}}</div>
-                    <div class="filed">支付凭证:
-                        <img :src="data.deposit.receiptPhoto">
+                    <div class="filed" v-if="data.payment.signatureInfo">签署情况
+                        <div>签署情况：{{data.payment.signatureInfo}}</div>
+                        <div>支付方式：{{data.payment.paymentMethod}}</div>
+                        <div>备注信息：{{data.payment.depositRemark}}</div>
                     </div>
-                    <div class="filed">付款人: {{data.deposit.payer}}</div>
+                    <div class="filed" v-if="data.payment.contractNo">合同编号及金额
+                        <div>三方合同编号：{{data.payment.contractNo}}</div>
+                        <div>三方总金额：{{data.payment.contractTotalMoney}}元</div>
+                        <div>凭证照片：
+                            <img class="photo" :src="data.payment.receiptPhoto">
+                        </div>
+                        <div>备注：{{data.payment.contractRemark}}</div>
+                    </div>
+                    <div class="filed">支付信息录入
+                        <div>实收金额: {{data.payment.paidIn}}元</div>
+                        <div>支付凭证: {{data.payment.receipt}}</div>
+                        <div>支付凭证图片:
+                            <img class="photo" :src="data.payment.receiptPhoto">
+                        </div>
+                        <div>付款人: {{data.payment.payer}}</div>
+                    </div>
                 </div>
             </panel>
         </collapse>
@@ -106,7 +134,6 @@
                 });
             },
             showDialog(type) {
-                console.log(type);
                 if (type === 0) {
                     this.dialog.title = '客服备注';
                     this.dialog.msg = this.data.serviceRemark;
@@ -128,6 +155,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
+        overflow-x: auto;
     }
 
     .filed {
@@ -143,10 +171,6 @@
 
     .filed:last-child {
         border-bottom: 0;
-    }
-
-    .decoration {
-        text-decoration: line-through #ed3f14;
     }
 
     .photo {

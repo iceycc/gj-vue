@@ -36,7 +36,7 @@ function handleOrderButton(order) {
             } else if (order.orderMsgFee) {
                 //do nothing
             } else {
-                array = array.concat([2, 3, 4]);
+                array = array.concat([3, 4]);
             }
             break;
         case 2: //无法承接
