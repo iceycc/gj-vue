@@ -20,7 +20,8 @@
         <uz-auto-list ref="listview" :url="url">
             <template slot="item" scope="props">
                 <div class="filed title"><span class="tag" v-if="props.item.orderMsgFee">外销单</span>
-                    <span class="tag" v-if="props.item.orderCharge">收费单</span>订单编号:{{props.item.orderShow}}
+                    <span class="tag"
+                          v-if="props.item.orderCharge">收费单</span><span>({{props.item.orderType == 0 ? '平台单' : props.item.orderType == 1 ? '反推单' : '订单类型异常'}})</span>订单编号:{{props.item.orderShow}}
                 </div>
                 <div class="filed" v-if="props.item.buttons.length > 0">
                     <i-button v-if="props.item.buttons.indexOf(0) > -1" type="primary" size="small"
@@ -50,20 +51,24 @@
                     房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
                 </div>
 
-                <div class="filed">
+                <div class="filed" v-if="props.item.corpList.length > 0">
                     <div class="company_name"><span>装修公司：</span><span v-if="props.item.corpList.length > 0"
                                                                       @click="allot_applyfor_company(props.item.orderNo)">申请替换</span>
                     </div>
-                    <span v-for="(item,index) in props.item.corpList" :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}<br></span>
+                    <span v-for="(item,index) in props.item.corpList"
+                          :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}<br></span>
                 </div>
-                <div class="filed">{{props.item.sellToCorp ? '出售公司:' + props.item.sellToCorp : ''}}</div>
+                <div class="filed" v-if="props.item.corpList.sellToCorp">
+                    {{props.item.sellToCorp ? '出售公司:' + props.item.sellToCorp : ''}}
+                </div>
                 <div class="filed">
                     下单时间:{{props.item.orderGeneratedTime}}<br>{{props.item.orderAssignTime ? '分单时间:' + props.item.orderAssignTime : ''}}
                 </div>
                 <div class="filed">
                     装修预算:{{props.item.budget}}万元 装修方式:{{props.item.decorateType}} 装修风格:{{props.item.decorateStyle}}
                 </div>
-                <div class="filed">客服备注:{{props.item.serviceRemark}}</div>
+                <div class="filed" @click="showRemark(props.item,1)">装修需求:{{props.item.content}}</div>
+                <div class="filed" @click="showRemark(props.item,0)">客服备注:{{props.item.serviceRemark}}</div>
                 <div class="filed" @click="addCityManagerRemark(props.item.orderNo,props.item.cityManagerRemark)">
                     城市经理备注:{{props.item.cityManagerRemark}}
                 </div>
@@ -71,7 +76,7 @@
                 <div class="filed">详细地址:{{props.item.detailAddr}}</div>
             </template>
         </uz-auto-list>
-        <mu-dialog :open="isShowRemark" title="城市经理备注" @close="closeDialog">
+        <mu-dialog :open="isShowRemark" title="城市经理备注" @close="closeDialog(false)">
             <mu-text-field class="input_text" v-model="cityManagerRemark" multiLine :rows="3" :rowsMax="6"/>
             <i-button slot="actions" size="small" @click="closeDialogManagerRemark(false)">取消</i-button>
             <i-button slot="actions" type="primary" size="small" @click="closeDialogManagerRemark(true)"
@@ -79,7 +84,7 @@
                 编辑
             </i-button>
         </mu-dialog>
-        <mu-dialog :open="dialog[dialog.type]" :title="dialog.title" @close="closeDialog">
+        <mu-dialog :open="dialog.show" :title="dialog.title" @close="closeDialog(false)">
             <div v-if="dialog.type != 'unable'">{{dialog.desc}}</div>
             <mu-text-field v-if="dialog.type == 'unable'" class="input_text"
                            :hintText="dialog.desc" v-model="dialog.input" multiLine :rows="3" :rowsMax="6"/>
@@ -88,6 +93,12 @@
             <i-button slot="actions" size="small" @click="closeDialog(false)">取消</i-button>
             <i-button slot="actions" type="primary" size="small" @click="closeDialog(true)" style="margin-left: 20px">
                 确定
+            </i-button>
+        </mu-dialog>
+        <mu-dialog :open="dialog.show1" :title="dialog.title" @close="closeDialog(false)">
+            <div>{{dialog.desc}}</div>
+            <i-button slot="actions" type="primary" size="small" @click="closeDialog(false)" style="margin-left: 20px">
+                关闭
             </i-button>
         </mu-dialog>
     </div>
@@ -114,6 +125,8 @@
         data() {
             return {
                 dialog: {
+                    show: false,
+                    show1: false,
                     note: false,
                     unable: false,
                     charge: false,
@@ -161,7 +174,6 @@
         },
         activated() {
             EventBus.$emit(Constants.EventBus.update_main_tab_index, 0);
-            console.log(this.$route);
             if ('tab' in this.$route.params) {
                 this.handleTabChange(this.$route.params.tab);
             } else {
@@ -252,11 +264,24 @@
                     this.isShowRemark = false;
                 }
             },
+            showRemark(item, type) {
+                this.dialog.show1 = true;
+                if (type === 0) {
+                    this.dialog.title = '客服备注';
+                    this.dialog.desc = item.serviceRemark;
+                } else if (type === 1) {
+                    this.dialog.title = '装修需求';
+                    this.dialog.desc = item.content;
+                }
+            },
             closeDialog(flag) {
-                this.dialog[this.dialog.type] = false;
+                this.dialog.show = false;
+                this.dialog.show1 = false;
+
+                console.log(flag);
 
                 if (flag) {
-                    if (this.dialog.type === 'unable' || this.dialog.type === 'info' || this.dialog.type === 'charge') {//无法承接
+                    if (this.dialog.type === 'unable' || this.dialog.type === 'info' || this.dialog.type === 'charge' || this.dialog.type === 'uncharge') {//无法承接
                         let url = Constants.method.cm_set_order_status;
                         let param = {
                             order_no: this.orderNo
@@ -270,6 +295,8 @@
                             param.set_type = 1;
                         } else if (this.dialog.type === 'charge') {
                             param.set_type = 0;
+                        } else if (this.dialog.type === 'uncharge') {
+                            param.set_type = 2;
                         }
 
                         api.post(url, param, () => {
@@ -296,19 +323,19 @@
                         this.dialog.title = '设置';
                         this.dialog.desc = '此订单是否确定为收费订单';
                         break;
+                    case 'uncharge':
+                        this.dialog.title = '取消收费单';
+                        this.dialog.desc = '取消收费单设置';
+                        break;
                     case 'info':
                         this.dialog.title = '外销单';
                         this.dialog.desc = '此订单是否确定为外销单';
                         break;
-                    case 'rminfo':
-                        this.dialog.title = '取消外销单';
-                        this.dialog.desc = '取消外销单设置';
-                        break;
                 }
 
                 this.orderNo = orderNo;
-                this.dialog[type] = true;
                 this.dialog.type = type;
+                this.dialog.show = true;
             },
             showToast(message) {
                 EventBus.$emit(Constants.EventBus.showToast, {

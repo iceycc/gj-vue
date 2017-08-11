@@ -48,9 +48,10 @@
                 }
             }
         },
-        mounted() {
+        created() {
             api = new API(parent);
             this.scroller = this.$el;
+            console.log(this.url);
             this.getdata();
         },
         methods: {
@@ -74,7 +75,6 @@
                 if (this.$parent.handleParam) {
                     param = Object.assign(this.$parent.handleParam(), param)
                 }
-
                 api.post(this.url, param, (result) => {
                     let datas = [];
                     if ('handleResult' in this.$parent) {
