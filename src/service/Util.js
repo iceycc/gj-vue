@@ -27,6 +27,7 @@ function handleOrderButton(order) {
             }
             break;
         case 1: //已分配
+            array = array.concat([0]);
             if (count < 3) {
                 array = array.concat([1]);
             }

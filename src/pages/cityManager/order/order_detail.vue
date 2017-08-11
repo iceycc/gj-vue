@@ -49,8 +49,8 @@
                         <div v-if="tab == 1 || tab == 2">
                             {{item.pic_name ? '负责人:' + item.pic_name : ''}}  {{item.pic_phone ? '手机号:' + item.pic_phone : ''}}
                         </div>
-                        <div v-if="tab == 2 ">{{item.visited ? '已量房' : '未量房'}} 量房日期：{{item.visitDate}}</div>
-                        <div v-if="tab == 1 ">{{item.meet ? '已见面' : '未见面'}} 见面日期：{{item.meetDate}}</div>
+                        <div v-if="tab == 2 ">{{item.visited ? '已量房' : '未量房'}} {{item.visitDate ? '量房日期：' + item.visitDate : ''}}</div>
+                        <div v-if="tab == 1 ">{{item.meet ? '已见面' : '未见面'}} {{item.meetDate ? '见面日期：' + item.meetDate : ''}}</div>
                     </div>
                 </div>
             </panel>
