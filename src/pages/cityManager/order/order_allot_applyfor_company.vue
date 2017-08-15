@@ -4,6 +4,7 @@
         <div class="filed" v-for="(item,index) in this.datas" v-if="(item.corpStatus==0 && item.replaced==0) || item.corpStatus != 0">
             <span :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}</span>
             <span class="tag" v-if="item.corpStatus == 1" @click="showReason(item)">删除原因</span>
+            <span class="tag" v-if="item.corpStatus == 1" @click="allot_company(item)">申请替换</span>
             <span class="tag" v-if="item.corpStatus == 2" @click="showReason(item)">替换原因</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="showDelDialog(item)">删除</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="allot_company(item)">申请替换</span>
