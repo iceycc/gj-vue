@@ -6,6 +6,7 @@
  4:信息费
  5:取消收费单
 
+ orderType： 0：平台 1：反推
  status:   0:待处理  1:已分配  2:无法承接
  orderCharge :收费单
  orderMsgFee :信息费(属于无法承接状态)
@@ -14,9 +15,14 @@ function handleOrderButton(order) {
     let array = [];
     let count = getCount(order.corpList);
 
+    console.log(order);
     switch (order.status) {
         case 0: //待处理
-            array = array.concat([2, 3, 4]);
+            if (order.orderType === "0") {
+                array = array.concat([2, 3, 4]);
+            } else if (order.orderType === "1") {
+                array = array.concat([2]);
+            }
 
             if (count === 0) {
                 array = array.concat([1]);
@@ -37,7 +43,9 @@ function handleOrderButton(order) {
             } else if (order.orderMsgFee) {
                 //do nothing
             } else {
-                array = array.concat([3, 4]);
+                if (order.orderType === "0") {
+                    array = array.concat([3, 4]);
+                }
             }
             break;
         case 2: //无法承接

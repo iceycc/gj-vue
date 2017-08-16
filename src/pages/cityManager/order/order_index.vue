@@ -58,9 +58,7 @@
                     <span v-for="(item,index) in props.item.corpList"
                           :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}<br></span>
                 </div>
-                <div class="filed" v-if="props.item.corpList.sellToCorp">
-                    {{props.item.sellToCorp ? '出售公司:' + props.item.sellToCorp : ''}}
-                </div>
+                <div class="filed" v-if="props.item.sellToCorp" >出售公司: <span style="margin-left: 10px">{{props.item.sellToCorp}}</span></div>
                 <div class="filed">
                     下单时间:{{props.item.orderGeneratedTime}}<br>{{props.item.orderAssignTime ? '分单时间:' + props.item.orderAssignTime : ''}}
                 </div>
