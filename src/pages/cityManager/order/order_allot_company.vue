@@ -162,12 +162,6 @@
 
 <style lang="scss" scoped>
 
-    ._page {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
     .filed {
         padding: 10px;
         width: 100%;

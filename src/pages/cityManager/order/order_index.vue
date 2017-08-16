@@ -349,12 +349,6 @@
 <style lang="scss" scoped>
     @import "../../../style/px2rem";
 
-    ._page {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
     .tabs {
         border-top: 0px;
     }

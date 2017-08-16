@@ -160,10 +160,7 @@
 <style lang="scss" scoped>
 
     ._page {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        overflow-x: auto;
+        overflow-y: auto !important;
     }
 
     .filed {
