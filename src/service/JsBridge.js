@@ -7,16 +7,16 @@ const name = 'native';
 function setStorage(key, val) {
     val = JSON.stringify(val);
 
-    if (isAppcan() && appcan.locStorage) {
-        appcan.locStorage.setVal(key, val);
+    if (isAppcan() && window.uexLocalStorage) {
+        window.uexLocalStorage.setItem(key, val);
     } else if (window && window.localStorage) {
         window.localStorage.setItem(key, val)
     }
 }
 
 function getStorage(key) {
-    if (isAppcan() && appcan.locStorage) {
-        return appcan.locStorage.getVal(key);
+    if (isAppcan() && window.uexLocalStorage) {
+        return window.uexLocalStorage.getItem(key);
     } else if (window && window.localStorage) {
         return window.localStorage.getItem(key);
     }
@@ -26,8 +26,8 @@ function getStorage(key) {
 
 function removeStorage(key) {
     if (key) {
-        if (isAppcan() && appcan.locStorage) {
-            appcan.locStorage.remove(key);
+        if (isAppcan() && window.uexLocalStorage) {
+            window.uexLocalStorage.removeItem(key);
         } else if (window && window.localStorage) {
             window.localStorage.removeItem(key);
         }
@@ -35,8 +35,8 @@ function removeStorage(key) {
 }
 
 function clearStorage() {
-    if (isAppcan() && appcan.locStorage) {
-        appcan.locStorage.remove();
+    if (isAppcan() && window.uexLocalStorage) {
+        window.uexLocalStorage.clear();
     } else if (window && window.localStorage) {
         window.localStorage.clear();
     }
@@ -75,7 +75,7 @@ function sendRequest(url, values, files, callback) {
 
 
 function isAppcan() {
-    return window.appcan
+    return window.__uex
 }
 
 /**

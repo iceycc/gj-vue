@@ -1,13 +1,15 @@
 <template>
     <div class="_page">
         <div class="filed">装修公司</div>
-        <div class="filed" v-for="(item,index) in this.datas" v-if="(item.corpStatus==0 && item.replaced==0) || item.corpStatus != 0">
+        <div class="filed" v-for="(item,index) in this.datas"
+             v-if="(item.corpStatus==0 && item.replaced==0) || item.corpStatus != 0">
             <span :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}</span>
-            <span class="tag" v-if="item.corpStatus == 1" @click="showReason(item)">删除原因</span>
+            <span class="tag" v-if="item.corpStatus == 1" @click="showReason(item,0)">删除原因</span>
             <span class="tag" v-if="item.corpStatus == 1" @click="allot_company(item)">申请替换</span>
-            <span class="tag" v-if="item.corpStatus == 2" @click="showReason(item)">替换原因</span>
+            <span class="tag" v-if="item.corpStatus == 2" @click="showReason(item,1)">替换原因</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="showDelDialog(item)">删除</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="allot_company(item)">申请替换</span>
+            <span class="tag" v-if="item.applyReplaceReason" @click="showReason(item,2)">申请替换原因</span>
         </div>
         <div class="filed">替换公司</div>
         <div class="filed" v-for="(item,index) in this.datas" :class="item.corpStatus != 0 ?'del-line' : ''"
@@ -65,22 +67,37 @@
             this.getdata();
         },
         methods: {
-            getdata(){
+            getdata() {
                 api.post(Constants.method.cm_get_corps, {
                     order_no: this.$route.query.orderNo
                 }, (result) => {
                     this.datas = result;
                 });
             },
-            showReason(item) {
-                this.dialog.show = true;
-                if (item.corpStatus == 1) {
-                    this.dialog.title = "删除原因";
-                    this.dialog.desc = item.deleteReason;
-                } else if (item.corpStatus == 2) {
-                    this.dialog.title = "替换原因";
-                    this.dialog.desc = item.replaceReason;
+            /**
+             * 0：删除原因
+             * 1：替换原因
+             * 2：申请替换原因
+             * @param item
+             */
+            showReason(item, type) {
+
+                switch (type){
+                    case 0:
+                        this.dialog.title = "删除原因";
+                        this.dialog.desc = item.deleteReason;
+                        break;
+                    case 1:
+                        this.dialog.title = "替换原因";
+                        this.dialog.desc = item.replaceReason;
+                        break;
+                    case 2:
+                        this.dialog.title = "申请替换原因";
+                        this.dialog.desc = item.applyReplaceReason;
+                        break;
                 }
+
+                this.dialog.show = true;
             },
             allot_company(item) {
                 this.$router.push({

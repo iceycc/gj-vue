@@ -32,7 +32,11 @@ export default {
         },
         logout() {
             JsBridge.removeStorage('user');
-            this.$router.push({name: 'user_login'});
+            if(window.__uex){
+                window.uexWindow.open({name:'login','data':'login.html'});
+            }else{
+                this.$router.push({name: 'user_login'});
+            }
         }
     },
     created() {
