@@ -28,8 +28,8 @@
              pass: '123456'
              */
             return {
-                username: 'szjl',
-                pass: 'wuzhi1',
+                username: '',
+                pass: '',
                 error_user: '',
                 error_pass: ''
             }
@@ -52,10 +52,18 @@
                 }
                 this.error_pass = '';
 
-                api.get('http://bang.uz.com/index.php?' + Constants.method.login, {
+                //http://bang.uz.com/index.php  //121
+                //http://bpre.uz.com/index.php  //176
+                api.get('http://bpre.uz.com/index.php?' + Constants.method.login, {
                     username: this.username,
                     password: this.pass
-                }, (result) => {
+                }, (result, response) => {
+                    if (!result) {
+                        EventBus.$emit(Constants.EventBus.showToast, {
+                            message: response.message
+                        });
+                    }
+
                     if (result.role != 38) {
                         EventBus.$emit(Constants.EventBus.showToast, {
                             message: '账户角色异常:' + result.role

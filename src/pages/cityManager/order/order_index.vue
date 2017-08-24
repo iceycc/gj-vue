@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="filed" v-if="props.item.corpList.length > 0">
-                    <div class="company_name"><span>装修公司：</span><span v-if="props.item.corpList.length > 0"
+                    <div class="company_name"><span>装修公司：</span><span v-if="props.item.corpList.length > 0 && props.item.status != 0"
                                                                       @click="allot_applyfor_company(props.item.orderNo)">申请替换</span>
                     </div>
                     <span v-for="(item,index) in props.item.corpList"
@@ -72,6 +72,10 @@
                 </div>
                 <div class="filed">城市区域:{{props.item.addr}}</div>
                 <div class="filed">详细地址:{{props.item.detailAddr}}</div>
+                <div class="filed" v-if="props.item.cantDealReason && props.item.cantDealTime">
+                    无法承接原因:{{props.item.cantDealReason}}<br>
+                    无法承接操作时间:{{props.item.cantDealTime}}
+                </div>
             </template>
         </uz-auto-list>
         <mu-dialog :open="isShowRemark" title="城市经理备注" @close="closeDialog(false)">

@@ -60,6 +60,7 @@ class API {
         }
 
         request.then((response) => {
+            console.log(response);
             let result = response.data;
 
             success(result, response);

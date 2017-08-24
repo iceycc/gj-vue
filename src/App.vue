@@ -52,6 +52,7 @@
         methods: {
             back(){
                 this.$router.back();
+                return false;
             }
         }
     }

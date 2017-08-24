@@ -17,6 +17,7 @@
             <span>{{item.corpName}}</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="showDelDialog(item)">删除</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="allot_company(item)">申请替换</span>
+            <span class="tag" v-if="item.applyReplaceReason" @click="showReason(item,2)">申请替换原因</span>
         </div>
         <mu-dialog :open="dialog.show" :title="dialog.title" @close="closeDialog">
             {{dialog.desc}}

@@ -5,7 +5,8 @@ import Qs from 'qs'
 
 let test3 = 'http://10.1.40.81/basic/web/';
 
-let testURL = 'http://service.intra.uzhuang.com/';
+// let testURL = 'http://service.intra.uzhuang.com/';
+let testURL = 'http://service.pre.uzhuang.com/';    //176
 let loging = 'http://bang.uz.com/index.php';
 
 const baseURL = testURL + 'index.php';
