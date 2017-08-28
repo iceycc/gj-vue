@@ -1,5 +1,6 @@
 <template>
     <div id="app">
+        <div :style="{height: statusBarHeight + 'px'}" style="background-color: #2196F3;"></div>
         <mu-appbar :title="title">
             <mu-icon-button :icon="icon_left" slot="left" @click="back"/>
             <!-- 占位,标题不居中-->
@@ -15,19 +16,21 @@
 </template>
 
 <script>
-    import {EventBus, Constants} from  './service/index';
+    import {EventBus, Constants} from './service/index';
+
     export default {
         name: 'app',
-        data(){
+        data() {
             return {
                 title: '城市经理',
                 icon_left: 'arrow_back',
                 toast: false,
                 toast_message: '',
-                toastTimer: null
+                toastTimer: null,
+                statusBarHeight: 0
             }
         },
-        created(){
+        created() {
             EventBus.$on(Constants.EventBus.setTitle, value => {
                 console.log(value);
                 this.title = value;
@@ -38,6 +41,7 @@
                 this.toast_message = value.message;
 
                 if (this.toastTimer) clearTimeout(this.toastTimer)
+
                 this.toastTimer = setTimeout(() => {
                     this.toast = false
                 }, 2000)
@@ -46,11 +50,15 @@
             EventBus.$on(Constants.EventBus.setTitleLeftIcon, value => {
                 this.icon_left = value;
             });
+
+            if (navigator.userAgent.indexOf('iPhone') !== -1 && navigator.userAgent.indexOf('Appcan') !== -1) {
+                this.statusBarHeight = 20;
+            }
         },
-        mounted(){
+        mounted() {
         },
         methods: {
-            back(){
+            back() {
                 this.$router.back();
                 return false;
             }
