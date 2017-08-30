@@ -5,7 +5,7 @@
                  v-if="item.role.indexOf(role) > -1">
                 <img class="grid-item-img" :src="item.img" v-if="item.img"/>
                 <span>{{item.title}}</span>
-                <span class="badge">{{item.count}}</span>
+                <span class="badge" v-show="item.count > 0">{{item.count}}</span>
             </div>
         </template>
 
@@ -64,6 +64,8 @@
             justify-content: center;
             background-color: #FFFFFF;
             position: relative;
+            border: 1px solid #CCCCCC;
+            margin: 5px ;
             .grid-item-img {
                 height: 50px;
                 width: 50px;

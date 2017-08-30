@@ -1,9 +1,9 @@
 <template>
     <div class="page">
         <div class="login">
-            <mu-text-field v-model="username" label="用户名" hintText="请输入用户名" icon="verified_user" :errorText="error_user"
+            <mu-text-field v-model="username" label="用户名" hintText="请输入用户名"  :errorText="error_user"
                            labelFloat fullWidth/>
-            <mu-text-field v-model="pass" label="密码" hintText="请输入密码" icon="lock" :errorText="error_pass"
+            <mu-text-field v-model="pass" label="密码" hintText="请输入密码"  :errorText="error_pass"
                            type="password" labelFloat
                            fullWidth/>
             <br/>
@@ -54,7 +54,7 @@
 
                 //http://bang.uz.com/index.php  //121
                 //http://bpre.uz.com/index.php  //176
-                api.get('http://bpre.uz.com/index.php?' + Constants.method.login, {
+                api.get('http://bang.uz.com/index.php?' + Constants.method.login, {
                     username: this.username,
                     password: this.pass
                 }, (result, response) => {
@@ -81,6 +81,6 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .login {
-        padding: 10px 30px;
+        padding: 40px 40px;
     }
 </style>

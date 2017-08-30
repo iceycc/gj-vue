@@ -65,8 +65,8 @@
                 <div class="filed">
                     装修预算:{{props.item.budget}}万元 装修方式:{{props.item.decorateType}} 装修风格:{{props.item.decorateStyle}}
                 </div>
-                <div class="filed" @click="showRemark(props.item,1)">装修需求:{{props.item.content}}</div>
-                <div class="filed" @click="showRemark(props.item,0)">客服备注:{{props.item.serviceRemark}}</div>
+                <div class="filed single" @click="showRemark(props.item,1)">装修需求:{{props.item.content}}</div>
+                <div class="filed single" @click="showRemark(props.item,0)">客服备注:{{props.item.serviceRemark}}</div>
                 <div class="filed" @click="addCityManagerRemark(props.item.orderNo,props.item.cityManagerRemark)">
                     城市经理备注:{{props.item.cityManagerRemark}}
                 </div>
@@ -362,6 +362,12 @@
     //dialog 内输入框
     .input_text {
         width: 100%;
+    }
+
+    .single {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .filed {

@@ -66,11 +66,11 @@
                 <div class="cell"></div>
             </div>
             <div class="tr" v-if="type ==4">
-                <div class="cell-5">订单编号</div>
-                <div class="cell-5">业主姓名</div>
-                <div class="cell-5">合同金额</div>
-                <div class="cell-5">订单来源</div>
-                <div class="cell-5"></div>
+                <div class="cell cell-4">订单编号</div>
+                <div class="cell cell-4">业主姓名</div>
+                <div class="cell cell-4">合同金额</div>
+                <div class="cell cell-4">订单来源</div>
+                <div class="cell cell-1"></div>
             </div>
             <div class="tr" v-if="type ==5">
                 <div class="cell">装修公司</div>
@@ -108,11 +108,11 @@
                     <div class="cell"> > </div>
                 </div>
                 <div class="tr" v-if="type == 4 ">
-                    <span class="cell-5">{{props.item.orderShow}}</span>
-                    <span class="cell-5">{{props.item.customersName}}</span>
-                    <span class="cell-5">{{props.item.contractMoney}}</span>
-                    <span class="cell-5">{{props.item.orderFrom}}</span>
-                    <div class="cell-5"> > </div>
+                    <span class="cell cell-4">{{props.item.orderShow}}</span>
+                    <span class="cell cell-4">{{props.item.customersName}}</span>
+                    <span class="cell cell-4">{{props.item.contractMoney}}</span>
+                    <span class="cell cell-4">{{props.item.orderFrom}}</span>
+                    <span class="cell cell-1"> > </span>
                 </div>
                 <div class="tr" v-if="type == 5">
                     <span class="cell">{{props.item.corpName}}</span>
@@ -300,6 +300,12 @@
             width: 24%;
             display: inline-block;
             text-align: center;
+            &-1 {
+                width: 6%;
+            }
+            &-4 {
+                width: 22%;
+            }
         }
         .cell-5 {
             width: 19%;

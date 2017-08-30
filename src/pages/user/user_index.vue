@@ -91,11 +91,11 @@
 
                     this.menus.forEach((item, index) => {
 
-                        if (this.menus[index].path == 'cm_order_index') {
+                        if (this.menus[index].path === 'cm_order_index') {
                             this.menus[index].count = result.unhandledQty;
                         }
 
-                        if (this.menus[index].path == 'evaluate_list') {
+                        if (this.menus[index].path === 'evaluate_list') {
                             this.menus[index].count = result.commentQty;
                         }
                     });
