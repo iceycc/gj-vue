@@ -65,7 +65,7 @@
                         <div>三方合同编号：{{data.payment.contractNo}}</div>
                         <div>三方总金额：{{data.payment.contractTotalMoney}}元</div>
                         <div>凭证照片：
-                            <img class="photo" v-for="item in data.payment.receiptPhoto" :src="item">
+                            <img class="photo" v-for="item in data.payment.contractPhoto" :src="item">
                         </div>
                         <div>备注：{{data.payment.contractRemark}}</div>
                     </div>

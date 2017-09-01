@@ -25,7 +25,7 @@
                 </div>
                 <div class="filed" v-if="props.item.buttons.length > 0">
                     <i-button v-if="props.item.buttons.indexOf(0) > -1" type="primary" size="small"
-                              @click="allot_manager(props.item.orderNo)">分配经理
+                              @click="allot_manager(props.item.orderNo)">{{props.item.status === 1 ? '重新分配经理' : '分配经理'}}
                     </i-button>
                     <i-button v-if="props.item.buttons.indexOf(1) > -1" type="primary" size="small"
                               @click="allot_company(props.item.orderNo)">分配公司

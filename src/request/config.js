@@ -3,13 +3,12 @@
  */
 import Qs from 'qs'
 
-let test3 = 'http://10.1.40.81/basic/web/';
 
-let testURL = 'http://service.intra.uzhuang.com/';      //121
-// let testURL = 'http://service.pre.uzhuang.com/';    //176
-let loging = 'http://bang.uz.com/index.php';
+// let apiURL = 'http://service.intra.uzhuang.com/';            //121
+// let apiURL = 'http://service.pre.uzhuang.com/';              //176
+let apiURL = 'http://service.intra.uzhuang.com/';               //线上
 
-const baseURL = testURL + 'index.php';
+const baseURL = apiURL + 'index.php';
 
 export default {
     method: 'post',
