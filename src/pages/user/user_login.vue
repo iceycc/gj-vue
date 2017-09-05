@@ -66,6 +66,10 @@
                         });
                     }
 
+                    if (result.role == 41) {
+                        result.role = 38;
+                    }
+
                     if (result.role != 38) {
                         EventBus.$emit(Constants.EventBus.showToast, {
                             message: '账户角色异常:' + result.role
