@@ -69,7 +69,6 @@
         },
         created() {
             api = new API(this);
-
             //this.getScheduleData();
         },
         activated() {
@@ -122,6 +121,10 @@
                 if (value.path === 'cm_order_index') {
                     value.params = {
                         tab: 0
+                    }
+                } else if (value.path === "evaluate_list") {
+                    value.params = {
+                        isnew: 0
                     }
                 }
 

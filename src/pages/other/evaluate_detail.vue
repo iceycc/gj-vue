@@ -112,12 +112,13 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+
     .page {
         padding: 16px;
         font-size: 16px;
 
         .node-title {
-            padding-bottom: 8px;
+            padding: 8px 0 ;
         }
 
         .title {

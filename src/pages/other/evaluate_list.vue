@@ -1,6 +1,7 @@
 <template>
     <div class="page">
-        <uz-list :list="list" :isMore="isMore" :loading="loading" @loadMore="loadMore" @itemOnClick="itemOnClick">
+        <uz-list :ref="list" :list="list" :isMore="isMore" :loading="loading" @loadMore="loadMore"
+                 @itemOnClick="itemOnClick">
             <template slot="item" scope="props">
                 <div class="sub-point" :style="{background:props.item.readStatus == 0 ? '#e13c13':'#FFFFFF'}"></div>
                 <div class="sub-item">
@@ -17,7 +18,7 @@
 </template>
 
 <script>
-    import {EventBus, Constants, API, mixins} from  '../../service/index';
+    import {EventBus, Constants, API, mixins} from '../../service/index';
     import UzList from "../../components/List";
     import UzTabs from "../../components/Tabs";
 
@@ -37,17 +38,19 @@
                 isMore: true
             }
         },
-        mounted(){
+        activated() {
             this.setTitle('评价列表');
             api = new API(this);
-
-            if (this.$route.query && this.$route.query.tab) {
-                this.activeTab = this.$route.query.tab;
+            if ('isnew' in this.$route.params) {
+                this.initList();
+                this.getdata();
             }
-            this.getdata()
+        },
+        mounted() {
+
         },
         methods: {
-            itemOnClick(index){
+            itemOnClick(index) {
                 this.router_push({
                     path: 'evaluate_detail',
                     query: {
@@ -56,13 +59,13 @@
                     }
                 });
             },
-            initList(){
+            initList() {
                 this.list = [];
                 this.page = 1;
                 this.isMore = true;
                 this.loading = false;
             },
-            getdata(){
+            getdata() {
                 this.loading = true;
                 let param = {
                     page: this.page,
@@ -74,8 +77,9 @@
                 }
 
                 api.post(url, param, (result) => {
-                    if (result instanceof Array) {
-                        this.list = this.list.concat(result);
+                    this.setTitle('评价列表(' + result.total + ')');
+                    if (result.list instanceof Array && result.list.length > 0) {
+                        this.list = this.list.concat(result.list);
                     } else {
                         this.isMore = false;
                     }
@@ -88,7 +92,7 @@
                     this.isMore = false;
                 });
             },
-            loadMore(){
+            loadMore() {
                 this.page = this.page + 1;
 
                 this.getdata();

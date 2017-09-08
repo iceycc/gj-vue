@@ -21,12 +21,12 @@
                 default: 3
             },
             role: {
-                type: String,
+                type: [String],
                 default: '21'
             },
             grids: {}
         },
-        data () {
+        data() {
             return {
                 griditemStyle: {
                     width: '33vw',
@@ -34,15 +34,16 @@
                 }
             }
         },
-        updated () {
-
+        updated() {
         },
-        mounted () {
+        created() {
+        },
+        mounted() {
             this.griditemStyle.width = 100 / this.cols + 'vw';
             this.griditemStyle.height = 100 / this.cols + 'vw';
         },
         methods: {
-            itmeClick(index){
+            itmeClick(index) {
                 this.$emit('change', index);
             }
         }
@@ -65,7 +66,7 @@
             background-color: #FFFFFF;
             position: relative;
             border: 1px solid #CCCCCC;
-            margin: 5px ;
+            margin: 5px;
             .grid-item-img {
                 height: 50px;
                 width: 50px;

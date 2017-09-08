@@ -74,7 +74,7 @@ let router = new Router({
             path: '/evaluate_list',
             name: 'evaluate_list',
             component: pages.Evaluate_List,
-            meta: {title: '业主评价', keepAlive: false}
+            meta: {title: '业主评价', keepAlive: true}
         },
         {
             path: '/evaluate_detail',

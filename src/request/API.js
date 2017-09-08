@@ -18,7 +18,7 @@ class API {
         return this._request(url, 'post', param, success, fail, finish)
     }
 
-    get(url, param, success, fail, finish) {
+    get (url, param, success, fail, finish) {
         return this._request(url, 'get', param, success, fail, finish)
     }
 
@@ -30,7 +30,6 @@ class API {
         url = this.isHasHttp(url) ? url : config.baseURL + '?' + url;
 
         config.method = type;
-
         //添加请求参数
         if (!param) {
             param = {};
@@ -40,13 +39,11 @@ class API {
             let user = JSON.parse(userStr);
             param.mid = user.uid;
             param.m_city = user.cityarea;
-            param.app_env = '' + process.env.NODE_ENV;
-            param.app_version = process.env.NODE_VERSION;
-            param.app_model = navigator.userAgent;
         }
-
-        /*        param.mid = 21922;
-                param.m_city = 3360;*/
+        param.api_version = '1.0.1';
+        param.app_env = '' + process.env.NODE_ENV;
+        param.app_version = process.env.NODE_VERSION;
+        param.app_model = navigator.userAgent;
 
         let request;
         switch (config.method) {
@@ -60,7 +57,6 @@ class API {
         }
 
         request.then((response) => {
-            console.log(response);
             let result = response.data;
 
             success(result, response);

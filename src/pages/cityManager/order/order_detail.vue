@@ -22,19 +22,23 @@
 
                         <div v-if="data.baseCorpList">
                             <div class="filed">装修公司</div>
-                            <div class="filed" v-for="(item,index) in data.baseCorpList" v-if="(item.corpStatus==0 && item.replaced==0) || item.corpStatus != 0">
+                            <div class="filed" v-for="(item,index) in data.baseCorpList"
+                                 v-if="(item.corpStatus==0 && item.replaced==0) || item.corpStatus != 0">
                                 <span :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}</span>
                                 <span class="tag" v-if="item.corpStatus == 1" @click="showDialog(1,item)">删除原因</span>
                                 <span class="tag" v-if="item.corpStatus == 2" @click="showDialog(2,item)">替换原因</span>
                             </div>
                             <div class="filed">替换公司</div>
-                            <div class="filed" v-for="(item,index) in data.baseCorpList" :class="item.corpStatus != 0 ?'del-line' : ''"
+                            <div class="filed" v-for="(item,index) in data.baseCorpList"
+                                 :class="item.corpStatus != 0 ?'del-line' : ''"
                                  v-if="item.corpStatus==0 && item.replaced==1">
                                 <span>{{item.corpName}}</span>
                             </div>
                         </div>
 
-                        <div class="filed" @click="showDialog(0)" v-if="data.serviceRemark">客服备注:{{data.serviceRemark}}</div>
+                        <div class="filed" @click="showDialog(0)" v-if="data.serviceRemark">
+                            客服备注:{{data.serviceRemark}}
+                        </div>
                         <div class="filed">城市经理备注:{{data.cityManagerRemark}}</div>
                         <div class="filed">城市区域:{{data.addr}}</div>
                         <div class="filed">详细地址:{{data.detailAddr}}</div>
@@ -49,8 +53,12 @@
                         <div v-if="tab == 1 || tab == 2">
                             {{item.pic_name ? '负责人:' + item.pic_name : ''}}  {{item.pic_phone ? '手机号:' + item.pic_phone : ''}}
                         </div>
-                        <div v-if="tab == 2 ">{{item.visited ? '已量房' : '未量房'}} {{item.visitDate ? '量房日期：' + item.visitDate : ''}}</div>
-                        <div v-if="tab == 1 ">{{item.meet ? '已见面' : '未见面'}} {{item.meetDate ? '见面日期：' + item.meetDate : ''}}</div>
+                        <div v-if="tab == 2 ">
+                            {{item.visited ? '已量房' : '未量房'}} {{item.visitDate ? '量房日期：' + item.visitDate : ''}}
+                        </div>
+                        <div v-if="tab == 1 ">
+                            {{item.meet ? '已见面' : '未见面'}} {{item.meetDate ? '见面日期：' + item.meetDate : ''}}
+                        </div>
                     </div>
                 </div>
             </panel>
@@ -65,7 +73,8 @@
                         <div>三方合同编号：{{data.payment.contractNo}}</div>
                         <div>三方总金额：{{data.payment.contractTotalMoney}}元</div>
                         <div>凭证照片：
-                            <img class="photo" v-for="item in data.payment.contractPhoto" :src="item">
+                            <img class="photo" v-for="item in data.payment.contractPhoto" :src="item"
+                                 @click="onItemClick(item)">
                         </div>
                         <div>备注：{{data.payment.contractRemark}}</div>
                     </div>
@@ -74,7 +83,8 @@
                         <div>支付方式：{{data.payment.paymentMethod}}</div>
                         <div>支付凭证: {{data.payment.receipt}}</div>
                         <div>支付凭证图片:
-                            <img class="photo" v-for="item in data.payment.receiptPhoto" :src="item">
+                            <img class="photo" v-for="item in data.payment.receiptPhoto" :src="item"
+                                 @click="onItemClick(item)">
                         </div>
                         <div>付款人: {{data.payment.payer}}</div>
                     </div>
@@ -124,6 +134,23 @@
             this.tab = this.$route.query.tab;
         },
         methods: {
+            onItemClick(item) {
+                if (uexImage) {
+                    let json = JSON.stringify({
+                        displayActionButton: false,
+                        displayNavArrows: true,
+                        enableGrid: false,
+                        startOnGrid: false,
+                        startIndex: 0,
+                        data: [{
+                            src: item.replace('small_square', 'originator'),
+                            thumb: item,
+                        }]
+                    });
+
+                    uexImage.openBrowser(json);
+                }
+            },
             getdata() {
                 api.post(Constants.method.cm_get_month_info, {
                     order_no: this.$route.query.orderNo,
@@ -133,16 +160,16 @@
                     this.data = result;
                 });
             },
-            showDialog(type,item) {
+            showDialog(type, item) {
                 if (type === 0) {
                     this.dialog.title = '客服备注';
                     this.dialog.msg = this.data.serviceRemark;
                     this.dialog.isShow = true;
-                }else if (type === 1){
+                } else if (type === 1) {
                     this.dialog.title = '删除原因';
                     this.dialog.msg = item.deleteReason;
                     this.dialog.isShow = true;
-                }else if (type === 2){
+                } else if (type === 2) {
                     this.dialog.title = '替换原因';
                     this.dialog.msg = item.replaceReason;
                     this.dialog.isShow = true;

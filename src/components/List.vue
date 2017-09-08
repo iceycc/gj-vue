@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        name: 'uz-list',
+         name: 'uz-list',
         props: {
             list: {
                 type: Array,
