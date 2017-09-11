@@ -135,7 +135,8 @@
         },
         methods: {
             onItemClick(item) {
-                if (uexImage) {
+                console.log(item.replace('small_square', 'original'));
+                if (window.uexImage) {
                     let json = JSON.stringify({
                         displayActionButton: false,
                         displayNavArrows: true,
@@ -143,7 +144,7 @@
                         startOnGrid: false,
                         startIndex: 0,
                         data: [{
-                            src: item.replace('small_square', 'originator'),
+                            src: item.replace('small_square', 'original'),
                             thumb: item,
                         }]
                     });
@@ -156,7 +157,6 @@
                     order_no: this.$route.query.orderNo,
                     tab: this.$route.query.tab,
                 }, (result) => {
-                    console.log(result);
                     this.data = result;
                 });
             },

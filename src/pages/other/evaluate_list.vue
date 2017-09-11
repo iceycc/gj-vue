@@ -32,6 +32,7 @@
         name: 'evaluate_list',
         data() {
             return {
+                title: '评价列表',
                 list: [],
                 page: 1,
                 loading: false,
@@ -39,7 +40,7 @@
             }
         },
         activated() {
-            this.setTitle('评价列表');
+            this.setTitle(this.title);
             api = new API(this);
             if ('isnew' in this.$route.params) {
                 this.initList();
@@ -47,7 +48,6 @@
             }
         },
         mounted() {
-
         },
         methods: {
             itemOnClick(index) {
@@ -77,7 +77,8 @@
                 }
 
                 api.post(url, param, (result) => {
-                    this.setTitle('评价列表(' + result.total + ')');
+                    this.title = '评价列表(共' + result.total + '条)';
+                    this.setTitle(this.title);
                     if (result.list instanceof Array && result.list.length > 0) {
                         this.list = this.list.concat(result.list);
                     } else {

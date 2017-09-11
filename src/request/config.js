@@ -3,10 +3,7 @@
  */
 import Qs from 'qs'
 
-
-let apiURL = 'http://service.intra.uzhuang.com/';            //121
-// let apiURL = 'http://service.pre.uzhuang.com/';              //176
-// let apiURL = 'http://service.intra.uzhuang.com/';               //线上
+let apiURL = 'http://service.intra.uzhuang.com/';
 
 const baseURL = apiURL + 'index.php';
 

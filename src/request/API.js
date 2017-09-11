@@ -61,7 +61,8 @@ class API {
 
             success(result, response);
 
-            /*            if (response.code === 0) {
+            /*
+            if (response.code === 0) {
                             if (success) {
 
                             }

@@ -37,6 +37,8 @@
         updated() {
         },
         created() {
+            if(this.role == '38')
+                this.role = "38";
         },
         mounted() {
             this.griditemStyle.width = 100 / this.cols + 'vw';

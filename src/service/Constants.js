@@ -1,7 +1,6 @@
 /**
  * Created by zhangweiwei on 16/9/7.
  */
-
 export const method = {
     login: "m=bang&f=memberSt&v=login",
     orderlist: 'm=hkapp&f=order2&v=orderList',
@@ -13,6 +12,7 @@ export const method = {
     schedule: 'm=hkapp&f=evaluate&v=schedule',                              //个人中心-badge
     evaluateList: 'm=hkapp&f=evaluate&v=evaluateList',                      //业主评价列表
     save_photo: 'm=hkapp&f=uploadImage&v=save_photo',                       //上传图片
+
     cm_profile: 'r=order/profile',                                          //城市经理-个人中心页面
     cm_evaluateList: 'r=owner/owner-comment-list',                          //城市经理-评价列表
     cm_evaluateDetail: 'r=owner/owner-comment',                             //城市经理-评价详情
