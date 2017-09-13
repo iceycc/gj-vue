@@ -135,7 +135,8 @@
         },
         methods: {
             onItemClick(item) {
-                console.log(item.replace('small_square', 'original'));
+                let src = 'http://bang.uzhuang.com/image/big' + item.substring(item.indexOf('small_square') + 'small_square'.length);
+                console.log(src);
                 if (window.uexImage) {
                     let json = JSON.stringify({
                         displayActionButton: false,
@@ -144,7 +145,7 @@
                         startOnGrid: false,
                         startIndex: 0,
                         data: [{
-                            src: item.replace('small_square', 'original'),
+                            src: src,
                             thumb: item,
                         }]
                     });
