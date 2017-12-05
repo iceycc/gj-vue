@@ -42,9 +42,24 @@
                 </div>
             </div>
         </div>
-        <br/>
-        <br/>
-        <br/>
+        <div class="navigator">
+            <div class="item" @click="openWeb('http://m.uzhuang.com')">
+                <img class="img" src="../../assets/image/mzhan.png" alt="">
+                <div>主站M站</div>
+                <div>></div>
+            </div>
+            <div class="item" @click="openWeb('http://mall.uzhuang.com/mobile')">
+                <img class="img" src="../../assets/image/shopmzhan.png" alt="">
+                <div>商城M站</div>
+                <div>></div>
+            </div>
+            <div class="item" @click="openWeb('http://m.uzhuang.com/activity-index.html')">
+                <img class="img" src="../../assets/image/company.png" alt="">
+                <div>推荐装修返现</div>
+                <div>></div>
+            </div>
+        </div>
+
         <mu-raised-button label="退出" @click="doLogout" fullWidth secondary/>
     </div>
 </template>
@@ -63,9 +78,9 @@
             return {
                 user: {},
                 hkData: {},
-                col: 4,
+                col: 6,
                 menus: Constants.User.menus
-            }
+            };
         },
         created() {
             api = new API(this);
@@ -76,6 +91,9 @@
             this.getGuanjiaData();
         },
         methods: {
+            openWeb(url) {
+                window.location.href = url;
+            },
             doLogout() {
                 this.logout();
             },
@@ -106,7 +124,7 @@
                     query: {
                         type: type
                     }
-                })
+                });
             },
             getScheduleData() {
                 api.post(Constants.method.schedule, null, (result) => {
@@ -121,17 +139,17 @@
                 if (value.path === 'cm_order_index') {
                     value.params = {
                         tab: 0
-                    }
+                    };
                 } else if (value.path === "evaluate_list") {
                     value.params = {
                         isnew: 0
-                    }
+                    };
                 }
 
-                this.router_push(value)
+                this.router_push(value);
             }
         }
-    }
+    };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -142,14 +160,11 @@
         padding: px2rem(5) 0;
 
         .layout {
-            padding: px2rem(15);
-            border-bottom: px2rem(10) solid #CCCCCC;
+            padding: px2rem(10) px2rem(15);
+            border-bottom: px2rem(5) solid #CCCCCC;
         }
         .layout:nth-child(2) {
             padding: 0;
-        }
-        .layout:nth-child(3) {
-            border-bottom: 0;
         }
 
         .userinfo {
@@ -157,8 +172,8 @@
             flex-direction: row;
             align-items: center;
             .user-image {
-                width: px2rem(60);
-                height: px2rem(60);
+                width: px2rem(50);
+                height: px2rem(50);
                 margin-right: px2rem(20);
             }
             .user-text {
@@ -171,7 +186,7 @@
 
         .guanjia-data-title {
             display: flex;
-            font-size: px2rem(16);
+            font-size: px2rem(14);
             .title {
                 flex-grow: 1;
                 text-align: left;
@@ -183,12 +198,32 @@
             flex-wrap: wrap;
             .data {
                 width: 50%;
-                font-size: px2rem(14);
+                font-size: px2rem(12);
                 text-align: left;
-                margin-top: px2rem(10);
+                margin-top: px2rem(5);
             }
             .data-full {
                 width: 100%;
+            }
+        }
+
+        .navigator {
+            flex-grow: 1;
+            padding: 0 px2rem(15);
+            font-size: px2rem(12);
+            .item {
+                border-bottom: px2rem(1) solid #CCCCCC;
+                padding: px2rem(10) 0;
+                display: flex;
+                flex-direction: row;
+                :nth-child(1) {
+                    width: px2rem(25);
+                    height: px2rem(25);
+                    margin-right: px2rem(10);
+                }
+                :nth-child(2) {
+                    flex-grow: 1;
+                }
             }
         }
     }

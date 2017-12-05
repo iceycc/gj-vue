@@ -1,7 +1,7 @@
 {
   "name": "uz-guanjia",
-  "version": "0.0.1",
-  "description": "A Vue.js project",
+  "version": "0.0.2",
+  "description": "城市经理",
   "author": "诗人的咸鱼 <willnewii@gmail.com>",
   "private": true,
   "scripts": {

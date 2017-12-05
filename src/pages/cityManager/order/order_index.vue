@@ -33,9 +33,10 @@
                     <i-button v-if="props.item.buttons.indexOf(2) > -1" type="info" size="small"
                               @click="openDialog('unable',props.item.orderNo)">无法承接
                     </i-button>
-                    <i-button v-if="props.item.buttons.indexOf(3) > -1" type="info" size="small"
+                    <!-- 隐藏收费单按钮-->
+<!--                    <i-button v-if="props.item.buttons.indexOf(3) > -1" type="info" size="small"
                               @click="openDialog('charge',props.item.orderNo)">收费单
-                    </i-button>
+                    </i-button>-->
                     <i-button v-if="props.item.buttons.indexOf(4) > -1" type="info"
                               size="small"
                               @click="openDialog('info',props.item.orderNo)">外销单
