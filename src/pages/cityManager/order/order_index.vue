@@ -23,7 +23,7 @@
                     <span class="tag"
                           v-if="props.item.orderCharge">收费单</span><span>({{props.item.orderType == 0 ? '平台单' : props.item.orderType == 1 ? '反推单' : '订单类型异常'}})</span>订单编号:{{props.item.orderShow}}
                 </div>
-                <div class="filed" v-if="props.item.buttons.length > 0">
+                <div class="filed" v-if="props.item.buttons && props.item.buttons.length > 0">
                     <i-button v-if="props.item.buttons.indexOf(0) > -1" type="primary" size="small"
                               @click="allot_manager(props.item.orderNo)">{{props.item.status === 1 ? '重新分配经理' : '分配经理'}}
                     </i-button>
@@ -34,9 +34,9 @@
                               @click="openDialog('unable',props.item.orderNo)">无法承接
                     </i-button>
                     <!-- 隐藏收费单按钮-->
-<!--                    <i-button v-if="props.item.buttons.indexOf(3) > -1" type="info" size="small"
-                              @click="openDialog('charge',props.item.orderNo)">收费单
-                    </i-button>-->
+                    <!--                    <i-button v-if="props.item.buttons.indexOf(3) > -1" type="info" size="small"
+                                                  @click="openDialog('charge',props.item.orderNo)">收费单
+                                        </i-button>-->
                     <i-button v-if="props.item.buttons.indexOf(4) > -1" type="info"
                               size="small"
                               @click="openDialog('info',props.item.orderNo)">外销单
@@ -46,22 +46,31 @@
                     </i-button>
                 </div>
                 <div class="filed">
-                    用户名:{{props.item.customersName}}  订单来源:{{props.item.orderFrom}}  订单状态:{{props.item.orderStatus}}
+                    用户名:{{props.item.customersName}} 订单来源:{{props.item.orderFrom}} 订单状态:{{props.item.orderStatus}}
                 </div>
                 <div class="filed">
-                    房屋面积:{{props.item.houseArea}}平  管家经理:{{props.item.smName}}
+                    房屋面积:{{props.item.houseArea}}平 管家经理:{{props.item.smName}}
                 </div>
 
-                <div class="filed" v-if="props.item.corpList.length > 0">
-                    <div class="company_name"><span>装修公司：</span><span v-if="props.item.corpList.length > 0 && props.item.status != 0"
-                                                                      @click="allot_applyfor_company(props.item.orderNo)">申请替换</span>
+                <div class="filed" v-if="props.item.corpList && props.item.corpList.length > 0">
+                    <div class="company_name"><span>装修公司：</span><span
+                            v-if="props.item.corpList.length > 0 && props.item.status != 0"
+                            @click="allot_applyfor_company(props.item.orderNo)">申请替换</span>
                     </div>
                     <span v-for="(item,index) in props.item.corpList"
                           :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}<br></span>
                 </div>
-                <div class="filed" v-if="props.item.sellToCorp" >出售公司: <span style="margin-left: 10px">{{props.item.sellToCorp}}</span></div>
+                <div class="filed" v-if="props.item.company && props.item.company.length > 0" @click="showAppealReason(props.item.company)">
+                    <div class="company_name"><span>装修公司：</span><span
+                            >申诉原因</span>
+                    </div>
+                    <span v-for="(item,index) in props.item.company">{{item.title}} <span v-html="item.status"></span>  <br></span>
+                </div>
+                <div class="filed" v-if="props.item.sellToCorp">出售公司: <span style="margin-left: 10px">{{props.item.sellToCorp}}</span>
+                </div>
                 <div class="filed">
-                    下单时间:{{props.item.orderGeneratedTime}}<br>{{props.item.orderAssignTime ? '分单时间:' + props.item.orderAssignTime : ''}}
+                    下单时间:{{props.item.orderGeneratedTime}}<br>{{props.item.orderAssignTime ? '分单时间:' +
+                    props.item.orderAssignTime : ''}}
                 </div>
                 <div class="filed">
                     装修预算:{{props.item.budget}}万元 装修方式:{{props.item.decorateType}} 装修风格:{{props.item.decorateStyle}}
@@ -165,7 +174,7 @@
                 needRefresh: false,
                 search_field: Constants.CM_Order.search_field_index,
                 url: Constants.method.cm_orderList
-            }
+            };
         },
         computed: {
             listview: function () {
@@ -207,12 +216,16 @@
                     param.tab = 4;
                 } else if (this.activeTab === 3 && this.activeTab2 === 1) {
                     param.tab = 5;
+                } else if (this.activeTab === 4) {
+                    param.tab = 6;
                 }
                 return param;
             },
             handleResult(datas) {
                 datas.forEach((item, index) => {
-                    datas[index].buttons = Util.handleOrderButton(item);
+                    if ('status' in item){
+                        datas[index].buttons = Util.handleOrderButton(item);
+                    }
                 });
                 return datas;
             },
@@ -260,7 +273,7 @@
                         this.orderNo = '';
                         this.cityManagerRemark = '';
                         this.isShowRemark = false;
-                    })
+                    });
                 } else {
                     this.orderNo = '';
                     this.cityManagerRemark = '';
@@ -276,6 +289,11 @@
                     this.dialog.title = '装修需求';
                     this.dialog.desc = item.content;
                 }
+            },
+            //显示申诉原因
+            showAppealReason(data){
+                this.needRefresh = true;
+                this.$router.push({name: 'cm_order_appeal_reason', params: {data: data}});
             },
             closeDialog(flag) {
                 this.dialog.show = false;
@@ -308,7 +326,7 @@
                         }, null, () => {
                             this.dialog.input = '';
                             this.orderNo = '';
-                        })
+                        });
                     }
                 }
             },
@@ -346,7 +364,7 @@
                 });
             }
         }
-    }
+    };
 </script>
 
 <style lang="scss" scoped>

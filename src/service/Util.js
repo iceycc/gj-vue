@@ -15,7 +15,6 @@ function handleOrderButton(order) {
     let array = [];
     let count = getCount(order.corpList);
 
-    console.log(order);
     switch (order.status) {
         case 0: //待处理
             if (order.orderType === "0") {

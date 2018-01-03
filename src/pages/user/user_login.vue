@@ -52,7 +52,9 @@
                 }
                 this.error_pass = '';
 
-                let loginUrl = 'http://bang.uzhuang.com';
+                let loginUrl = 'http://bang.uz.com';
+                //let loginUrl = 'http://bpre.uz.com';
+//                let loginUrl = 'http://bang.uzhuang.com';
 
                 api.get(loginUrl + '/index.php?' + Constants.method.login, {
                     username: this.username,

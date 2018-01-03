@@ -309,6 +309,9 @@ export const CM_Order = {
     }, {
         name: '全部订单',
         value: '4'
+    }, {
+        name: '申诉列表',
+        value: '6'
     }],
     search_field_index: [{
         title: '订单编号',

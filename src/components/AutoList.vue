@@ -89,7 +89,6 @@
                     } else {
                         this.page = this.page + 1;
                     }
-
                 }, null, () => {
                     this.loading = false;
                 })

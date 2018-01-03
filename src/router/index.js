@@ -119,6 +119,12 @@ let router = new Router({
             meta: {title: '订单列表页', keepAlive: false}
         },
         {
+            path: '/cm_order_appeal_reason',
+            name: 'cm_order_appeal_reason',
+            component: pages.CM_ORDER_APPEAL_REASON,
+            meta: {title: '申诉原因', keepAlive: false}
+        },
+        {
             path: '/order_test',
             name: 'order_test',
             component: pages.order_test,

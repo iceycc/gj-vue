@@ -4,11 +4,13 @@
         <div class="filed" v-for="(item,index) in this.datas"
              v-if="(item.corpStatus==0 && item.replaced==0) || item.corpStatus != 0">
             <span :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}</span>
+            <br v-if="item.corpStatus == 3">
+            <span v-if="item.corpStatus == 3" class="red">(该装修公司申诉成功)</span>
             <span class="tag" v-if="item.corpStatus == 1" @click="showReason(item,0)">删除原因</span>
             <span class="tag" v-if="item.corpStatus == 1" @click="allot_company(item)">申请替换</span>
             <span class="tag" v-if="item.corpStatus == 2" @click="showReason(item,1)">替换原因</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="showDelDialog(item)">删除</span>
-            <span class="tag" v-if="item.corpStatus == 0" @click="allot_company(item)">申请替换</span>
+            <span class="tag" v-if="item.corpStatus == 0 || item.corpStatus == 3" @click="allot_company(item)">申请替换</span>
             <span class="tag" v-if="item.applyReplaceReason" @click="showReason(item,2)">申请替换原因</span>
         </div>
         <div class="filed">替换公司</div>
@@ -16,7 +18,7 @@
              v-if="item.corpStatus==0 && item.replaced==1">
             <span>{{item.corpName}}</span>
             <span class="tag" v-if="item.corpStatus == 0" @click="showDelDialog(item)">删除</span>
-            <span class="tag" v-if="item.corpStatus == 0" @click="allot_company(item)">申请替换</span>
+            <span class="tag" v-if="item.corpStatus == 0 " @click="allot_company(item)">申请替换</span>
             <span class="tag" v-if="item.applyReplaceReason" @click="showReason(item,2)">申请替换原因</span>
         </div>
         <mu-dialog :open="dialog.show" :title="dialog.title" @close="closeDialog">
@@ -145,6 +147,10 @@
         font-size: 14px;
         width: 100%;
         border-bottom: 1px solid #e4e4e4;
+    }
+
+    .red {
+        color: #ed3f14;
     }
 
     .tag {
