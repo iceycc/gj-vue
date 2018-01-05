@@ -28,14 +28,15 @@ function handleOrderButton(order) {
             } else if (count < 3) {
                 array = array.concat([0, 1]);
             } else {
-                array = array.concat([0]);
+                array = array.concat([0, 1]);
             }
             break;
         case 1: //已分配
             array = array.concat([0]);
-            if (count < 3) {
+/*            if (count < 3) {
                 array = array.concat([1]);
-            }
+            }*/
+            array = array.concat([1]);
 
             if (order.orderCharge) {
                 array = array.concat([5]);

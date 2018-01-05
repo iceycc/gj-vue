@@ -28,7 +28,7 @@
                               @click="allot_manager(props.item.orderNo)">{{props.item.status === 1 ? '重新分配经理' : '分配经理'}}
                     </i-button>
                     <i-button v-if="props.item.buttons.indexOf(1) > -1" type="primary" size="small"
-                              @click="allot_company(props.item.orderNo)">分配公司
+                              @click="allot_company(props.item.orderNo,props.item)">分配公司
                     </i-button>
                     <i-button v-if="props.item.buttons.indexOf(2) > -1" type="info" size="small"
                               @click="openDialog('unable',props.item.orderNo)">无法承接
@@ -54,15 +54,19 @@
 
                 <div class="filed" v-if="props.item.corpList && props.item.corpList.length > 0">
                     <div class="company_name"><span>装修公司：</span><span
-                            v-if="props.item.corpList.length > 0 && props.item.status != 0"
+                            v-if="props.item.corpList.length > 0 && props.item.status != 0 && false"
                             @click="allot_applyfor_company(props.item.orderNo)">申请替换</span>
                     </div>
-                    <span v-for="(item,index) in props.item.corpList"
-                          :class="item.corpStatus != 0 ?'del-line' : ''">{{item.corpName}}<br></span>
+                    <template v-for="(item,index) in props.item.corpList">
+                        <span :class="item.corpStatus != 0 ?'del-line' : ''" v-html="item.corpName"></span>
+                        <br>
+                    </template>
+
                 </div>
-                <div class="filed" v-if="props.item.company && props.item.company.length > 0" @click="showAppealReason(props.item.company)">
+                <div class="filed" v-if="props.item.company && props.item.company.length > 0"
+                     @click="showAppealReason(props.item.company)">
                     <div class="company_name"><span>装修公司：</span><span
-                            >申诉原因</span>
+                    >申诉原因</span>
                     </div>
                     <span v-for="(item,index) in props.item.company">{{item.title}} <span v-html="item.status"></span>  <br></span>
                 </div>
@@ -113,6 +117,13 @@
                 关闭
             </i-button>
         </mu-dialog>
+        <mu-dialog :open="dialog1.show" title="提示" @close="closeDialog1(false)">
+            <div>公司规定同一订单分配标准为3家装修，确认要新增一家装修公司吗？</div>
+            <i-button slot="actions" size="small" @click="closeDialog1(false)">取消</i-button>
+            <i-button slot="actions" type="primary" size="small" @click="closeDialog1(true)" style="margin-left: 20px">
+                确定
+            </i-button>
+        </mu-dialog>
     </div>
 </template>
 
@@ -147,6 +158,9 @@
                     type: '',
                     title: '',
                     input: ''
+                },
+                dialog1: { //新增装修公司
+                    show: false
                 },
                 isShowRemark: false,    //城市经理备注对话框
                 cityManagerRemark: '',  //城市经理备注内容
@@ -223,7 +237,7 @@
             },
             handleResult(datas) {
                 datas.forEach((item, index) => {
-                    if ('status' in item){
+                    if ('status' in item) {
                         datas[index].buttons = Util.handleOrderButton(item);
                     }
                 });
@@ -249,9 +263,20 @@
                 this.needRefresh = true;
                 this.$router.push({name: 'cm_allot_manager', query: {orderNo: order_id}});
             },
-            allot_company(order_id) {
-                this.needRefresh = true;
-                this.$router.push({name: 'cm_allot_company', query: {orderNo: order_id}});
+            allot_company(order_id, item) {
+                if (item.corpList && item.corpList.length >= 3) {
+                    this.dialog1.show = true;
+                    this.dialog1.order_id = order_id;
+                } else {
+                    this.needRefresh = true;
+                    this.$router.push({name: 'cm_allot_company', query: {orderNo: order_id}});
+                }
+            },
+            closeDialog1(flag) {
+                this.dialog1.show = !this.dialog1.show;
+                if (flag) {
+                    this.$router.push({name: 'cm_allot_company', query: {orderNo: this.dialog1.order_id}});
+                }
             },
             allot_applyfor_company(order_id) {
                 this.$router.push({name: 'cm_allot_applyfor_company', query: {orderNo: order_id}});
@@ -291,7 +316,7 @@
                 }
             },
             //显示申诉原因
-            showAppealReason(data){
+            showAppealReason(data) {
                 this.needRefresh = true;
                 this.$router.push({name: 'cm_order_appeal_reason', params: {data: data}});
             },
