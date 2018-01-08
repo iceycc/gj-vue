@@ -101,11 +101,11 @@
                         message: "替换模式 只能选择一家公司"
                     });
                 }
-                else if (list.length > 3) {
+/*                else if (list.length > 3) {
                     EventBus.$emit(Constants.EventBus.showToast, {
                         message: "最多选择3家装修公司"
                     });
-                }
+                }*/
                 else {
                     let param = {};
                     param.order_no = this.order_no;

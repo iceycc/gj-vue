@@ -118,7 +118,7 @@
             </i-button>
         </mu-dialog>
         <mu-dialog :open="dialog1.show" title="提示" @close="closeDialog1(false)">
-            <div>公司规定同一订单分配标准为3家装修，确认要新增一家装修公司吗？</div>
+            <div>{{dialog1.desc}}</div>
             <i-button slot="actions" size="small" @click="closeDialog1(false)">取消</i-button>
             <i-button slot="actions" type="primary" size="small" @click="closeDialog1(true)" style="margin-left: 20px">
                 确定
@@ -159,8 +159,9 @@
                     title: '',
                     input: ''
                 },
-                dialog1: { //新增装修公司
-                    show: false
+                dialog1: { //新增装修公司大于三家
+                    show: false,
+                    desc: ''
                 },
                 isShowRemark: false,    //城市经理备注对话框
                 cityManagerRemark: '',  //城市经理备注内容
@@ -266,15 +267,18 @@
             allot_company(order_id, item) {
                 if (item.corpList && item.corpList.length >= 3) {
                     this.dialog1.show = true;
+                    this.dialog1.desc = '公司规定同一订单分配标准为3家装修，确认要新增一家装修公司吗？';
                     this.dialog1.order_id = order_id;
                 } else {
-                    this.needRefresh = true;
-                    this.$router.push({name: 'cm_allot_company', query: {orderNo: order_id}});
+                    this.dialog1.show = true;
+                    this.dialog1.desc = '分配后将不能进行删除操作，确定要将订单分配给该装修公司吗？';
+                    this.dialog1.order_id = order_id;
                 }
             },
             closeDialog1(flag) {
                 this.dialog1.show = !this.dialog1.show;
                 if (flag) {
+                    this.needRefresh = true;
                     this.$router.push({name: 'cm_allot_company', query: {orderNo: this.dialog1.order_id}});
                 }
             },
